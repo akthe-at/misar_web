@@ -1,0 +1,24 @@
+{% extends "home/base.html" %}
+{% block content %}
+    <div class="container-fluid text-left">
+        <div id="content" name="content" class="row row-cols-auto">
+            <h3>{{ siteinfo.description }}</h3>
+        </div>
+        <div id="mission" name="mission" class="row row-cols-auto">
+            <figure class="text-center">
+                <blockquote class="blockquote">
+                    <p>{{ siteinfo.mission_statement }}</p>
+                </blockquote>
+                <figcaption class="blockquote-footer">MISAR Mission Statement</figcaption>
+            </figure>
+        </div>
+        <div class="card text-center border-danger mb-3" style="max-width: 22rem">
+            <h5 class="card-header">Emergency Dispatch</h5>
+            <div class="card-body">
+                <h5 class="card-title">For Immediate Dispatch of K9 Teams</h5>
+                <p class="card-text">Please Call: {{ siteinfo.dispatch_number }}</p>
+                <a href="tel:18008185645" class="btn btn-danger">Call us!</a>
+            </div>
+        </div>
+    {% endblock %}
+</div>
