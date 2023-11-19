@@ -8,6 +8,8 @@ class SiteInfo(models.Model):
     mission_statement = models.TextField()
     dispatch_number = models.CharField(default="(800)-818-5645", max_length=20)
     logo = models.ImageField(upload_to="home/files/images")
+    alternate_logo = models.ImageField(upload_to="home/files/images")
+    home_page_image = models.ImageField(upload_to="home/files/images")
 
     def __str__(self):
         return self.site_name

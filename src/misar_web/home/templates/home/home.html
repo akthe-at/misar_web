@@ -1,24 +1,53 @@
 {% extends "home/base.html" %}
+{% load static %}
 {% block content %}
-    <div class="container-fluid text-left">
-        <div id="content" name="content" class="row row-cols-auto">
-            <h3>{{ siteinfo.description }}</h3>
+    <div style="max-height: 45vh;
+                overflow: hidden"
+         class="container-fluid rounded text-center">
+        <img src="{{ siteinfo.home_page_image }}"
+             alt="Gratzi"
+             class="img-fluid rounded text-center`">
+    </div>
+    <div class="card m-4">
+        <div class="card-body">
+            <h4 class="card-title">{{ siteinfo.description }}</h4>
         </div>
-        <div id="mission" name="mission" class="row row-cols-auto">
+    </div>
+    <div class="card m-4">
+        <div class="card-body">
             <figure class="text-center">
                 <blockquote class="blockquote">
-                    <p>{{ siteinfo.mission_statement }}</p>
+                    <p class="card-text">{{ siteinfo.mission_statement }}</p>
                 </blockquote>
-                <figcaption class="blockquote-footer">MISAR Mission Statement</figcaption>
+                <figcaption class="blockquote-footer">Our Mission</figcaption>
             </figure>
         </div>
-        <div class="card text-center border-danger mb-3" style="max-width: 22rem">
-            <h5 class="card-header">Emergency Dispatch</h5>
-            <div class="card-body">
-                <h5 class="card-title">For Immediate Dispatch of K9 Teams</h5>
-                <p class="card-text">Please Call: {{ siteinfo.dispatch_number }}</p>
-                <a href="tel:18008185645" class="btn btn-danger">Call us!</a>
-            </div>
+    </div>
+</div>
+<div class="container-fluid m-4 bg-body-tertiary rounded d-flex align-items-center justify-content-center">
+    <div class="card text-center border-danger mb-3" style="max-width: 22rem;">
+        <h5 class="card-header">Emergency Dispatch</h5>
+        <div class="card-body">
+            <h5 class="card-title">For Immediate Dispatch of K9 Teams</h5>
+            <p class="card-text">Please Call: {{ siteinfo.dispatch_number }}</p>
+            <a href="tel:18008185645" class="btn btn-danger">Call us!</a>
         </div>
-    {% endblock %}
+    </div>
+</div>
+<div class="shadow-lg p-4 bg-dark  row flex-fill justify-content-center">
+    <div class="row">
+        <div class="col-6 align-self-center">
+            <img src="{{ siteinfo.alternate_logo }}"
+                 alt="MISAR Logo"
+                 class="img-fluid rounded"
+                 style="max-height: 300px">
+        </div>
+        <div class="col-6 align-self-center">
+            <h3 class="text-white">
+                <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a>
+            </h3>
+        </div>
+    </div>
+</div>
+{% endblock %}
 </div>
