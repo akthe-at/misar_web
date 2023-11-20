@@ -13,41 +13,45 @@
             <h4 class="card-title">{{ siteinfo.description }}</h4>
         </div>
     </div>
-    <div class="card m-4">
-        <div class="card-body">
-            <figure class="text-center">
+    <div style="height: 40vh" class="col test bg-dark container-fluid">
+        <div class="align-self-center">
+            <figure class="mx-auto text-center">
+                <h2>Our Mission</h2>
                 <blockquote class="blockquote">
-                    <p class="card-text">{{ siteinfo.mission_statement }}</p>
+                    <p class="text-center card-text">{{ siteinfo.mission_statement }}</p>
                 </blockquote>
-                <figcaption class="blockquote-footer">Our Mission</figcaption>
             </figure>
         </div>
     </div>
-</div>
-<div class="container-fluid m-4 bg-body-tertiary rounded d-flex align-items-center justify-content-center">
-    <div class="card text-center border-danger mb-3" style="max-width: 22rem;">
-        <h5 class="card-header">Emergency Dispatch</h5>
-        <div class="card-body">
-            <h5 class="card-title">For Immediate Dispatch of K9 Teams</h5>
-            <p class="card-text">Please Call: {{ siteinfo.dispatch_number }}</p>
-            <a href="tel:18008185645" class="btn btn-danger">Call us!</a>
+    <div class="container-fluid m-4 bg-body-tertiary rounded d-flex align-items-center justify-content-center">
+        <div class="card text-center border-danger mb-3" style="max-width: 22rem;">
+            <h5 class="card-header">Emergency Dispatch</h5>
+            <div class="card-body">
+                <h5 class="card-title">For Immediate Dispatch of K9 Teams</h5>
+                <p class="card-text">Please Call: {{ siteinfo.dispatch_number }}</p>
+                <a href="tel:18008185645" class="btn btn-danger">Call us!</a>
+            </div>
         </div>
     </div>
-</div>
-<div class="shadow-lg p-4 bg-dark  row flex-fill justify-content-center">
-    <div class="row">
-        <div class="col-6 align-self-center">
-            <img src="{{ siteinfo.alternate_logo }}"
-                 alt="MISAR Logo"
-                 class="img-fluid rounded"
-                 style="max-height: 300px">
+    <div style="height: 75vh"
+         class="shadow-lg p-4 bg-dark  row flex-fill justify-content-center gx-5">
+        <div class="row">
+            <div class="col align-self-center">
+                <img src="{{ siteinfo.alternate_logo }}"
+                     alt="MISAR Logo"
+                     class="img-fluid rounded"
+                     style="max-height: 600px">
+            </div>
+            <div class="col align-self-center">
+                <h2>
+                    <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a>
+                </h2>
+            </div>
         </div>
-        <div class="col-6 align-self-center">
-            <h3 class="text-white">
-                <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a>
-            </h3>
-        </div>
+        <style>
+  .test {
+    color: white;
+  }
+        </style>
     </div>
-</div>
 {% endblock %}
-</div>
