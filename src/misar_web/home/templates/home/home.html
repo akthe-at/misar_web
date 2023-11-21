@@ -1,36 +1,54 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block content %}
-    <div style="max-height: 45vh;
+    <div style="height: 50vh;
                 overflow: hidden"
-         class="container-fluid rounded text-center">
+         class="col px-0 bg-dark container-fluid">
         <img src="{{ siteinfo.home_page_image }}"
              alt="Gratzi"
-             class="img-fluid rounded text-center`">
-    </div>
-    <div class="card m-4">
-        <div class="card-body">
-            <h4 class="card-title">{{ siteinfo.description }}</h4>
+             class="img-fluid rounded"
+             style="width: 100%;
+                    object-fit: cover">
+        <div style="position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    z-index: 1;
+                    color: white;
+                    text-align: center">
+            <h2>Our Team</h2>
+            <blockquote class="blockquote">
+                <p class="mx-5 text-center ">{{ siteinfo.description }}</p>
+            </blockquote>
         </div>
     </div>
-    <div style="height: 40vh" class="col test bg-dark container-fluid">
-        <div class="align-self-center">
-            <figure class="mx-auto text-center">
-                <h2>Our Mission</h2>
-                <blockquote class="blockquote">
-                    <p class="text-center card-text">{{ siteinfo.mission_statement }}</p>
-                </blockquote>
-            </figure>
+    <div class="col test container-fluid d-flex align-items-center justify-content-center"
+         style="height: 30vh;
+                background-color: #55595A">
+        <div class="text-center">
+            <h2 class="pb-3">Our Mission</h2>
+            <blockquote class="blockquote">
+                <p class="text-center mx-5">{{ siteinfo.mission_statement }}</p>
+            </blockquote>
         </div>
     </div>
-    <div class="container-fluid m-4 bg-body-tertiary rounded d-flex align-items-center justify-content-center">
-        <div class="card text-center border-danger mb-3" style="max-width: 22rem;">
-            <h5 class="card-header">Emergency Dispatch</h5>
-            <div class="card-body">
-                <h5 class="card-title">For Immediate Dispatch of K9 Teams</h5>
-                <p class="card-text">Please Call: {{ siteinfo.dispatch_number }}</p>
-                <a href="tel:18008185645" class="btn btn-danger">Call us!</a>
-            </div>
+    <div style="height: 30vh"
+         class="col test bg-dark container-fluid d-flex align-items-center justify-content-center">
+        <div class="text-center">
+            <h2 class="pb-3">Emergency Dispatch</h2>
+            <h4 class="pb-2">For Immediate Dispatch of K9 Teams:</h4>
+            <a href="tel:18008185645"
+               style="background-color: #1DBF04;
+                      border-color: transparent"
+               class="btn btn-danger">Please Call {{ siteinfo.dispatch_number }}</a>
+        </div>
+    </div>
+    <div class="container-fluid" style="height: 30vh; background-color#55595A">
+        <div class="col test align-items-center justify-content-center"
+            <h2 class="pb-3">DONATE AREA HOLDER</h2>
+        </div>
+        <div class="col align-items-center justify-content-center">
+            <h2 class="pb-3">GET INVOLVED AREA HOLDER</h2>
         </div>
     </div>
     <div style="height: 75vh"
