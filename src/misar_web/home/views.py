@@ -6,5 +6,7 @@ from .models import SiteInfo
 
 def home(request: HttpRequest):
     site_info = SiteInfo.objects.get(id=1)
-    return render(request, "home/home.html", {"siteinfo": site_info})
+    return render(
+        request, template_name="home/home.html", context={"siteinfo": site_info}
+    )
 
