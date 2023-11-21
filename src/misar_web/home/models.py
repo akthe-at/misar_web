@@ -10,6 +10,7 @@ class SiteInfo(models.Model):
     logo = models.ImageField(upload_to="home/files/images")
     alternate_logo = models.ImageField(upload_to="home/files/images")
     home_page_image = models.ImageField(upload_to="home/files/images")
+    donation_link = models.CharField(max_length=250)
 
     def __str__(self):
         return self.site_name
