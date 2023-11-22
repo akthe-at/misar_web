@@ -39,8 +39,18 @@
             </blockquote>
         </div>
     </div>
-    <div style="height: 30vh"
-         class="col test bg-dark container-fluid d-flex align-items-center justify-content-center">
+    <div class="col test container-fluid d-flex align-items-center justify-content-center bg-dark"
+         style="height: 30vh">
+        <div class="text-center">
+            <h2 class="pb-3">Our Mission</h2>
+            <blockquote class="blockquote">
+                <p class="text-center mx-5">{{ siteinfo.mission_statement }}</p>
+            </blockquote>
+        </div>
+    </div>
+    <div style="height: 30vh;
+                background-color: #55595A"
+         class="col test container-fluid d-flex align-items-center justify-content-center">
         <div class="text-center">
             <h2 class="pb-3">Emergency Dispatch</h2>
             <h4 class="pb-2">For Immediate Dispatch of K9 Teams:</h4>
@@ -50,36 +60,31 @@
                class="btn btn-danger btn-lg">Please Call {{ siteinfo.dispatch_number }}</a>
         </div>
     </div>
-    <div class="shadow-lg p04 bg0dark row flex-fill justify-content-center gx-5"
-         style="height: 30vh;
-                background-color: #55595A">
-        <div class="row">
-            <div class="col d-flex mx-3 align-items-center">
+    <div class="container-fluid text-center bg-dark">
+        <div class="row row-cols-2 align-items-center">
+            <div class="col p-2 me-auto">
+                <img src="{{ siteinfo.alternate_logo }}"
+                     alt="MISAR Logo"
+                     class="img-fluid rounded"
+                     style="max-height: 50vh">
+            </div>
+            <div class="col p-2 me-auto">
+                <h2 class="test">
+                    <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a>
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid text-center" style="background-color: #55595A">
+        <div class="row row-cols-2 align-items-center" style="height: 30vh;">
+            <div class="col p-2 me-auto">
                 <a href="{{ siteinfo.donation_link }}"
                    style="background-color: #1DBF04;
                           border-color: transparent"
                    class="btn btn-danger btn-md">Donate to MISAR</a>
             </div>
-            <div class="col d-flex mx-3 align-items-center">
-                <h2 class="pb-3">GET INVOLVED AREA HOLDER</h2>
-            </div>
-        </div>
-    </div>
-    <div style="height: 60vh"
-         class="shadow-lg p-4 bg-dark row flex-fill justify-content-center gx-5">
-        <div class="row">
-            <div class="col d-flex mx-3 align-items-center">
-                <img src="{{ siteinfo.alternate_logo }}"
-                     alt="MISAR Logo"
-                     class="img-fluid rounded"
-                     style="height: 100%;
-                            width: 100%;
-                            object-fit: contain">
-            </div>
-            <div class="col mx-3 d-flex align-items-center">
-                <h2 class="test">
-                    <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a>
-                </h2>
+            <div class="col p-2 me-auto">
+                <h2 class="test">GET INVOLVED AREA HOLDER</h2>
             </div>
         </div>
     </div>
