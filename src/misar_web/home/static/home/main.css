@@ -1,0 +1,35 @@
+.home {
+  color: white;
+}
+
+.home-img-container {
+  height: 50vh;
+  overflow: hidden;
+}
+
+.home-img {
+  object-fit: cover;
+}
+
+.home-container {
+  height: 30vh;
+}
+
+.home-btn {
+  background-color: #1dbf04;
+  border-color: transparent;
+}
+
+.home-container-lt {
+  height: 30vh;
+  background-color: #55595a;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #1dbf04;
+  font-size: 22px;
+}
+
+.navbar-brand {
+  color: white;
+}
