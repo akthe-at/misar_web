@@ -1,23 +1,20 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block content %}
-    <div style="height: 50vh;
-                overflow: hidden"
-         class="card text-center bg-dark">
+    <div class="card home-img-container d-flex text-center bg-dark">
         <img src="{{ siteinfo.home_page_image }}"
              alt="Gratzi"
-             class="card-img"
-             style="object-fit: cover">
-        <div class="card-img-overlay text-center">
-            <h2 class="card-title test">Our Team</h2>
-            <blockquote class="blockquote test"
-                <p class="card-text ">{{ siteinfo.description }}</p>
-            </blockquote>
+             class="home-img card-img">
+        <div class="card-img-overlay d-flex justify-content-center align-items-center">
+            <div class="align-self-center mx-auto">
+                <h2 class="card-title text-center home">Our Team</h2>
+                <blockquote class="blockquote home"
+                    <p class="card-text ">{{ siteinfo.description }}</p>
+                </blockquote>
+            </div>
         </div>
     </div>
-    <div class="col test container-fluid d-flex align-items-center justify-content-center"
-         style="height: 30vh;
-                background-color: #55595A">
+    <div class="col home home-container-lt container-fluid d-flex align-items-center justify-content-center">
         <div class="text-center">
             <h2 class="pb-3">Our Mission</h2>
             <blockquote class="blockquote">
@@ -25,8 +22,7 @@
             </blockquote>
         </div>
     </div>
-    <div class="col test container-fluid d-flex align-items-center justify-content-center bg-dark"
-         style="height: 30vh">
+    <div class="col home-container home container-fluid d-flex align-items-center justify-content-center bg-dark">
         <div class="text-center">
             <h2 class="pb-3">Our Mission</h2>
             <blockquote class="blockquote">
@@ -36,14 +32,11 @@
     </div>
     <div style="height: 30vh;
                 background-color: #55595A"
-         class="col test container-fluid d-flex align-items-center justify-content-center">
+         class="col home container-fluid d-flex align-items-center justify-content-center">
         <div class="text-center">
             <h2 class="pb-3">Emergency Dispatch</h2>
             <h4 class="pb-2">For Immediate Dispatch of K9 Teams:</h4>
-            <a href="tel:18008185645"
-               style="background-color: #1DBF04;
-                      border-color: transparent"
-               class="btn btn-danger btn-lg">Please Call {{ siteinfo.dispatch_number }}</a>
+            <a href="tel:18008185645" class="btn btn-danger home-btn btn-lg">Please Call {{ siteinfo.dispatch_number }}</a>
         </div>
     </div>
     <div class="container-fluid text-center bg-dark">
@@ -55,9 +48,17 @@
                      style="max-height: 50vh">
             </div>
             <div class="col p-2 me-auto">
-                <h2 class="test">
+                <h2 class="home">
                     <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a>
                 </h2>
+                <div class="fb-like"
+                     data-href="https://www.facebook.com/profile.php?id=100064673201959"
+                     data-width="150"
+                     data-layout=""
+                     data-colorscheme="dark"
+                     data-action=""
+                     data-size=""
+                     data-share="false"></div>
             </div>
         </div>
     </div>
@@ -65,18 +66,11 @@
         <div class="row row-cols-2 align-items-center" style="height: 30vh;">
             <div class="col p-2 me-auto">
                 <a href="{{ siteinfo.donation_link }}"
-                   style="background-color: #1DBF04;
-                          border-color: transparent"
-                   class="btn btn-danger btn-md">Donate to MISAR</a>
+                   class="btn btn-danger btn-md home-btn">Donate to MISAR</a>
             </div>
             <div class="col p-2 me-auto">
-                <h2 class="test">GET INVOLVED AREA HOLDER</h2>
+                <h2 class="home">GET INVOLVED AREA HOLDER</h2>
             </div>
         </div>
     </div>
-    <style>
-    .test {
-        color: white;
-    }
-    </style>
 {% endblock %}
