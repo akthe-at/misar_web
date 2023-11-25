@@ -12,6 +12,9 @@ class SiteInfo(models.Model):
     home_page_image = models.ImageField(upload_to="home/files/images")
     donation_link = models.CharField(max_length=250)
 
+    class Meta:
+        verbose_name_plural = "information"
+
     def __str__(self):
         return self.site_name
 
