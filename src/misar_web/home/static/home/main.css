@@ -5,6 +5,7 @@
 .home-img-container {
   height: 50vh;
   overflow: hidden;
+  border-radius: 0;
 }
 
 .trans-img {
@@ -13,6 +14,7 @@
 }
 
 .home-img {
+  border-radius: 0;
   object-fit: cover;
 }
 
