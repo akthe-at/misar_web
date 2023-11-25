@@ -1,14 +1,25 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block content %}
-    <h1>Register</h1>
-    <br />
-    <br />
-    <div class"form-group">
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button class="btn btn-secondary">Register</button>
-        </form>
+  <div class="justify-content-center container-fluid text-center">
+    <h1 class="mt-3">Register</h1>
+    <label class="mb-5">Please fill in this form to create an account. Intended for current MISAR Members, not potential applicants.</label>
+  </div>
+    <div class="container-fluid row justify-content-center">
+      <div class="col-md-6">
+          <div class="container-fluid">
+              <div class="row justify-content-center">
+                  <div class="col-md-8">
+                      <form method="POST">
+                          {% csrf_token %}
+                          {{ form.as_p }}
+                          <button class="btn btn-secondary">Register</button>
+                      </form>
+                      <br />
+                      <label>Already have an account? <a href="{% url 'login' %}">Login</a></label>
+                  </div>
+              </div>
+          </div>
+      </div>
     </div>
 {% endblock %}
