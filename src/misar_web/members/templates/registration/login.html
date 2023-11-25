@@ -1,20 +1,23 @@
 {% extends 'home/base.html' %}
+{% load static %}
 {% block content %}
-  <div class="text-center container-fluid row justify-content-center bg-body-secondary">
-    <div class="col-md-6">
-      <h1>MISAR Membership Login</h1>
-      <br />
-      <br />
-    </div>
-    <div class="container-fluid row justify-content-center bg-body-secondary">
-      <div class"form-group">
-          <form method="POST">
-              {% csrf_token %}
-              {{ form.as_p }}
-              <button class="btn btn-secondary">Login</button>
-          </form>
-        <br />
-        <label>Don't have an account? <a href="{% url 'register' %}">Register</a></label>
-      </div>
-    </div>
-{% endblock %}
+    <div class="text-center container-fluid row justify-content-center bg-body-secondary">
+        <div class="col-md-6">
+            <h1>MISAR Membership Login</h1>
+            <br />
+            <br />
+        </div>
+        <div class="container-fluid row justify-content-center bg-body-secondary">
+            <div class"form-group">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-secondary">Login</button>
+                </form>
+                <br />
+                <label>
+                    Don't have an account? <a href="{% url 'register' %}">Register</a>
+                </label>
+            </div>
+        </div>
+    {% endblock %}
