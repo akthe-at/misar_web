@@ -1,10 +1,10 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block content %}
-    <div class="border-0 card home-img-container d-flex text-center bg-dark">
+    <div class="border-0 card home-img-container text-center bg-dark">
         <img src="{{ siteinfo.home_page_image }}"
-             alt="Gratzi"
-             class="home-img border-0 card-img">
+             alt="GPS Background"
+             class="border-0 card-img home-img">
         <div class="card-img-overlay d-flex justify-content-center align-items-center">
             <div style="background-color: rgb(105, 100, 100, 0.3)"
                  class="rounded align-self-center mx-auto">
@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="container-fluid text-center bg-dark">
-        <div class="row row-cols-2 align-items-center">
+        <div class="row justify-content-around align-items-center">
             <div class="col p-2 me-auto">
                 <img src="{{ siteinfo.alternate_logo }}"
                      alt="MISAR Logo"

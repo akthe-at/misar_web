@@ -15,6 +15,7 @@
 
 .home-img {
   border-radius: 0;
+  height: 50vh;
   object-fit: cover;
 }
 
