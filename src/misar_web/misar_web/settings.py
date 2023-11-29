@@ -40,6 +40,19 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "localflavor",
+    "tailwind",
+    "theme",
+    "django_browser_reload",
+    "crispy_forms",
+    "crispy_tailwind",
+]
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"
+TAILWIND_APP_NAME = "theme"
+
+NPM_BIN_PATH = "C:\\Users\\ARK010\\node-v20.8.1-win-x64\\npm.cmd"
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 MIDDLEWARE = [
@@ -50,6 +63,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = "misar_web.urls"
@@ -121,9 +135,11 @@ STATIC_ROOT = "static/"
 STATIC_URL = "static/"
 MEDIA_ROOT = ""
 MEDIA_URL = ""
-LOGIN_REDIRECT_URL = "home"
+LOGIN_URL = ""
+LOGIN_REDIRECT_URL = "../../members/member_home/"
 LOGOUT_REDIRECT_URL = "home"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+

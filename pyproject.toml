@@ -2,17 +2,20 @@
 name = ""
 version = ""
 description = ""
-authors = [
-    {name = "Adam K.", email = "arkelly111@gmail.com"},
-]
+authors = [{ name = "Adam K.", email = "arkelly111@gmail.com" }]
 dependencies = [
     "django>=4.2.7",
     "pillow>=10.1.0",
     "django-stubs>=4.2.6",
     "django-allauth>=0.58.2",
     "django-localflavor>=4.0",
+    "django-filer>=3.1.1",
+    "django-browser-reload>=1.12.1",
+    "crispy-tailwind>=0.5.0",
 ]
 requires-python = ">=3.12"
 readme = "README.md"
-license = {text = "MIT"}
+license = { text = "MIT" }
 
+[tool.pdm.dev-dependencies]
+dev = ["django-tailwind>=3.6.0"]

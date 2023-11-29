@@ -10,3 +10,7 @@ def home(request: HttpRequest):
         request, template_name="home/home.html", context={"siteinfo": site_info}
     )
 
+
+def donate(request: HttpRequest):
+    return render(request, template_name="home/donate.html", context={"donate": donate})
+

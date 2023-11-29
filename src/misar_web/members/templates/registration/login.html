@@ -1,19 +1,21 @@
 {% extends 'home/base.html' %}
+{% load tailwind_filters %}
 {% load static %}
 {% block content %}
-    <div class="text-center d-flex row justify-content-center bg-secondary align-items-center text-white">
-        <div style="height: 20vh"
-             class="row justify-content-center align-items-center">
+    <div class="text-center text-white">
+        <div>
             <h1>MISAR Member Page Login</h1>
         </div>
     </div>
-    <div class="d-flex bg-dark text-white row justify-content-center">
-        <div class"form-group">
-            <form method="POST">
+    <div>
+        <form class="text-white max-w-sm mx-auto" method="POST">
+            <div class="text-formcontrol mb-5 align-middle">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button class="btn btn-secondary">Login</button>
-            </form>
+                {{ form|crispy }}
+                <button class="">Login</button>
+            </div>
+        </form>
+        <div class="align-middle text-center text-white">
             <label>
                 Don't have an account? <a href="{% url 'register' %}">Register</a>
             </label>
