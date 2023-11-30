@@ -2,22 +2,27 @@
 {% load tailwind_filters %}
 {% load static %}
 {% block content %}
-    <div class="text-center text-white">
+    <div class="p-8 text-center text-white">
         <div>
-            <h1>MISAR Member Page Login</h1>
+            <h2 class="text-2xl">MISAR Member Page Login</h2>
         </div>
     </div>
     <div>
-        <form class="text-white max-w-sm mx-auto" method="POST">
-            <div class="text-formcontrol mb-5 align-middle">
+        <form class="max-w-sm mx-auto text-white" method="POST">
+            <div class="mb-5 align-middle text-formcontrol cursor-text">
                 {% csrf_token %}
                 {{ form|crispy }}
-                <button class="">Login</button>
+                <div class="container mx-0 flex min-w-full flex-col items-center px-10 py-10">
+                    <button class="flex flex-col items-center px-4 py-2 font-bold text-center rounded bg-misargreen hover:bg-white hover:text-black w-44">
+                        Login
+                    </button>
+                </div>
             </div>
         </form>
-        <div class="align-middle text-center text-white">
+        <div class="text-center text-white align-middle">
             <label>
-                Don't have an account? <a href="{% url 'register' %}">Register</a>
+                Don't have an account? <a class="text-misargreen hover:text-red-600"
+    href="{% url 'register' %}">Register</a>
             </label>
         </div>
     </div>

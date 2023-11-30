@@ -1,64 +1,62 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block content %}
-    <!-- <section class="overlay flex"> -->
     <div>
-        <div class="flex items-center justify-center h-72 w-full bg-cover text-center bg-center"
+        <div class="flex items-center justify-center w-full text-center bg-fixed bg-bottom bg-cover h-72"
              style="background-image: url({{ siteinfo.home_page_image }})">
-            <div class="absolute h-64 flex flex-col items-center justify-center background-blend-overlay"
-                 style="background-color: rgba(0, 0, 0, 0.6)">
-                <h2 class="text-white text-4xl mb-2">Our Team</h2>
-                <p class="text-white text-xl sm:mx-4 md:mx-8 lg:mx-16 xl:mx-32">{{ siteinfo.description }}</p>
+            <div class="absolute flex flex-col items-center justify-center h-64 background-blend-overlay">
+                <h2 class="mb-2 text-4xl text-white">Our Team</h2>
+                <p class="text-xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64">{{ siteinfo.description }}</p>
             </div>
         </div>
-        <div class="flex items-center justify-center h-72 w-full text-center bg-misargray">
+        <div class="flex items-center justify-center w-full text-center h-72 bg-stone-900">
             <div class="text-center">
-                <h2 class="pb-3 text-white text-4xl">Our Mission</h2>
-                <p class="text-white text-xl sm:mx-4 md:mx-8 lg:mx-16 xl:mx-32">{{ siteinfo.mission_statement }}</p>
+                <h2 class="pb-3 text-4xl text-white">Our Mission</h2>
+                <p class="text-xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64">{{ siteinfo.mission_statement }}</p>
             </div>
         </div>
-        <!--
-<div style="height: 30vh; --> <!--                 background-color: #55595A" -->
-<!--          class="col home container-fluid d-flex align-items-center justify-content-center"> -->
-<!--         <h2 class="pb-3">Emergency Dispatch</h2> -->
-<!--         <h4 class="pb-2">For Immediate Dispatch of K9 Teams:</h4> -->
-<!--         <a href="tel:18008185645" class="btn btn-danger home-btn btn-lg">Please Call {{ siteinfo.dispatch_number }}</a> -->
-<!--     </div> -->
-<!-- </div> -->
-<!-- <div class="container-fluid text-center bg-dark"> -->
-<!--     <div class="row justify-content-around align-items-center"> -->
-<!--         <div class="col p-2 me-auto"> -->
-<!--             <img src="{{ siteinfo.alternate_logo }}" -->
-<!--                  alt="MISAR Logo" -->
-<!--                  class="img-fluid rounded" -->
-<!--                  style="max-height: 50vh"> -->
-<!--         </div> -->
-<!--         <div class="col p-2 me-auto"> -->
-<!--             <h2 class="home"> -->
-<!--                 <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a> -->
-<!--             </h2> -->
-<!--             <div class="fb-like" -->
-<!--                  data-href="https://www.facebook.com/profile.php?id=100064673201959" -->
-<!--                  data-width="150" -->
-<!--                  data-layout="" -->
-<!--                  data-colorscheme="dark" -->
-<!--                  data-action="" -->
-<!--                  data-size="" -->
-<!--                  data-share="false"></div> -->
-<!--         </div> -->
-<!--     </div> -->
-<!-- </div> -->
-<!-- <div class="container-fluid text-center" style="background-color: #55595A"> -->
-<!--     <div class="row row-cols-2 align-items-center" style="height: 40vh;"> -->
-<!--         <div class="col p-2 me-auto"> -->
-<!--             <h2 class="home">Support Michigan Search and Rescue</h2> -->
-<!--             <a href="{{ siteinfo.donation_link }}" -->
-<!--                class="btn btn-danger btn-md home-btn">Donate to MISAR</a> -->
-<!--         </div> -->
-<!--         <div class="home col p-2 me-auto"> -->
-<!--             <h2>Get Involved.</h2> -->
-<!--             <a href="#" class="btn btn-primary btn-md home-btn">Click Here to Learn More</a> -->
-<!--         </div> -->
-<!--     </div> -->
-</div>
-{% endblock %}
+        <div class="flex items-center justify-center w-full text-center h-72 bg-neutral-700">
+            <div class="text-center col">
+                <h2 class="pb-3 text-4xl text-white">Emergency Dispatch</h2>
+                <h4 class="mb-3 text-xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64">For Immediate Dispatch of K9 Teams:</h4>
+                <a href="tel:18008185645"
+                    <button class="px-4 py-2 font-bold text-white rounded bg-misargreen hover:bg-red-600">
+                        Please Call {{ siteinfo.dispatch_number }}
+                    </a>
+                </div>
+            </div>
+            <div class="flex items-center justify-center w-full text-center h-72 bg-stone-900">
+                <div class="items-center flex-initial w-auto h-full mx-8 justify-self-center">
+                    <img src="{{ siteinfo.alternate_logo }}"
+                         alt="MISAR LOGO"
+                         class="w-full h-full justify-self-center">
+                </div>
+                <div class="flex flex-col justify-center flex-initial w-auto h-full mx-8 text-center text-white">
+                    <h2 class="text-2xl text-white hover:text-blue-400">
+                        <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a>
+                    </h2>
+                    <div class="fb-like"
+                         data-href="https://www.facebook.com/profile.php?id=100064673201959"
+                         data-width="150"
+                         data-layout=""
+                         data-colorscheme="dark"
+                         data-action=""
+                         data-size=""
+                         data-share="false"></div>
+                </div>
+            </div>
+            <div class="flex items-center justify-center w-full text-center h-72 bg-neutral-700">
+                <div class="flex flex-col justify-center flex-initial w-auto h-full mx-auto">
+                    <h2 class="pb-3 text-2xl text-white">Support Michigan Search and Rescue</h2>
+                    <a href="#"
+                        <button class="px-4 py-2 font-bold text-white rounded bg-misargreen hover:bg-white hover:text-black">
+                        Donate to MISAR</a>
+                    </div>
+                    <div class="flex flex-col justify-center flex-initial w-auto h-full mx-auto text-center text-white">
+                        <h2 class="pb-3 text-2xl text-white">Get Involved.</h2>
+                        <a href="#"
+                            <button class="px-4 py-2 font-bold rounded bg-misargreen hover:bg-white hover:text-black">
+                            Click Here to Learn More</a>
+                        </div>
+                    </div>
+                {% endblock %}
