@@ -1,10 +1,51 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block content %}
-<h1> This is a donation Page </h1>
-Talk about how people can donate...
-<ul>
-  <li>Money</li>
-  <li>Time (Hiders)</li>
-  <li>Tissue Donations</li>
-  {% endblock %}
+    <div>
+        <div class="text-white text-center m-3">
+            <h1 class="font-semibold text-3xl">How to Help?</h1>
+            <h2 class="font-medium text-xl">3 Ways to Support Michigan Search and Rescue</h2>
+        </div>
+        <p class="text-white text-center justify-items-center mx-16"></p>
+        <div class="flex justify-center items-center mt-5">
+            <a href="#"
+               class="block max-w-7xl p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <h1 class="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Monetary Donations</h1>
+                <p class="font-normal text-gray-700 dark:text-gray-400">
+                    <ul class="list-disc">
+                        <li>Michigan Search and Rescue is a 501(c)3 nonprofit corporation.</li>
+                        <li>Members of MISAR are not paid or compensated for their services in any form.</li>
+                        <li>
+                            The organization operates solely on donations received from the public, grants, and through grass-roots fundraising efforts.
+                        </li>
+                        <li>
+                            Members are expected to pay for and maintain their own equipment with their own money on top of the costs associated with traveling to searches or training.
+                        </li>
+                        <li>
+                            Additionally, canine handlers on the team must provide and care for their canine with their own money. The canines are not property of the organization unlike many law enforcement canines.
+                        </li>
+                        <li>
+                            If you would like to make a donation to Michigan Search and Rescue, please click the "Donate" button below this paragraph, or contact us through our email at Michigansar@gmail.com
+                        </li>
+                    </ul>
+                </p>
+            </a>
+        </div>
+        <div class="flex justify-center items-center mt-5">
+            <a href="#"
+               class="block max-w-7xl p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <h1 class="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Donate your Time</h1>
+                <h2>Support Michigan Search and Rescue</h2>
+                <p class="font-normal text-gray-700 dark:text-gray-400">Come Hide for Us! Fill This Out!!!!!</p>
+            </a>
+        </div>
+        <div class="flex justify-center items-center mt-5">
+            <a href="#"
+               class="block max-w-7xl p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <h1 class="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Donate your Tissue</h1>
+                <h2>Support Michigan Search and Rescue</h2>
+                <p class="font-normal text-gray-700 dark:text-gray-400">Talk About Tissue Donations Here.</p>
+            </a>
+        </div>
+    </div>
+{% endblock %}
