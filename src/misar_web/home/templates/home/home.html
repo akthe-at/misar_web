@@ -2,61 +2,62 @@
 {% load static %}
 {% block content %}
     <div>
-        <div class="flex items-center justify-center w-full text-center bg-fixed bg-bottom bg-cover h-72"
+        <div class="flex items-center justify-center w-full text-center bg-fixed bg-bottom bg-cover h-96"
              style="background-image: url({{ siteinfo.home_page_image }})">
             <div class="absolute flex flex-col items-center justify-center h-64 background-blend-overlay">
-                <h2 class="mb-2 text-4xl text-white">Our Team</h2>
-                <p class="text-xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64">{{ siteinfo.description }}</p>
+                <h2 class="mb-2 text-5xl text-white">Our Team</h2>
+                <p class="text-2xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64">{{ siteinfo.description }}</p>
             </div>
         </div>
-        <div class="flex items-center justify-center w-full text-center h-72 bg-stone-900">
+        <div class="flex items-center justify-center w-full text-center h-80 bg-neutral-900">
             <div class="text-center">
-                <h2 class="pb-3 text-4xl text-white">Our Mission</h2>
-                <p class="text-xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64">{{ siteinfo.mission_statement }}</p>
+                <h2 class="pb-3 text-5xl text-white">Our Mission</h2>
+                <p class="text-2xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64">{{ siteinfo.mission_statement }}</p>
             </div>
         </div>
-        <div class="flex items-center justify-center w-full text-center h-72 bg-neutral-700">
+        <div class="flex items-center justify-center w-full text-center h-80 bg-neutral-700">
             <div class="text-center col">
-                <h2 class="pb-3 text-4xl text-white">Emergency Dispatch</h2>
-                <h4 class="mb-3 text-xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64">For Immediate Dispatch of K9 Teams:</h4>
+                <h2 class="pb-3 text-5xl text-white">Emergency Dispatch</h2>
+                <h4 class="mb-3 text-2xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64">For Immediate Dispatch of K9 Teams:</h4>
                 <a href="tel:18008185645"
-                    <button class="px-4 py-2 font-bold text-white rounded bg-misargreen hover:bg-red-600">
+                    <button class="px-4 py-2 font-bold text-white rounded bg-misargreen hover:bg-red-700">
                         Please Call {{ siteinfo.dispatch_number }}
                     </a>
                 </div>
             </div>
-            <div class="flex items-center justify-center w-full text-center h-72 bg-stone-900">
-                <div class="items-center flex-initial w-auto h-3/4 mx-8 justify-self-center">
-                    <img src="{{ siteinfo.alternate_logo }}"
-                         alt="MISAR LOGO"
-                         class="w-full h-full justify-self-center">
-                </div>
-                <div class="flex flex-col justify-center flex-initial w-auto h-full mx-8 text-center text-white">
-                    <h2 class="text-2xl text-white hover:text-blue-400">
-                        <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a>
-                    </h2>
-                    <div class="fb-like"
-                         data-href="https://www.facebook.com/profile.php?id=100064673201959"
-                         data-width="150"
-                         data-layout=""
-                         data-colorscheme="dark"
-                         data-action=""
-                         data-size=""
-                         data-share="false"></div>
-                </div>
+        </div>
+        <div class="flex flex-col items-center justify-center w-full text-center h-72 bg-neutral-600">
+            <h2 class="pb-3 text-5xl text-white">Get Involved</h2>
+            <div class="flex">
+                <a href="#" class="mx-2">
+                    <button class="flex items-center px-4 py-2 font-bold text-white rounded bg-misargreen hover:bg-white hover:text-black">
+                    Donate</a>
+                </button>
+                <a href="#" class="mx-2">
+                    <button class="px-4 py-2 font-bold text-center text-white rounded bg-misargreen hover:bg-white hover:text-black">
+                    Volunteer</a>
+                </button>
             </div>
-            <div class="flex items-center justify-center w-full text-center h-72 bg-neutral-700">
-                <div class="flex flex-col justify-center flex-initial w-auto h-full mx-auto">
-                    <h2 class="pb-3 text-2xl text-white">Support Michigan Search and Rescue</h2>
-                    <a href="#"
-                        <button class="px-4 py-2 font-bold text-white rounded bg-misargreen hover:bg-white hover:text-black">
-                        Donate to MISAR</a>
-                    </div>
-                    <div class="flex flex-col justify-center flex-initial w-auto h-full mx-auto text-center text-white">
-                        <h2 class="pb-3 text-2xl text-white">Get Involved.</h2>
-                        <a href="#"
-                            <button class="px-4 py-2 font-bold rounded bg-misargreen hover:bg-white hover:text-black">
-                            Click Here to Learn More</a>
-                        </div>
-                    </div>
-                {% endblock %}
+        </div>
+        <div class="flex items-center justify-center w-full text-center bg-fixed bg-top bg-cover h-96 bg-neutral-900"
+             style="background-image: url({{ siteinfo.home_page_image }})">
+            <div class="flex flex-col justify-center flex-initial w-auto h-full mx-8 text-center text-white">
+                <h2 class="text-4xl text-white hover:text-blue-400">
+                    <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a>
+                </h2>
+                <div class="fb-like mt-4"
+                     data-href="https://www.facebook.com/profile.php?id=100064673201959"
+                     data-width="150"
+                     data-layout=""
+                     data-colorscheme="dark"
+                     data-action=""
+                     data-size=""
+                     data-share="false"></div>
+            </div>
+            <div class="items-center flex-initial w-auto mx-8 h-3/4 justify-self-end">
+                <img src="{{ siteinfo.alternate_logo }}"
+                     alt="MISAR LOGO"
+                     class="w-full h-full justify-self-center">
+            </div>
+        </div>
+    {% endblock %}

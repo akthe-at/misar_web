@@ -23,3 +23,9 @@ class Member(AbstractUser):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+
+class MemberFile(models.Model):
+    """A class to represet user-uploaded files"""
+
+    file_object = models.FileField(upload_to="members/member_files/")
+

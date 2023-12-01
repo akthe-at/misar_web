@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_tailwind",
 ]
+
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
 TAILWIND_APP_NAME = "theme"
@@ -71,7 +72,7 @@ ROOT_URLCONF = "misar_web.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -131,10 +132,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-STATIC_ROOT = "static/"
 STATIC_URL = "static/"
-MEDIA_ROOT = ""
+# STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = "static/"
 MEDIA_URL = ""
+MEDIA_ROOT = ""
 LOGIN_URL = ""
 LOGIN_REDIRECT_URL = "../../members/member_home/"
 LOGOUT_REDIRECT_URL = "home"
