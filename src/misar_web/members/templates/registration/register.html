@@ -1,5 +1,6 @@
 {% extends 'home/base.html' %}
 {% load tailwind_filters %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
     <div class="justify-content-center container-fluid text-center bg-secondary text-white">
@@ -8,20 +9,22 @@
             Please fill in this form to create an account. Intended for current MISAR Members, not potential applicants.
         </label>
     </div>
-    <div>
-        <form class="text-white max-w-sm mx-auto" method="POST">
-            <div class="text-formcontrol mb-5 align-middle">
+    <div class="flex text-black">
+        <form class="text-black max-w-sm mx-auto" method="POST">
+            <div class="mb-5 text-black align-middle">
                 {% csrf_token %}
-                {{ form|crispy }}
+                {% crispy form %}
+            </div>
+            <div>
+                <button class="flex justify-center items-center px-4 py-2 w-36 font-bold text-white rounded bg-misargreen hover:bg-white hover:text-black">
+                    Register
+                </button>
+            </div>
+            <div class="align-middle text-center text-white">
+                <label>
+                    Already have an account?   <a href="{% url 'login' %}">Login Here</a>
+                </label>
             </div>
         </form>
-        <div>
-            <button>Register</button>
-        </div>
-        <div class="align-middle text-center text-white">
-            <label>
-                Already have an account?   <a href="{% url 'login' %}">Login Here</a>
-            </label>
-        </div>
     </div>
 {% endblock %}

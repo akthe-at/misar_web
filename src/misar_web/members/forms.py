@@ -1,13 +1,25 @@
 from typing import Any
 from django.contrib.auth.forms import UserCreationForm
 from datetime import datetime
+
+from django.urls import reverse_lazy
 from members.models import Member
 from django import forms
 from localflavor.us.forms import USStateField, USStateSelect, USZipCodeField
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 
 class MemberRegistrationForm(UserCreationForm):
     """MISAR Member Registration Form"""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super(MemberRegistrationForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        # self.helper.form_action = reverse_lazy("member_landing")
+        self.helper.add_input(Submit("submit", "Submit"))
+        self.fields["password1"].widget.attrs["class"] = "form-control"
+        self.fields["password2"].widget.attrs["class"] = "form-control"
 
     username = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
     first_name = forms.CharField(
@@ -42,10 +54,4 @@ class MemberRegistrationForm(UserCreationForm):
             "zip",
             "date_of_birth",
         )
-
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super(MemberRegistrationForm, self).__init__(*args, **kwargs)
-
-        self.fields["password1"].widget.attrs["class"] = "form-control"
-        self.fields["password2"].widget.attrs["class"] = "form-control"
 
