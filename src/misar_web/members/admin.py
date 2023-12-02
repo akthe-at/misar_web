@@ -14,7 +14,6 @@ class CustomUserAdmin(UserAdmin):
                     "phone_number",
                     "address",
                     "city",
-                    "state",
                     "date_of_birth",
                 )
             },

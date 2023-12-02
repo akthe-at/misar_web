@@ -10,20 +10,15 @@
         </label>
     </div>
     <div class="flex text-black">
-        <form class="text-black max-w-sm mx-auto" method="POST">
-            <div class="mb-5 text-black align-middle">
+        <form class="text-white max-w-sm mx-auto" method="POST">
+            <div class="mb-5 text-black align-middle items-center">
                 {% csrf_token %}
                 {% crispy form %}
-            </div>
-            <div>
-                <button class="flex justify-center items-center px-4 py-2 w-36 font-bold text-white rounded bg-misargreen hover:bg-white hover:text-black">
-                    Register
-                </button>
-            </div>
-            <div class="align-middle text-center text-white">
-                <label>
-                    Already have an account?   <a href="{% url 'login' %}">Login Here</a>
-                </label>
+                <div class="flex align-middle text-center text-white">
+                    <label>
+                        Already have an account?   <a href="{% url 'login' %}">Login Here</a>
+                    </label>
+                </div>
             </div>
         </form>
     </div>

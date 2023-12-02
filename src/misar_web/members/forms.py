@@ -16,8 +16,14 @@ class MemberRegistrationForm(UserCreationForm):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super(MemberRegistrationForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        # self.helper.form_action = reverse_lazy("member_landing")
-        self.helper.add_input(Submit("submit", "Submit"))
+        self.helper.form_action = reverse_lazy("member_home")
+        self.helper.add_input(
+            Submit(
+                "submit",
+                "Submit",
+                css_class="flex space-x-2 justify-center items-center px-4 py-2 w-36 font-bold text-white rounded bg-misargreen hover:bg-white hover:text-black",
+            )
+        )
         self.fields["password1"].widget.attrs["class"] = "form-control"
         self.fields["password2"].widget.attrs["class"] = "form-control"
 
@@ -32,7 +38,6 @@ class MemberRegistrationForm(UserCreationForm):
     )
     address = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
     city = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
-    state = USStateField(widget=USStateSelect(attrs={"class": "form-control"}))
     zip = USZipCodeField(widget=forms.NumberInput(attrs={"class": "form-control"}))
     date_of_birth = forms.DateField(
         widget=forms.SelectDateWidget(
@@ -50,7 +55,6 @@ class MemberRegistrationForm(UserCreationForm):
             "phone_number",
             "address",
             "city",
-            "state",
             "zip",
             "date_of_birth",
         )
