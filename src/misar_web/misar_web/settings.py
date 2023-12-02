@@ -137,7 +137,7 @@ STATIC_URL = "static/"
 STATIC_ROOT = "static/"
 MEDIA_URL = ""
 MEDIA_ROOT = ""
-LOGIN_URL = ""
+LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "../../members/member_home/"
 LOGOUT_REDIRECT_URL = "home"
 # Default primary key field type
@@ -145,3 +145,7 @@ LOGOUT_REDIRECT_URL = "home"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
+# django_project/settings.py
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = BASE_DIR / "sent_emails"

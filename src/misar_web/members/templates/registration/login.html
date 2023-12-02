@@ -21,9 +21,12 @@
         </form>
         <div class="text-center text-white align-middle">
             <label>
-                Don't have an account? <a class="text-misargreen hover:text-red-600"
+                Don't have an account? <a class="text-red-700 hover:text-black font-semibold"
     href="{% url 'register' %}">Register</a>
             </label>
+            <p>
+                <a href="{% url 'password_reset' %}">Reset Password</a>
+            </p>
         </div>
     </div>
 {% endblock %}

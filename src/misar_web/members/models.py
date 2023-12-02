@@ -1,11 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from localflavor.us.models import USStateField, USZipCodeField
+from localflavor.us.models import USZipCodeField
 
 
 class Member(AbstractUser):
     """Defines a member of the organization"""
 
+    member_password = models.CharField(
+        ("MISAR Secret Phrase"), max_length=15, blank=False
+    )
     first_name = models.CharField(("first name"), max_length=150, blank=True)
     last_name = models.CharField(("last name"), max_length=150, blank=True)
     email = models.EmailField(("email address"), blank=True)

@@ -5,7 +5,7 @@ from datetime import datetime
 from django.urls import reverse_lazy
 from members.models import Member
 from django import forms
-from localflavor.us.forms import USStateField, USStateSelect, USZipCodeField
+from localflavor.us.forms import USZipCodeField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -15,19 +15,13 @@ class MemberRegistrationForm(UserCreationForm):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super(MemberRegistrationForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.form_action = reverse_lazy("member_home")
-        self.helper.add_input(
-            Submit(
-                "submit",
-                "Submit",
-                css_class="flex space-x-2 justify-center items-center px-4 py-2 w-36 font-bold text-white rounded bg-misargreen hover:bg-white hover:text-black",
-            )
-        )
         self.fields["password1"].widget.attrs["class"] = "form-control"
         self.fields["password2"].widget.attrs["class"] = "form-control"
 
     username = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
+    member_password = forms.CharField(
+        max_length=15, widget=forms.PasswordInput(attrs={"class": "form-control"})
+    )
     first_name = forms.CharField(
         widget=forms.TextInput(attrs={"class": "form-control"})
     )
@@ -46,9 +40,21 @@ class MemberRegistrationForm(UserCreationForm):
         )
     )
 
+    # TODO: This needs to be written to an environmental variable before production
+    def clean_member_password(self):
+        """Checks to see if correct member password used to allow for registration"""
+
+        data = self.cleaned_data["member_password"]
+        if data != "bigfishy":
+            raise forms.ValidationError(
+                "Sorry you must have the secret code to become a MISAR member."
+            )
+        return data
+
     class Meta(UserCreationForm.Meta):
         model = Member
         fields = UserCreationForm.Meta.fields + (
+            "member_password",
             "first_name",
             "last_name",
             "email",
