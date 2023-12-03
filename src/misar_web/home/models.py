@@ -11,10 +11,24 @@ class SiteInfo(models.Model):
     alternate_logo = models.ImageField(upload_to="home/files/images")
     home_page_image = models.ImageField(upload_to="home/files/images")
     donation_link = models.CharField(max_length=250)
+    mailing_address = models.CharField(max_length=250)
+    team_email = models.EmailField(max_length=50)
 
     class Meta:
         verbose_name_plural = "information"
 
     def __str__(self):
         return self.site_name
+
+
+class TeamGoals(models.Model):
+    """A small class for holding the organization's goals"""
+
+    team_goal = models.CharField(max_length=250)
+
+    class Meta:
+        verbose_name_plural = "Team Goals"
+
+    def __str__(self) -> str:
+        return self.team_goal
 
