@@ -2,7 +2,7 @@
 {% load tailwind_filters %}
 {% load static %}
 {% block content %}
-    <div class="p-8 text-center text-white">
+    <div class="p-8 text-center text-stone-800">
         <div>
             <h2 class="text-5xl">Member Login</h2>
         </div>
@@ -19,13 +19,14 @@
                 </div>
             </div>
         </form>
-        <div class="text-center text-white align-middle">
+        <div class="text-center text-stone-800 align-middle">
             <label>
                 Don't have an account? <a class="text-red-700 hover:text-black font-semibold"
     href="{% url 'register' %}">Register</a>
             </label>
             <p>
-                <a href="{% url 'password_reset' %}">Reset Password</a>
+                <a class="text-red-900 hover:text-black"
+                   href="{% url 'password_reset' %}">Reset Password</a>
             </p>
         </div>
     </div>
