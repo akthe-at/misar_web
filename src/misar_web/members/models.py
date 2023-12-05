@@ -27,7 +27,34 @@ class Member(AbstractUser):
 
 
 class MemberFile(models.Model):
-    """A class to represet user-uploaded files"""
+    """A class to represent user-uploaded files"""
 
-    file_object = models.FileField(upload_to="members/member_files/")
+    user = models.ForeignKey(Member, on_delete=models.CASCADE)
+    file = models.FileField(upload_to="members/member_files/", null=False, blank=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f"{self.file}"
+
+    def delete(self, *args, **kwargs):
+        super().delete(self, *args, **kwargs)
+
+    class Meta:
+        permissions = [
+            ("view_file", "Can view file"),
+            ("edit_file", "Can edit file"),
+            ("delete_file", "Can delete file"),
+        ]
+
+
+class FileSharing(models.Model):
+    """Representation of File Sharing Permissions"""
+
+    file = models.ForeignKey(MemberFile, on_delete=models.CASCADE)
+    recipient = models.ForeignKey(Member, on_delete=models.CASCADE)
+    date_shared = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"{self.file} is shared with {self.recipient}"
 

@@ -2,12 +2,10 @@ from typing import Any
 from django.contrib.auth.forms import UserCreationForm
 from datetime import datetime
 
-from django.urls import reverse_lazy
-from members.models import Member
+
+from members.models import Member, MemberFile
 from django import forms
 from localflavor.us.forms import USZipCodeField
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
 
 
 class MemberRegistrationForm(UserCreationForm):
@@ -64,4 +62,12 @@ class MemberRegistrationForm(UserCreationForm):
             "zip",
             "date_of_birth",
         )
+
+
+class FileUploadForm(forms.ModelForm):
+    """Form for members to upload files"""
+
+    class Meta:
+        model = MemberFile
+        fields = ["file"]
 
