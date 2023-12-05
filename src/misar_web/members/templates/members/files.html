@@ -4,5 +4,7 @@
 {% block content %}
     <div>
         <h2>Uploaded Files</h2>
-    </div>
-{% endblock %}
+        {% for file in files %}<p class="text-black" {{ file.file }} {{ file.date_created }}{% endfor %}
+            </p>
+        </div>
+    {% endblock %}
