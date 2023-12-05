@@ -32,3 +32,18 @@ class TeamGoals(models.Model):
     def __str__(self) -> str:
         return self.team_goal
 
+
+class SearchSpecialty(models.Model):
+    """Holds information related to each SAR Specialty"""
+
+    specialty = models.CharField(max_length=50)
+    brief_synopsis = models.CharField(max_length=200)
+    long_description = models.CharField(max_length=500)
+    icon = models.ImageField(upload_to="home/files/images")
+
+    class Meta:
+        verbose_name_plural = "Search Specialties"
+
+    def __str__(self) -> str:
+        return self.specialty
+

@@ -1,13 +1,13 @@
 from django.http import HttpRequest
 from django.shortcuts import render
 
-from .models import SiteInfo, TeamGoals
+from .models import SearchSpecialty, SiteInfo
 
 
 def home(request: HttpRequest):
     site_info = SiteInfo.objects.get(id=1)
-    team_goals = TeamGoals.objects.all()
-    context = {"siteinfo": site_info, "team_goals": team_goals}
+    search_spec = SearchSpecialty.objects.all()
+    context = {"siteinfo": site_info, "search_spec": search_spec}
     return render(request=request, template_name="home/home.html", context=context)
 
 
