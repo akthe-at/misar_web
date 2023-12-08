@@ -133,10 +133,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 STATIC_URL = "static/"
-# STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = "static/"
-MEDIA_URL = ""
-MEDIA_ROOT = ""
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR.parent / "local-cdn" / "static"
+MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR.parent / "local-cdn" / "media"
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "../../members/member_home/"
 LOGOUT_REDIRECT_URL = "home"
@@ -148,4 +148,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # django_project/settings.py
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+EMAIL_FILE_PATH = BASE_DIR.parent / "sent_emails"
