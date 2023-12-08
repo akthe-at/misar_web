@@ -5,14 +5,15 @@ from .models import SearchSpecialty, SiteInfo
 
 
 def home(request: HttpRequest):
-    site_info = SiteInfo.objects.get(id=1)
+    siteinfo = SiteInfo.objects.get(id=1)
     search_spec = SearchSpecialty.objects.all()
-    context = {"siteinfo": site_info, "search_spec": search_spec}
+    context = {"siteinfo": siteinfo, "search_spec": search_spec}
     return render(request=request, template_name="home/home.html", context=context)
 
 
 def donate(request: HttpRequest):
-    context = {"donate": donate}
+    site_info = SiteInfo.objects.get(id=1)
+    context = {"siteinfo": site_info, "donate": donate}
     return render(request=request, template_name="home/donate.html", context=context)
 
 
