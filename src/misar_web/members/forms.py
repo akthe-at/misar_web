@@ -38,12 +38,13 @@ class MemberRegistrationForm(UserCreationForm):
         )
     )
 
-    # TODO: This needs to be written to an environmental variable before production
     def clean_member_password(self):
         """Checks to see if correct member password used to allow for registration"""
 
         data = self.cleaned_data["member_password"]
-        if data != "bigfishy":
+        if (
+            data != "bigfishy"
+        ):  # TODO: This needs to be written to an environmental variable before production
             raise forms.ValidationError(
                 "Sorry you must have the secret code to become a MISAR member."
             )
@@ -64,10 +65,22 @@ class MemberRegistrationForm(UserCreationForm):
         )
 
 
+input_css_class = "form-control"
+
+
 class FileUploadForm(forms.ModelForm):
     """Form for members to upload files"""
 
     class Meta:
         model = MemberFile
-        fields = ["file"]
+        fields = ("file", "file_name")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs["class"] = "input_css_class"
+
+    def save(self, *args, **kwargs):
+        instance = super().save(commit=False)
+        return instance
 
