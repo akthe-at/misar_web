@@ -1,10 +1,10 @@
-from pathlib import Path
-from django.db import models
-from django.contrib.auth.models import AbstractUser
-from localflavor.us.models import USZipCodeField
-from django.db import transaction
-from django.utils.text import slugify
 import uuid
+from pathlib import Path
+
+from django.contrib.auth.models import AbstractUser
+from django.db import models, transaction
+from django.utils.text import slugify
+from localflavor.us.models import USZipCodeField
 
 
 class Member(AbstractUser):
@@ -46,10 +46,6 @@ class MemberFile(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     share_with_all = models.BooleanField(default=False)
-
-    def delete(self, *args, **kwargs):
-        self.file.delete()
-        super().delete(self, *args, **kwargs)
 
     def save(self, *args, **kwargs):
         if not self.handle:
@@ -128,4 +124,3 @@ class FileOwnershipTransfer(models.Model):
     date_requested = models.DateTimeField(auto_now_add=True)
     date_completed = models.DateTimeField(null=True, blank=True)
     is_completed = models.BooleanField(default=False)
-
