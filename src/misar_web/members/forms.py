@@ -52,7 +52,7 @@ class MemberRegistrationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = Member
-        fields = UserCreationForm.Meta.fields + (
+        fields = UserCreationForm.Meta.fields + (  # ignore
             "member_password",
             "first_name",
             "last_name",
@@ -83,3 +83,4 @@ class FileUploadForm(forms.ModelForm):
     def save(self, *args, **kwargs):
         instance = super().save(commit=False)
         return instance
+
