@@ -1,10 +1,13 @@
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+
 from misar_web.settings import LOGIN_URL
+from home.models import SiteInfo
 from .forms import FileUploadForm, MemberRegistrationForm
 from .models import MemberFile
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
 
 
 class MemberRegisterView(CreateView):
@@ -15,7 +18,9 @@ class MemberRegisterView(CreateView):
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def member_home(request):
-    return render(request, "members/member_landing.html")
+    siteinfo = SiteInfo.objects.get(id=1)
+    context = {"siteinfo": siteinfo}
+    return render(request, "members/member_landing.html", context)
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
@@ -29,22 +34,13 @@ def files(request):
     return render(request, "members/files.html", context)
 
 
-# class FileListView(ListView):
-#     """View for seeing team/member files"""
-#
-#     model = MemberFile
-#     template_name = "members/files.html"
-#     context_object_name = "files"
-
-
-# @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
-# class UploadFileView(CreateView):
-#     """View for uploading member files"""
-#
-#     model = MemberFile
-#     form_class = FileUploadForm
-#     template_name = "members/upload.html"
-#     success_url = reverse_lazy("files")
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
+def delete_file(request, file_id):
+    file = MemberFile.objects.get(pk=file_id)
+    if request.user == file.current_owner or request.user.has_perm("delete_file", file):
+        file.delete()
+        return redirect("files")
+    return HttpResponseForbidden("You do not have permission to delete this file.")
 
 
 def file_upload(request):
