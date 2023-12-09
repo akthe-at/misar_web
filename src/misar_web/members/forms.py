@@ -1,11 +1,11 @@
-from typing import Any
-from django.contrib.auth.forms import UserCreationForm
 from datetime import datetime
+from typing import Any
 
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from localflavor.us.forms import USZipCodeField
 
 from members.models import Member, MemberFile
-from django import forms
-from localflavor.us.forms import USZipCodeField
 
 
 class MemberRegistrationForm(UserCreationForm):
@@ -83,4 +83,3 @@ class FileUploadForm(forms.ModelForm):
     def save(self, *args, **kwargs):
         instance = super().save(commit=False)
         return instance
-
