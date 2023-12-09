@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Member, MemberFile
+from .models import FileOwnershipTransfer, FileSharing, Member, MemberFile
 # Register your models here.
 
 
@@ -22,5 +22,5 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(Member, CustomUserAdmin)
-admin.site.register(MemberFile)
+admin.site.register([MemberFile, FileSharing, FileOwnershipTransfer])
 
