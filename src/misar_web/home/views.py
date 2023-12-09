@@ -12,13 +12,13 @@ def home(request: HttpRequest):
 
 
 def donate(request: HttpRequest):
-    site_info = SiteInfo.objects.get(id=1)
-    context = {"siteinfo": site_info, "donate": donate}
+    siteinfo = SiteInfo.objects.get(id=1)
+    context = {"siteinfo": siteinfo, "donate": donate}
     return render(request=request, template_name="home/donate.html", context=context)
 
 
 def contact(request: HttpRequest):
-    site_info = SiteInfo.objects.get(id=1)
-    context = {"siteinfo": site_info}
+    siteinfo = SiteInfo.objects.get(id=1)
+    context = {"siteinfo": siteinfo}
     return render(request=request, template_name="home/contact.html", context=context)
 
