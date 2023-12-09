@@ -1,7 +1,8 @@
 {% extends "members/base.html" %}
 {% load static %}
 {% block content %}
-    <div class="items-center text-center p-8">
+    <div class="items-center p-8 text-center">
         <h1 class="text-4xl text-black">This is the landing page for members after they login</h1>
+        <a href="{% url 'files' %}">Member Files Page</a>
         <div>
         {% endblock %}
