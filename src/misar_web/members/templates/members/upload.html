@@ -1,0 +1,23 @@
+{% extends "home/base.html" %}
+{% load tailwind_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <div class="p-8 text-center text-stone-800">
+        <h2 class="text-5xl">Upload Files</h2>
+    </div>
+    <div>
+        <form action="."
+              class="max-w-md mx-auto text-black"
+              method="POST"
+              enctype="multipart/form-data">
+            <div class="mb-5 align-middle text-formcontrol cursor-text">
+                {% csrf_token %}
+                {% crispy form %}
+                <input type="submit"
+                       value="Upload"
+                       class="flex items-center justify-center px-4 py-2 font-bold rounded w-36 bg-misargreen hover:bg-white hover:text-black">
+            </div>
+        </form>
+    </div>
+{% endblock %}
