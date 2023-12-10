@@ -73,7 +73,7 @@ class FileUploadForm(forms.ModelForm):
 
     class Meta:
         model = MemberFile
-        fields = ("file", "file_name")
+        fields = ("file", "file_description")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
