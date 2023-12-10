@@ -1,4 +1,5 @@
 from django import template
+from pathlib import Path
 
 register = template.Library()
 
@@ -26,4 +27,13 @@ def extension(file: str) -> str:
 
 
 register.filter("extension", extension)
+
+
+def get_file_name(filepath: str) -> str:
+    """Gets the name of the file from the path for displaying in the file directory"""
+    file_name = Path(filepath).name
+    return file_name
+
+
+register.filter("file_name", get_file_name)
 
