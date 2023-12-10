@@ -56,7 +56,7 @@ class MemberFile(models.Model):
     share_with_all = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.file_name
+        return str(self.file)
 
     def save(self, *args, **kwargs):
         if not self.handle:
