@@ -48,7 +48,7 @@ class MemberFile(models.Model):
         Member, related_name="owned_files", on_delete=models.CASCADE
     )
     file = models.FileField(upload_to="media/", null=False, blank=False)
-    file_name = models.CharField(max_length=50)
+    file_description = models.CharField(max_length=50)
     permissions = models.ManyToManyField(Permission, related_name="files")
     handle = models.SlugField(unique=True)
     date_created = models.DateTimeField(auto_now_add=True)
