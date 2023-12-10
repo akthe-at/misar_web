@@ -39,7 +39,7 @@
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <th scope="row"
                                 class="px-6 py-4 text-gray-900 font-large whitespace-nowrap dark:text-white">
-                                {{ file.file_name }}
+                                {{ file.file.path|file_name }}
                             </th>
                             <td class="px-6 py-4">{{ file.file.name|extension }}</td>
                             <td class="px-6 py-4">{{ file.file.size|filesize }}</td>
