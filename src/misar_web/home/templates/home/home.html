@@ -5,7 +5,7 @@
         <div class="flex items-center justify-center w-full text-center bg-fixed bg-bottom bg-cover h-96"
              style="background-image: url({{ siteinfo.home_page_image.url }})">
             <div class="absolute flex flex-col items-center justify-center h-64 background-blend-overlay">
-                <h2 class="mb-2 text-5xl text-white">Our Team</h2>
+                <h2 class="font-semibold mb-2 text-5xl text-white">Our Team</h2>
                 <p class="text-2xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
                     {{ siteinfo.description }}
                 </p>
@@ -13,22 +13,24 @@
         </div>
         <div class="flex items-center justify-center w-full text-center h-80 bg-neutral-900">
             <div class="text-center">
-                <h2 class="pb-3 text-5xl text-white">Our Mission</h2>
+                <h2 class="font-semibold pb-3 text-5xl text-white">Our Mission</h2>
                 <p class="text-2xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
                     {{ siteinfo.mission_statement }}
                 </p>
             </div>
         </div>
         <div class="flex flex-col items-center justify-center w-full text-center min-h-80 bg-neutral-600">
-            <h2 class="pb-3 mt-4 mb-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white">Search Specialties</h2>
-            <div class="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 grid justify-center grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-10 mb-4 mx-auto w-3/4 sm:w-2/3 md:w-1/2 lg:w-3/4">
+            <h2 class="pb-3 mt-8 mb-4 font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white">
+                Search Specialties
+            </h2>
+            <div class="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 grid justify-center grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-10 mb-12 mx-auto w-3/4 sm:w-2/3 md:w-1/2 lg:w-3/4">
                 {% for spec in search_spec %}
                     {% include 'home/includes/discipline_cards.html' with object=spec %}
                 {% endfor %}
             </div>
         </div>
         <div class="flex flex-col items-center justify-center w-full text-center h-80 bg-neutral-700">
-            <h2 class="pb-3 text-5xl text-white">Emergency Dispatch</h2>
+            <h2 class="pb-3 font-semibold text-5xl text-white">Emergency Dispatch</h2>
             <h4 class="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 mb-3 text-2xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64">
                 For Immediate Dispatch of K9 Teams:
             </h4>
@@ -39,7 +41,7 @@
             </div>
             <div>
                 <div class="flex flex-col items-center justify-center w-full text-center h-72 bg-neutral-600">
-                    <h2 class="pb-3 text-5xl text-white">Get Involved</h2>
+                    <h2 class="pb-3 text-5xl font-semibold text-white">Get Involved</h2>
                     <div class="flex space-x-2">
                         <a href="#" class="mx-2">
                             <button class="flex items-center justify-center px-4 py-2 font-bold text-white rounded w-36 bg-misargreen hover:bg-white hover:text-black">
@@ -57,19 +59,11 @@
             <div class="flex flex-row items-center justify-center w-full text-center bg-fixed bg-top bg-cover h-96 bg-neutral-900"
                  style="background-image: url({{ siteinfo.home_page_image.url }})">
                 <div class="flex flex-col  w-full p-4 text-center text-white">
-                    <h2 class="flex flex-col text-4xl text-white hover:text-blue-400">
+                    <h2 class="flex font-semibold flex-col text-4xl text-white hover:text-blue-400">
                         <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a>
                     </h2>
-                    <div class="flex flex-col mt-4 fb-like"
-                         data-href="https://www.facebook.com/profile.php?id=100064673201959"
-                         data-width="150"
-                         data-layout="standard"
-                         data-colorscheme="dark"
-                         data-action="like"
-                         data-size=""
-                         data-share="false"></div>
                 </div>
-                <div class="flex flex-col h-full items-center w-full p-4">
+                <div class="flex justify-items-end flex-col h-full w-3/4 p-4">
                     <img src="{{ siteinfo.alternate_logo.url }}"
                          alt="MISAR LOGO"
                          class="flex  flex-col w-auto h-full object-scale-down">
