@@ -1,0 +1,13 @@
+<!-- members/templates/members/share_file.html -->
+{% extends "members/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <h2>Share File</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_div }}
+
+    <button type="submit" class="px-2 text-white bg-misargreen hover:bg-neutral-500 focus:ring-4 focus:outline-none focus:ring-misargreen font-medium rounded-lg text-sm  py-2.5 text-center inline-flex items-center me-2 ms-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Share</button>
+  </form>
+{% endblock %}

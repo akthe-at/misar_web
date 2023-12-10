@@ -7,6 +7,14 @@ from django.utils.text import slugify
 from localflavor.us.models import USZipCodeField
 
 
+class Permission(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+
 class Member(AbstractUser):
     """Defines a member of the organization"""
 
@@ -41,11 +49,14 @@ class MemberFile(models.Model):
     )
     file = models.FileField(upload_to="media/", null=False, blank=False)
     file_name = models.CharField(max_length=50)
-    # file_description = models.CharFriend(max_length=250)
+    permissions = models.ManyToManyField(Permission, related_name="files")
     handle = models.SlugField(unique=True)
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     share_with_all = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.file_name
 
     def save(self, *args, **kwargs):
         if not self.handle:
@@ -80,10 +91,10 @@ class MemberFile(models.Model):
 
     class Meta:
         permissions = [
-            ("view_file", "Can view file"),
-            ("edit_file", "Can edit file"),
-            ("delete_file", "Can delete file"),
-            ("share_file", "Can share file"),
+            ("view", "Can view file"),
+            ("edit", "Can edit file"),
+            ("delete", "Can delete file"),
+            ("share", "Can share file"),
             ("revoke_share", "Can revoke file sharing"),
         ]
 

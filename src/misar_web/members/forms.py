@@ -5,7 +5,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from localflavor.us.forms import USZipCodeField
 
-from members.models import Member, MemberFile
+from members.models import FileSharing, Member, MemberFile, Permission
 
 
 class MemberRegistrationForm(UserCreationForm):
@@ -84,3 +84,35 @@ class FileUploadForm(forms.ModelForm):
         instance = super().save(commit=False)
         return instance
 
+
+class FileSharingForm(forms.ModelForm):
+    """Form for sharing files with other users"""
+
+    PERMISSION_CHOICES = [
+        ("view", "Can view file"),
+        ("edit", "Can edit file"),
+        ("delete", "Can delete file"),
+        ("share", "Can share file"),
+    ]
+
+    recipient = forms.ModelMultipleChoiceField(
+        queryset=Member.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+    permissions = forms.MultipleChoiceField(
+        choices=PERMISSION_CHOICES,
+        widget=forms.CheckboxSelectMultiple,
+    )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(FileSharingForm, self).__init__(*args, **kwargs)
+        if user:
+            self.fields["file"].queryset = MemberFile.objects.filter(current_owner=user)
+            self.fields["recipient"].queryset = Member.objects.exclude(
+                id=user.id
+            ).exclude(is_superuser=True)
+
+    class Meta:
+        model = FileSharing
+        fields = ["file", "recipient", "permissions"]

@@ -1,12 +1,15 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseForbidden
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import CreateView
+from home.models import SiteInfo
 
 from misar_web.settings import LOGIN_URL
-from home.models import SiteInfo
-from .forms import FileUploadForm, MemberRegistrationForm
+
+from .forms import FileSharingForm, FileUploadForm, MemberRegistrationForm
 from .models import MemberFile
 
 
@@ -43,6 +46,7 @@ def delete_file(request, file_id):
     return HttpResponseForbidden("You do not have permission to delete this file.")
 
 
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def file_upload(request):
     context = {}
     form = FileUploadForm(request.POST or None, request.FILES or None)
@@ -57,3 +61,24 @@ def file_upload(request):
     context["form"] = form
     return render(request, "members/upload.html", context)
 
+
+class ShareFileView(LoginRequiredMixin, View):
+    login_url = LOGIN_URL
+    redirect_field_name = "redirect_to"
+
+    def get(self, request):
+        form = FileSharingForm(user=request.user)
+        return render(request, "members/share_file.html", {"form": form})
+
+    def post(self, request):
+        form = FileSharingForm(request.POST or None, user=request.user)
+        if form.is_valid():
+            file_sharing = form.save(commit=False)
+            file_sharing.save()
+
+            permissions = form.cleaned_data["permissions"]
+            for permission in permissions:
+                file_sharing.permissions.add(permission)
+            form.save_m2m()
+            return redirect("files")
+        return render(request, "members/share_file.html", {"form": form})

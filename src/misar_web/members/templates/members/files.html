@@ -3,7 +3,7 @@
 {% load membertags %}
 {% load static %}
 {% block content %}
-    <div class="p-8 text-center mx-auto justify-center items-center text-stone-800">
+    <div class="items-center justify-center p-8 mx-auto text-center text-stone-800">
         <div class="mb-5">
             <h2 class="mb-3">Member File Storage</h2>
             <a href="{% url 'upload' %}">
@@ -23,7 +23,7 @@
                 </button>
             </a>
         </div>
-        <div class="mx-auto relative overflow-x-auto shadow-md sm:rounded-lg w-1/2">
+        <div class="relative w-1/2 mx-auto overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -44,7 +44,7 @@
                             <td class="px-6 py-4">{{ file.file.name|extension }}</td>
                             <td class="px-6 py-4">{{ file.file.size|filesize }}</td>
                             <td class="px-6 py-4">
-                                <a href="#"
+                                <a href="{% url 'share' %}"
                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Share File</a>
                             </td>
                             <td class="px-6 py-4">
@@ -58,7 +58,7 @@
         </div>
         <h2>Shared Files</h2>
         Here is a list of files that others have shared with you:
-        <div class="mx-auto relative overflow-x-auto shadow-md sm:rounded-lg w-1/2">
+        <div class="relative w-1/2 mx-auto overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -79,7 +79,7 @@
                             <td class="px-6 py-4">{{ file.file.name|extension }}</td>
                             <td class="px-6 py-4">{{ file.file.size|filesize }}</td>
                             <td class="px-6 py-4">
-                                <a href="#"
+                                <a href="{% url 'share' %}"
                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Share File</a>
                             </td>
                             <td class="px-6 py-4">
