@@ -23,7 +23,7 @@
             <h2 class="pb-3 mt-8 mb-4 font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white">
                 Search Specialties
             </h2>
-            <div class="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 grid justify-center grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-10 mb-12 mx-auto w-3/4 sm:w-2/3 md:w-1/2 lg:w-3/4">
+            <div class="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-y-10 gap-x-px mb-12 mx-auto w-10/12 sm:w-2/3 md:w-1/2 lg:w-10/12">
                 {% for spec in search_spec %}
                     {% include 'home/includes/discipline_cards.html' with object=spec %}
                 {% endfor %}
@@ -36,7 +36,7 @@
             </h4>
             <a href="tel:18008185645"
                 <button class="px-4 w-36 flex py-2 font-bold text-white rounded bg-misargreen hover:bg-red-700">
-                    Call: {{ siteinfo.dispatch_number }}
+                    {{ siteinfo.dispatch_number }}
                 </a>
             </div>
             <div>
