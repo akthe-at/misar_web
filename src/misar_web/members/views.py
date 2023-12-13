@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
@@ -10,7 +10,7 @@ from home.models import SiteInfo
 from misar_web.settings import LOGIN_URL
 
 from .forms import FileSharingForm, FileUploadForm, MemberRegistrationForm
-from .models import MemberFile
+from .models import MemberFile, Member
 from django.contrib.auth.views import (
     LoginView,
     LogoutView,
@@ -88,7 +88,9 @@ def member_home(request):
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def files(request):
     member_files = MemberFile.objects.filter(current_owner=request.user)
-    shared_files = MemberFile.objects.filter(users=request.user)
+    shared_files = MemberFile.objects.filter(users=request.user).exclude(
+        current_owner=request.user
+    )
     siteinfo = SiteInfo.objects.get(id=1)
     context = {
         "memberfiles": member_files,
@@ -108,6 +110,16 @@ def delete_file(request, file_id):
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
+def download_file(request, file_id):
+    file = MemberFile.objects.get(pk=file_id)
+    if request.user == file.current_owner or request.user.has_perm("view_file", file):
+        response = HttpResponse(file.file, content_type="application/force-download")
+        response["Content-Disposition"] = f"attachment; filename={file.file}"
+        return response
+    return HttpResponseForbidden("You do not have permission to download this file.")
+
+
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def file_upload(request):
     siteinfo = SiteInfo.objects.get(id=1)
     form = FileUploadForm(request.POST or None, request.FILES or None)
@@ -117,6 +129,10 @@ def file_upload(request):
             obj.user = request.user
             obj.current_owner = request.user
             obj.save()
+
+            if form.cleaned_data["share_with_all"]:
+                obj.users.add(*Member.objects.all())
+
             return redirect("files")
         form.add_error(None, "You must be logged in to upload files.")
     context = {"form": form, "siteinfo": siteinfo}

@@ -18,7 +18,10 @@ class MemberRegistrationForm(UserCreationForm):
 
     username = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
     member_password = forms.CharField(
-        max_length=15, widget=forms.PasswordInput(attrs={"class": "form-control"})
+        max_length=15,
+        widget=forms.PasswordInput(attrs={"class": "form-control"}),
+        help_text="Code Supplied by MISAR to enable Registration.",
+        label="MISAR Member Secret-Phrase",
     )
     first_name = forms.CharField(
         widget=forms.TextInput(attrs={"class": "form-control"})
@@ -73,12 +76,15 @@ class FileUploadForm(forms.ModelForm):
 
     class Meta:
         model = MemberFile
-        fields = ("file", "file_description")
+        fields = ("file", "file_description", "share_with_all")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs["class"] = "input_css_class"
+            self.fields["share_with_all"] = forms.BooleanField(
+                help_text="Check to share with all memberz", required=False
+            )
 
     def save(self, *args, **kwargs):
         instance = super().save(commit=False)
@@ -91,7 +97,6 @@ class FileSharingForm(forms.ModelForm):
     PERMISSION_CHOICES = [
         ("view", "Can view file"),
         ("edit", "Can edit file"),
-        ("delete", "Can delete file"),
         ("share", "Can share file"),
     ]
 
@@ -99,7 +104,7 @@ class FileSharingForm(forms.ModelForm):
         queryset=Member.objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
-    permissions = forms.MultipleChoiceField(
+    permission = forms.MultipleChoiceField(
         choices=PERMISSION_CHOICES,
         widget=forms.CheckboxSelectMultiple,
     )
@@ -115,4 +120,5 @@ class FileSharingForm(forms.ModelForm):
 
     class Meta:
         model = FileSharing
-        fields = ["file", "recipient", "permissions"]
+        fields = ["file", "recipient", "permission"]
+

@@ -8,8 +8,8 @@ from localflavor.us.models import USZipCodeField
 
 
 class Permission(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.CharField(max_length=200)
+    name = models.CharField(max_length=20)
+    description = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
@@ -19,7 +19,9 @@ class Member(AbstractUser):
     """Defines a member of the organization"""
 
     member_password = models.CharField(
-        ("MISAR Secret Phrase"), max_length=15, blank=False
+        ("MISAR Secret Phrase"),
+        max_length=15,
+        blank=False,
     )
     first_name = models.CharField(("first name"), max_length=150, blank=True)
     last_name = models.CharField(("last name"), max_length=150, blank=True)
@@ -60,7 +62,7 @@ class MemberFile(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.handle:
-            base_slug = slugify(self.file_name)[:50]
+            base_slug = slugify(self.file)[:50]
             unique_slug = base_slug
 
             while MemberFile.objects.filter(handle=unique_slug).exists():
@@ -89,11 +91,15 @@ class MemberFile(models.Model):
         self.current_owner = new_owner
         self.save()
 
+    def share_with_all_users(self):
+        """Set permissions to allow all users to view file when shared with all"""
+        file_sharing = FileSharing.objects.get(file=self, permission="view")
+        file_sharing.recipient.set(Member.objects.all())
+
     class Meta:
         permissions = [
             ("view", "Can view file"),
             ("edit", "Can edit file"),
-            ("delete", "Can delete file"),
             ("share", "Can share file"),
             ("revoke_share", "Can revoke file sharing"),
         ]
@@ -105,13 +111,12 @@ class FileSharing(models.Model):
     PERMISSION_CHOICES = [
         ("view", "Can view file"),
         ("edit", "Can edit file"),
-        ("delete", "Can delete file"),
         ("share", "Can share file"),
     ]
 
     file = models.ForeignKey(MemberFile, on_delete=models.CASCADE)
     recipient = models.ManyToManyField(Member, related_name="file_sharings")
-    permission = models.CharField(choices=PERMISSION_CHOICES, max_length=20)
+    permission = models.ManyToManyField(Permission)
     date_shared = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
@@ -119,8 +124,9 @@ class FileSharing(models.Model):
 
     def save(self, *args, **kwargs):
         # set default permissions when a file is shared
-        if not self.pk and not self.permission:
-            self.permission = "view"
+        if not self.pk and not self.permission.exists():
+            view_permission = Permission.objects.get(name="view")
+            self.permission.add(view_permission)
         super().save(*args, **kwargs)
 
 
@@ -135,3 +141,4 @@ class FileOwnershipTransfer(models.Model):
     date_requested = models.DateTimeField(auto_now_add=True)
     date_completed = models.DateTimeField(null=True, blank=True)
     is_completed = models.BooleanField(default=False)
+
