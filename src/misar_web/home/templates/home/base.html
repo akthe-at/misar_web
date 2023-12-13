@@ -7,17 +7,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="{% static 'home/main.css' %}">
         <link rel="shortcut icon" href="{% static 'home/favicon.ico' %}" />
+        <script src="https://unpkg.com/htmx.org@1.9.9"></script>
         <title>Michigan Search and Rescue</title>
     </head>
     <body class="bg-neutral-300">
         {% tailwind_css %}
         {% include 'home/includes/navbar.html' %}
         {% block content %}{% endblock %}
-        <div id="fb-root"></div>
-        <script async
-                defer
-                crossorigin="anonymous"
-                src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0"
-                nonce="C18b3BZb"></script>
     </body>
 </html>
