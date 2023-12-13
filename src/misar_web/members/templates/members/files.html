@@ -28,10 +28,14 @@
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">File Name</th>
+                        <th scope="col" class="px-6 py-3">File Description</th>
                         <th scope="col" class="px-6 py-3">File Type</th>
                         <th scope="col" class="px-6 py-3">File Size</th>
+                        <th scope="col" class="px-6 py-3">File Added</th>
+                        <th scope="col" class="px-6 py-3">File Last Modified</th>
                         <th scope="col" class="px-6 py-3">Share</th>
                         <th scope="col" class="px-6 py-3">Delete</th>
+                        <th scope="col" class="px-6 py-3">Download</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,8 +45,11 @@
                                 class="px-6 py-4 text-gray-900 font-large whitespace-nowrap dark:text-white">
                                 {{ file.file.path|file_name }}
                             </th>
+                            <td class="px-6 py-4">{{ file.file_description }}</td>
                             <td class="px-6 py-4">{{ file.file.name|extension }}</td>
                             <td class="px-6 py-4">{{ file.file.size|filesize }}</td>
+                            <td class="px-6 py-4">{{ file.date_created|date:"d/m/y" }}</td>
+                            <td class="px-6 py-4">{{ file.last_modified|date:"d/m/y" }}</td>
                             <td class="px-6 py-4">
                                 <a href="{% url 'share' %}"
                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Share File</a>
@@ -50,43 +57,50 @@
                             <td class="px-6 py-4">
                                 <a href="{% url 'delete_file' file.id %}"
                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
-                            </td>
+                                <td class="px-6 py-4">
+                                    <a href="{% url 'download' file.id %}"
+                                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Download</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <h2>Shared Files</h2>
+            Here is a list of files that others have shared with you:
+            <div class="relative w-1/2 mx-auto overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">File Name</th>
+                            <th scope="col" class="px-6 py-3">File Type</th>
+                            <th scope="col" class="px-6 py-3">File Size</th>
+                            <th scope="col" class="px-6 py-3">Share</th>
+                            <th scope="col" class="px-6 py-3">Delete</th>
+                            <th scope="col" class="px-6 py-3">Download</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <h2>Shared Files</h2>
-        Here is a list of files that others have shared with you:
-        <div class="relative w-1/2 mx-auto overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">File Name</th>
-                        <th scope="col" class="px-6 py-3">File Type</th>
-                        <th scope="col" class="px-6 py-3">File Size</th>
-                        <th scope="col" class="px-6 py-3">Share</th>
-                        <th scope="col" class="px-6 py-3">Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for file in sharedfiles %}
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row"
-                                class="px-6 py-4 text-gray-900 font-large whitespace-nowrap dark:text-white">
-                                {{ file.file_name }}
-                            </th>
-                            <td class="px-6 py-4">{{ file.file.name|extension }}</td>
-                            <td class="px-6 py-4">{{ file.file.size|filesize }}</td>
-                            <td class="px-6 py-4">
-                                <a href="{% url 'share' %}"
-                                   class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Share File</a>
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="{% url 'delete_file' file.id %}"
-                                   class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </div>
-            {% endblock %}
+                    </thead>
+                    <tbody>
+                        {% for file in sharedfiles %}
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row"
+                                    class="px-6 py-4 text-gray-900 font-large whitespace-nowrap dark:text-white">
+                                    {{ file.file.path|file_name }}
+                                </th>
+                                <td class="px-6 py-4">{{ file.file.name|extension }}</td>
+                                <td class="px-6 py-4">{{ file.file.size|filesize }}</td>
+                                <td class="px-6 py-4">
+                                    <a href="{% url 'share' %}"
+                                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Share File</a>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <a href="{% url 'delete_file' file.id %}"
+                                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                                    <td class="px-6 py-4">
+                                        <a href="{% url 'download' file.id %}"
+                                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Download</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </div>
+                    {% endblock %}
