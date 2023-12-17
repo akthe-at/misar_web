@@ -1,18 +1,8 @@
-import uuid
-from pathlib import Path
-
 from django.contrib.auth.models import AbstractUser
-from django.db import models, transaction
+from django.db import models
 from django.utils.text import slugify
+from uuid import uuid4
 from localflavor.us.models import USZipCodeField
-
-
-class Permission(models.Model):
-    name = models.CharField(max_length=20)
-    description = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
 
 
 class Member(AbstractUser):
@@ -43,102 +33,69 @@ class Member(AbstractUser):
 class MemberFile(models.Model):
     """A class to represent user-uploaded files"""
 
-    DEFAULT_PERMISSIONS = ["view", "edit", "delete", "share"]
-
-    users = models.ManyToManyField(Member, related_name="owned_by")
-    current_owner = models.ForeignKey(
-        Member, related_name="owned_files", on_delete=models.CASCADE
+    owner = models.ForeignKey(
+        Member, on_delete=models.CASCADE, related_name="owned_files", null=False
+    )
+    shared_with = models.ManyToManyField(
+        Member,
+        through="FilePermission",
+        related_name="owned_by",
+        through_fields=("file", "recipient"),
     )
     file = models.FileField(upload_to="media/", null=False, blank=False)
+    file_name = models.CharField(max_length=50)
     file_description = models.CharField(max_length=50)
-    permissions = models.ManyToManyField(Permission, related_name="files")
-    handle = models.SlugField(unique=True)
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     share_with_all = models.BooleanField(default=False)
+    slug = models.SlugField(unique=True, editable=False, max_length=255)
 
     def __str__(self):
-        return str(self.file)
+        return self.file_name
 
     def save(self, *args, **kwargs):
-        if not self.handle:
-            base_slug = slugify(self.file)[:50]
-            unique_slug = base_slug
+        if not self.slug:
+            self.slug = slugify(f"{self.file_name}--{uuid4()}")
+        user = kwargs.get("user")
+        if user is not None:
+            self.owner = user
 
-            while MemberFile.objects.filter(handle=unique_slug).exists():
-                unique_slug = f"{base_slug}-{uuid.uuid4().hex[:6]}"
-            self.handle = unique_slug
-
-        with transaction.atomic():
-            super().save(*args, **kwargs)
-
-            if not self.pk:
-                # Save the instance first to get an id
-                super().save(*args, **kwargs)
-
-                # set default permissions when a new file is uploaded.
-                for permission in self.DEFAULT_PERMISSIONS:
-                    file_sharing = FileSharing(file=self, permission=permission)
-                    file_sharing.save()
-                    file_sharing.recipient.set(self.users.all())
-            else:
-                super().save(*args, **kwargs)
-
-    def transfer_ownership(self, new_owner):
-        FileOwnershipTransfer.objects.create(
-            file=self, from_member=self.current_owner, to_member=new_owner
-        )
-        self.current_owner = new_owner
-        self.save()
-
-    def share_with_all_users(self):
-        """Set permissions to allow all users to view file when shared with all"""
-        file_sharing = FileSharing.objects.get(file=self, permission="view")
-        file_sharing.recipient.set(Member.objects.all())
-
-    class Meta:
-        permissions = [
-            ("view", "Can view file"),
-            ("edit", "Can edit file"),
-            ("share", "Can share file"),
-            ("revoke_share", "Can revoke file sharing"),
-        ]
-
-
-class FileSharing(models.Model):
-    """Representation of File Sharing Permissions"""
-
-    PERMISSION_CHOICES = [
-        ("view", "Can view file"),
-        ("edit", "Can edit file"),
-        ("share", "Can share file"),
-    ]
-
-    file = models.ForeignKey(MemberFile, on_delete=models.CASCADE)
-    recipient = models.ManyToManyField(Member, related_name="file_sharings")
-    permission = models.ManyToManyField(Permission)
-    date_shared = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self) -> str:
-        return f"{self.file} is shared with {self.recipient}"
-
-    def save(self, *args, **kwargs):
-        # set default permissions when a file is shared
-        if not self.pk and not self.permission.exists():
-            view_permission = Permission.objects.get(name="view")
-            self.permission.add(view_permission)
         super().save(*args, **kwargs)
 
+        for permission_choice in FilePermission.PERMISSION_CHOICES:
+            for member in self.shared_with.all():
+                FilePermission.objects.get_or_create(
+                    file=self, user=member, permission=permission_choice[0]
+                )
 
-class FileOwnershipTransfer(models.Model):
+    def share_with_all_users(self):
+        print("sharing with all users at the model level...")
+        for member in Member.objects.all():
+            file_permission, created = FilePermission.objects.get_or_create(
+                file=self, user=member, permission=FilePermission.VIEW
+            )
+            print("FilePermission instance:", file_permission, "Created:", created)
+
+
+class FilePermission(models.Model):
+    """Representation of File Sharing Permissions"""
+
+    VIEW = "view"
+    SHARE = "share"
+    EDIT = "change"  # Make sure "change" is included in your choices
+    DELETE = "delete"
+
+    PERMISSION_CHOICES = (
+        (VIEW, "View"),
+        (SHARE, "Share"),
+        (EDIT, "Edit"),
+        (DELETE, "Delete"),
+    )
     file = models.ForeignKey(MemberFile, on_delete=models.CASCADE)
-    from_members = models.ManyToManyField(
-        Member, related_name="ownership_transfers_sent"
+    recipient = models.ForeignKey(Member, on_delete=models.CASCADE)
+    permissions = models.CharField(
+        max_length=20, choices=PERMISSION_CHOICES, default=VIEW
     )
-    to_members = models.ManyToManyField(
-        Member, related_name="ownership_transfers_received"
-    )
-    date_requested = models.DateTimeField(auto_now_add=True)
-    date_completed = models.DateTimeField(null=True, blank=True)
-    is_completed = models.BooleanField(default=False)
+    date_shared = models.DateTimeField(auto_now_add=True)
+    is_owner = models.BooleanField(default=False)
 

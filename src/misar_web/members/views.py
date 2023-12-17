@@ -1,16 +1,19 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django.http import HttpResponseForbidden, HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
+from django.db import IntegrityError, transaction
 from django.views import View
 from django.views.generic import CreateView
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from home.models import SiteInfo
 
 from misar_web.settings import LOGIN_URL
 
-from .forms import FileSharingForm, FileUploadForm, MemberRegistrationForm
-from .models import MemberFile, Member
+from .forms import FilePermissionForm, FileUploadForm, MemberRegistrationForm
+from .models import FilePermission, MemberFile, Member
 from django.contrib.auth.views import (
     LoginView,
     LogoutView,
@@ -87,9 +90,9 @@ def member_home(request):
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def files(request):
-    member_files = MemberFile.objects.filter(current_owner=request.user)
-    shared_files = MemberFile.objects.filter(users=request.user).exclude(
-        current_owner=request.user
+    member_files = MemberFile.objects.filter(owner=request.user).order_by("id")
+    shared_files = MemberFile.objects.filter(shared_with=request.user).exclude(
+        owner=request.user
     )
     siteinfo = SiteInfo.objects.get(id=1)
     context = {
@@ -103,7 +106,7 @@ def files(request):
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def delete_file(request, file_id):
     file = MemberFile.objects.get(pk=file_id)
-    if request.user == file.current_owner or request.user.has_perm("delete_file", file):
+    if request.user == file.owner or request.user.has_perm("delete_memberfile", file):
         file.delete()
         return redirect("files")
     return HttpResponseForbidden("You do not have permission to delete this file.")
@@ -111,12 +114,19 @@ def delete_file(request, file_id):
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def download_file(request, file_id):
-    file = MemberFile.objects.get(pk=file_id)
-    if request.user == file.current_owner or request.user.has_perm("view_file", file):
-        response = HttpResponse(file.file, content_type="application/force-download")
-        response["Content-Disposition"] = f"attachment; filename={file.file}"
-        return response
-    return HttpResponseForbidden("You do not have permission to download this file.")
+    file = get_object_or_404(MemberFile, pk=file_id)
+    print("User: ", request.user)
+    print("File: ", file)
+    if not (
+        request.user == file.owner or request.user.has_perm("view_memberfile", file)
+    ):
+        return HttpResponseForbidden(
+            "You do not have permission to download this file."
+        )
+
+    response = HttpResponse(file.file, content_type="application/force-download")
+    response["Content-Disposition"] = f"attachment; filename={file.file_name}"
+    return response
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
@@ -124,17 +134,8 @@ def file_upload(request):
     siteinfo = SiteInfo.objects.get(id=1)
     form = FileUploadForm(request.POST or None, request.FILES or None)
     if form.is_valid():
-        obj = form.save(commit=False)
-        if request.user.is_authenticated:
-            obj.user = request.user
-            obj.current_owner = request.user
-            obj.save()
-
-            if form.cleaned_data["share_with_all"]:
-                obj.users.add(*Member.objects.all())
-
-            return redirect("files")
-        form.add_error(None, "You must be logged in to upload files.")
+        form.save(owner=request.user)
+        return redirect("files")
     context = {"form": form, "siteinfo": siteinfo}
     return render(request, "members/upload.html", context)
 
@@ -145,23 +146,35 @@ class ShareFileView(LoginRequiredMixin, View):
 
     def get(self, request):
         siteinfo = SiteInfo.objects.get(id=1)
-        form = FileSharingForm(user=request.user)
+        form = FilePermissionForm(
+            initial={"file": request.GET.get("file")}, user=request.user
+        )
         context = {"form": form, "siteinfo": siteinfo}
         return render(request, "members/share_file.html", context)
 
     def post(self, request):
         siteinfo = SiteInfo.objects.get(id=1)
-        form = FileSharingForm(request.POST or None, user=request.user)
+        form = FilePermissionForm(request.POST or None, user=request.user)
         if form.is_valid():
-            file_sharing = form.save(commit=False)
-            file_sharing.save()
+            file = form.cleaned_data["file"]
+            recipient = form.cleaned_data["recipient"]
+            permissions = form.cleaned_data.get("permissions", [])
+            print(form.cleaned_data)
 
-            permissions = form.cleaned_data["permissions"]
-            for permission in permissions:
-                file_sharing.permissions.add(permission)
-            form.save_m2m()
+            try:
+                file_permission = FilePermission(
+                    file=file, recipient=recipient, permissions=permissions
+                )
+                file_permission.save()
+            except IntegrityError as e:
+                print(e)
+                messages.warning(
+                    request,
+                    f"{recipient} already has permissions for {file.file_name}.",
+                )
+
             return redirect("files")
-
+        print(form.errors)
         context = {"form": form, "siteinfo": siteinfo}
         return render(request, "members/share_file.html", context)
 

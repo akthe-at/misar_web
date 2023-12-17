@@ -5,7 +5,6 @@ from django.urls import path
 from . import views
 from .views import (
     ShareFileView,
-    download_file,
     CustomLoginView,
     CustomLogoutView,
     CustomPasswordResetView,

@@ -3,9 +3,10 @@ from typing import Any
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.db import transaction
 from localflavor.us.forms import USZipCodeField
 
-from members.models import FileSharing, Member, MemberFile, Permission
+from members.models import FilePermission, Member, MemberFile
 
 
 class MemberRegistrationForm(UserCreationForm):
@@ -76,49 +77,58 @@ class FileUploadForm(forms.ModelForm):
 
     class Meta:
         model = MemberFile
-        fields = ("file", "file_description", "share_with_all")
+        fields = ("file", "file_name", "file_description", "share_with_all")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs["class"] = "input_css_class"
-            self.fields["share_with_all"] = forms.BooleanField(
-                help_text="Check to share with all memberz", required=False
-            )
 
-    def save(self, *args, **kwargs):
-        instance = super().save(commit=False)
+    def save(self, owner: Member | None = None, *args, **kwargs):
+        with transaction.atomic():
+            instance = super().save(commit=False)
+
+            # Set the owner field to the authenticated user
+            instance.owner = owner
+
+            instance.save()
+
+            if kwargs.get("commit", True):  # Only do this if commit is True
+                if instance.share_with_all:
+                    print("Sharing with all users...")
+                    instance.share_with_all_users()
+
         return instance
 
 
-class FileSharingForm(forms.ModelForm):
+class FilePermissionForm(forms.ModelForm):
     """Form for sharing files with other users"""
 
-    PERMISSION_CHOICES = [
-        ("view", "Can view file"),
-        ("edit", "Can edit file"),
-        ("share", "Can share file"),
-    ]
-
-    recipient = forms.ModelMultipleChoiceField(
+    recipient = forms.ModelChoiceField(
         queryset=Member.objects.all(),
+        widget=forms.Select,
+    )
+    permissions = forms.MultipleChoiceField(
+        choices=FilePermission.PERMISSION_CHOICES,
         widget=forms.CheckboxSelectMultiple,
     )
-    permission = forms.MultipleChoiceField(
-        choices=PERMISSION_CHOICES,
-        widget=forms.CheckboxSelectMultiple,
+
+    file = forms.ModelChoiceField(
+        queryset=MemberFile.objects.all(),
+        widget=forms.Select,
     )
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user", None)
-        super(FileSharingForm, self).__init__(*args, **kwargs)
+        super(FilePermissionForm, self).__init__(*args, **kwargs)
         if user:
-            self.fields["file"].queryset = MemberFile.objects.filter(current_owner=user)
+            # update queryset based on your models
+            self.fields["file"].queryset = MemberFile.objects.filter(owner=user)
             self.fields["recipient"].queryset = Member.objects.exclude(
                 id=user.id
             ).exclude(is_superuser=True)
 
     class Meta:
-        model = FileSharing
-        fields = ["file", "recipient", "permission"]
+        model = FilePermission
+        fields = ["file", "recipient", "permissions"]
 
