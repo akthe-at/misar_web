@@ -99,6 +99,10 @@ DATABASES = {
 }
 
 AUTH_USER_MODEL = "members.Member"
+AUTHENTICATION_BACKENDS = [
+    "misar_web.backends.ObjectPermissionBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -149,3 +153,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # django_project/settings.py
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = BASE_DIR.parent / "sent_emails"
+
