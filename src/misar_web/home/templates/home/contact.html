@@ -1,21 +1,35 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block content %}
-    <div class="items-center p-8 text-center text-black">
-        <h1 class="mb-5 text-4xl font-bold">Contact Us</h1>
-        <ul>
-            <li class="mb-5">
-                <h2 class="mb-1 text-xl font-semibold">Call Us:</h2>
-                {{ siteinfo.dispatch_number }}
-            </li>
-            <li class="mb-5">
-                <h2 class="mb-1 text-xl font-semibold">Mailing Address:</h2>
-                {{ siteinfo.mailing_address }}
-            </li>
-            <li class="mb-5">
-                <h2 class="mb-1 text-xl font-semibold">Direct Email Inquiries to:</h2>
-                {{ siteinfo.team_email }}
-            </li>
-        </ul>
+    <div class="w-full items-center p-8 text-center text-black">
+        <h1 class="mt-4 mb-4 uppercase tracking-widest text-4xl font-bold">Contact Us</h1>
+        <div class="w-full flex-col mt-4 flex space-x-64 justify-center">
+            <div>
+                <h2 class="my-4 text-3xl font-semibold">Mailing Address:</h2>
+                {{ siteinfo.street_address }}
+                <br>
+                {{ siteinfo.po_box }}
+                <br>
+                {{ siteinfo.city_state_zip }}
+            </div>
+        </div>
+        <div>
+            <h2 class="text-3xl my-4 font-semibold">Contact Information:</h2>
+            <ul class="mt-4">
+                <li class="mb-4">
+                    <h2 class="mb-1 text-2xl font-semibold">Call Us:</h2>
+                    {{ siteinfo.dispatch_number }}
+                </li>
+                <li class="mb-4">
+                    <h2 class="mb-1 text-2xl font-semibold">Direct Email Inquiries to:</h2>
+                    {{ siteinfo.team_email }}
+                </li>
+            </ul>
+        </div>
     </div>
+    <div class="flex justify-center flex-row">
+        <img class=" sm:w-full sm:h-full sm:object-fill lg:my-4 lg:w-1/4 lg:h-1/4 sm:mt-2 md:mt-6"
+             src="{{ siteinfo.alternate_logo.url }}">
+    </div>
+</div>
 {% endblock %}
