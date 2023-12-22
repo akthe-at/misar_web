@@ -11,7 +11,9 @@ class SiteInfo(models.Model):
     alternate_logo = models.ImageField(upload_to="home/files/images")
     home_page_image = models.ImageField(upload_to="home/files/images")
     donation_link = models.CharField(max_length=250)
-    mailing_address = models.CharField(max_length=250)
+    street_address = models.CharField(max_length=50)
+    po_box = models.CharField(max_length=20)
+    city_state_zip = models.CharField(max_length=50)
     team_email = models.EmailField(max_length=50)
 
     class Meta:
