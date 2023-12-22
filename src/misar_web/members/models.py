@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.text import slugify
 from uuid import uuid4
 from localflavor.us.models import USZipCodeField
+from guardian.shortcuts import assign_perm
 
 
 class Member(AbstractUser):
@@ -29,18 +30,25 @@ class Member(AbstractUser):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        super().save(*args, **kwargs)
+        if is_new:
+            shared_files = MemberFile.objects.filter(share_with_all=True)
+            for file in shared_files:
+                assign_perm("members.view_memberfile", self, file)
+
 
 class MemberFile(models.Model):
     """A class to represent user-uploaded files"""
 
+    class Meta:
+        permissions = [
+            ("share_memberfile", "Can share member file"),
+        ]
+
     owner = models.ForeignKey(
         Member, on_delete=models.CASCADE, related_name="owned_files", null=False
-    )
-    shared_with = models.ManyToManyField(
-        Member,
-        through="FilePermission",
-        related_name="owned_by",
-        through_fields=("file", "recipient"),
     )
     file = models.FileField(upload_to="media/", null=False, blank=False)
     file_name = models.CharField(max_length=50)
@@ -61,41 +69,4 @@ class MemberFile(models.Model):
             self.owner = user
 
         super().save(*args, **kwargs)
-
-        for permission_choice in FilePermission.PERMISSION_CHOICES:
-            for member in self.shared_with.all():
-                FilePermission.objects.get_or_create(
-                    file=self, user=member, permission=permission_choice[0]
-                )
-
-    def share_with_all_users(self):
-        print("sharing with all users at the model level...")
-        for member in Member.objects.all():
-            file_permission, created = FilePermission.objects.get_or_create(
-                file=self, user=member, permission=FilePermission.VIEW
-            )
-            print("FilePermission instance:", file_permission, "Created:", created)
-
-
-class FilePermission(models.Model):
-    """Representation of File Sharing Permissions"""
-
-    VIEW = "view"
-    SHARE = "share"
-    EDIT = "change"  # Make sure "change" is included in your choices
-    DELETE = "delete"
-
-    PERMISSION_CHOICES = (
-        (VIEW, "View"),
-        (SHARE, "Share"),
-        (EDIT, "Edit"),
-        (DELETE, "Delete"),
-    )
-    file = models.ForeignKey(MemberFile, on_delete=models.CASCADE)
-    recipient = models.ForeignKey(Member, on_delete=models.CASCADE)
-    permissions = models.CharField(
-        max_length=20, choices=PERMISSION_CHOICES, default=VIEW
-    )
-    date_shared = models.DateTimeField(auto_now_add=True)
-    is_owner = models.BooleanField(default=False)
 
