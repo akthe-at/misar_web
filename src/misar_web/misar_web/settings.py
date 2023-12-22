@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "debug_toolbar",
     "home.apps.HomeConfig",
     "members.apps.MembersConfig",
     "django.contrib.admin",
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     "django_browser_reload",
     "crispy_forms",
     "crispy_tailwind",
+    "guardian",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
@@ -57,6 +59,7 @@ INTERNAL_IPS = [
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -100,8 +103,8 @@ DATABASES = {
 
 AUTH_USER_MODEL = "members.Member"
 AUTHENTICATION_BACKENDS = [
-    "misar_web.backends.ObjectPermissionBackend",
     "django.contrib.auth.backends.ModelBackend",
+    "guardian.backends.ObjectPermissionBackend",
 ]
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
