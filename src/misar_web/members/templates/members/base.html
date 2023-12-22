@@ -8,7 +8,23 @@
         <link rel="stylesheet" type="text/css" href="{% static 'home/main.css' %}">
         <link rel="shortcut icon" href="{% static 'home/favicon.ico' %}" />
         <script src="https://unpkg.com/htmx.org@1.9.9"></script>
+        <script defer
+                src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <title>Michigan Search and Rescue</title>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('personal-table').addEventListener('htmx:afterSwap', function (event) {
+                    var form = document.getElementById('upload-form');
+                    form.reset();
+                    showModal = false;
+                });
+            
+                window.validateForm = function () {
+                    var form = document.getElementById('upload-form');
+                    return form.checkValidity();  // Allow the form to be submitted if it's valid
+                }
+            });
+        </script>
     </head>
     <body class="bg-neutral-300">
         {% tailwind_css %}
