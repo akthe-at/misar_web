@@ -1,10 +1,10 @@
 from datetime import datetime
 from typing import Any
-
+from django.core.exceptions import ValidationError
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
-from guardian.shortcuts import assign_perm
+from guardian.shortcuts import assign_perm, get_objects_for_user
 from localflavor.us.forms import USZipCodeField
 
 from members.models import Member, MemberFile
@@ -50,14 +50,14 @@ class MemberRegistrationForm(UserCreationForm):
         if (
             data != "bigfishy"
         ):  # TODO: This needs to be written to an environmental variable before production
-            raise forms.ValidationError(
+            raise ValidationError(
                 "Sorry you must have the secret code to become a MISAR member."
             )
         return data
 
     class Meta(UserCreationForm.Meta):
         model = Member
-        fields = UserCreationForm.Meta.fields + (  # ignore
+        fields = UserCreationForm.Meta.fields + (
             "member_password",
             "first_name",
             "last_name",
@@ -115,12 +115,14 @@ class FileShareForm(forms.ModelForm):
 
     class Meta:
         model = MemberFile
-        fields = ["file", "recipient", "permissions"]
+        fields = ["file", "recipient", "assign_to_all", "permissions"]
 
     recipient = forms.ModelMultipleChoiceField(
         queryset=Member.objects.all(),
         widget=forms.SelectMultiple,
+        required=False,
     )
+    assign_to_all = forms.BooleanField(required=False)
 
     file = forms.ModelChoiceField(
         queryset=MemberFile.objects.all(),
@@ -137,10 +139,25 @@ class FileShareForm(forms.ModelForm):
         super(FileShareForm, self).__init__(*args, **kwargs)
         if user:
             # update queryset based on your models
-            self.fields["file"].queryset = MemberFile.objects.filter(owner=user)
+            self.fields["file"].queryset = get_objects_for_user(
+                user, "share_memberfile", klass=MemberFile
+            )
             self.fields["recipient"].queryset = Member.objects.exclude(
                 id=user.id
             ).exclude(is_superuser=True)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        assign_to_all = cleaned_data.get("assign_to_all")
+        recipient = cleaned_data.get("recipient")
+        if assign_to_all and recipient:
+            raise ValidationError(
+                'You cannot both, "Assign to All" and "select specific users" at the same time.'
+            )
+        if not assign_to_all and not recipient:
+            raise ValidationError(
+                "You must either 'Assign to all' or select specific users"
+            )
 
     def save(self, owner: Member | None = None, *args, **kwargs):
         recipients = self.cleaned_data["recipient"]
@@ -149,3 +166,4 @@ class FileShareForm(forms.ModelForm):
         for recipient in recipients:
             for permission in permissions:
                 assign_perm(permission, recipient, file)
+

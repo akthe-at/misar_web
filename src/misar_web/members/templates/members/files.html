@@ -5,12 +5,15 @@
 {% load static %}
 {% block content %}
     <div class="items-center justify-center p-6 mx-auto text-center text-stone-800">
+        <section id="messages">
+            {% include 'members/partials/toast.html' %}
+        </section>
         <h2 class="text-4xl font-bold text-red-800">Member File Storage</h2>
         <h2 class="m-3 font-semibold text-black text 3xl">Your Files</h2>
         <div x-data="{ showModal: false }"
              class="flex flex-row m-3 place-content-around">
             <a href="javascript:void(0);">
-                <!-- Modal toggle -->
+                <!-- File Upload Modal toggle -->
                 <button @click="showModal = true"
                         data-modal-target="upload-modal"
                         data-modal-toggle="upload-modal"
@@ -27,17 +30,17 @@
                     <label class="px-2 font-semibold">Upload</label>
                 </button>
             </a>
-            <!-- Main modal -->
+            <!-- File Upload Main modal -->
             <div x-show="showModal"
                  id="upload-modal"
                  tabindex="-1"
                  aria-hidden="true"
-                 class="flex justify-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50  items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                 class="backdrop-blur-md  flex justify-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50  items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                 <div @click.outside="showModal=false"
                      class="relative w-full max-w-md max-h-full p-4">
-                    <!-- Modal content -->
-                    <div class="relative bg-white rounded-lg shadow dark:text-stone-800">
-                        <!-- Modal header -->
+                    <!-- File Upload Modal content -->
+                    <div class="relative rounded-lg shadow-2xl bg-neutral-300 shadow-slate-900 dark:text-stone-800">
+                        <!-- File Upload Modal header -->
                         <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5 dark:border-gray-600">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Upload Files</h3>
                             <button @click="showModal = false"
@@ -54,25 +57,25 @@
                                 <span class="sr-only">Close modal</span>
                             </button>
                         </div>
-                        <!-- Modal body -->
-                        <div>
+                        <!-- File Upload Modal body -->
+                        <div class="flex items-center justify-center">
                             <form hx-post="{% url 'files' %}"
                                   hx-trigger="submit"
                                   hx-swap="outerHTML"
                                   hx-target="#personal-table"
                                   action="."
                                   id="upload-form"
-                                  class="max-w-md mx-auto text-black"
+                                  class="items-center justify-center max-w-md mx-auto text-black"
                                   method="POST"
                                   enctype="multipart/form-data"
                                   onsubmit="return validateForm()"
-                                  @submit.prevent="showModal = false; $el.reset()">
-                                <div class="mb-5 align-middle text-formcontrol cursor-text">
+                                  @submit.debounce.200ms="showModal = false; $el.reset()">
+                                <div class="items-center justify-center mb-5 text-center align-middle text-formcontrol cursor-text">
                                     {% csrf_token %}
                                     {% crispy form %}
                                     <input type="submit"
                                            value="Upload"
-                                           class="flex items-center justify-center px-4 py-2 font-bold rounded w-36 bg-misargreen hover:bg-white hover:text-black">
+                                           class="items-center justify-center px-4 py-2 font-bold rounded w-36 bg-misargreen hover:bg-white hover:text-black">
                                 </div>
                             </form>
                         </div>
@@ -80,104 +83,29 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="flex flex-col justify-between m-3">
+        <!-- File Upload Modal body -->
         <div hx-get="{% url 'files' %}"
              hx-trigger="load"
              hx-swap="outerHTML"
-             hx-target="#personal-table"
+             hx-target="personal-table"
              hx-select="table"
-             class="relative mx-auto overflow-x-auto rounded-lg sm:max-w-2/3 lg:max-w-2/3">
-            <table id="personal-table"
-                   class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">File Name</th>
-                        <th scope="col" class="px-6 py-3">File Description</th>
-                        <th scope="col" class="px-6 py-3">File Type</th>
-                        <th scope="col" class="px-6 py-3">File Size</th>
-                        <th scope="col" class="px-6 py-3">File Added</th>
-                        <th scope="col" class="px-6 py-3">File Last Modified</th>
-                        <th scope="col" class="px-6 py-3">Share</th>
-                        <th scope="col" class="px-6 py-3">Delete</th>
-                        <th scope="col" class="px-6 py-3">Download</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for file in memberfiles %}
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row"
-                                class="px-6 py-4 text-gray-900 font-large whitespace-nowrap dark:text-white">
-                                <a href="{{ file.file.url }}">{{ file.file_name }}</a>
-                            </th>
-                            <td class="px-6 py-4">{{ file.file_description }}</td>
-                            <td class="px-6 py-4">{{ file.file.name|extension }}</td>
-                            <td class="px-6 py-4">{{ file.file.size|filesize }}</td>
-                            <td class="px-6 py-4">{{ file.date_created|date:"m/d/y" }}</td>
-                            <td class="px-6 py-4">{{ file.last_modified|date:"m/d/y" }}</td>
-                            <td class="px-6 py-4">
-                                <a href="{% url 'share' file.id %}"
-                                   class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Share File</a>
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="{% url 'delete_file' file.id %}"
-                                   class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
-                                <td class="px-6 py-4">
-                                    <a href="{% url 'download' file.id %}"
-                                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Download</a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+             class="flex flex-col justify-between m-3">
+            <div class="relative mx-auto overflow-x-auto rounded-lg sm:max-w-2/3 lg:max-w-2/3">
+                <div id="personal-files-table">{% include 'members/partials/personal-table.html' %}</div>
             </div>
         </div>
     </div>
-    <div class="items-center justify-center p-6 m-3 mx-auto text-center text-stone-800">
-        <h2 class="m-3 font-semibold text-black text 3xl">Shared Files</h2>
-        Here is a list of files that others have shared with you:
-        <div class="flex flex-col justify-between m-3">
-            <div class="relative mx-auto overflow-x-auto rounded-lg sm:max-w-2/3 lg:max-w-2/3">
-                <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">File Name</th>
-                            <th scope="col" class="px-6 py-3">File Description</th>
-                            <th scope="col" class="px-6 py-3">File Type</th>
-                            <th scope="col" class="px-6 py-3">File Size</th>
-                            <th scope="col" class="px-6 py-3">File Added</th>
-                            <th scope="col" class="px-6 py-3">File Last Modified</th>
-                            <th scope="col" class="px-6 py-3">Share</th>
-                            <th scope="col" class="px-6 py-3">Delete</th>
-                            <th scope="col" class="px-6 py-3">Download</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for file in sharedfiles %}
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <th scope="row"
-                                    class="px-6 py-4 text-gray-900 font-large whitespace-nowrap dark:text-white">
-                                    {{ file.file_name }}
-                                </th>
-                                <td class="px-6 py-4">{{ file.file_description }}</td>
-                                <td class="px-6 py-4">{{ file.file.name|extension }}</td>
-                                <td class="px-6 py-4">{{ file.file.size|filesize }}</td>
-                                <td class="px-6 py-4">{{ file.date_created|date:"m/d/y" }}</td>
-                                <td class="px-6 py-4">{{ file.last_modified|date:"m/d/y" }}</td>
-                                <td class="px-6 py-4">
-                                    <a href="{% url 'share' file.id %}"
-                                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Share File</a>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <a href="{% url 'delete_file' file.id %}"
-                                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
-                                    <td class="px-6 py-4">
-                                        <a href="{% url 'download' file.id %}"
-                                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Download</a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </div>
-                    </div>
+    <!-- The Beginning of the Share files Table -->
+    <div>
+        <div class="items-center justify-center p-6 m-3 mx-auto text-center text-stone-800">
+            <h2 class="m-3 font-semibold text-black text 3xl">Shared Files</h2>
+            Here is a list of files that others have shared with you:
+            <div class="flex flex-col justify-between m-3">
+                <div id="shared-files-table"
+                     class="relative mx-auto overflow-x-auto rounded-lg sm:max-w-2/3 lg:max-w-2/3">
+                    {% include 'members/partials/shared-table.html' %}
                 </div>
-            {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,27 +1,27 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseForbidden, HttpResponse, JsonResponse
-from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib import messages
+from django.contrib.auth.views import (
+    LoginView,
+    LogoutView,
+    PasswordResetCompleteView,
+    PasswordResetConfirmView,
+    PasswordResetDoneView,
+    PasswordResetView,
+)
+from django.http import HttpResponse, HttpResponseForbidden
+from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
-from guardian.shortcuts import assign_perm, get_perms
 from django.views import View
 from django.views.generic import CreateView
-from django.template.loader import render_to_string
+from guardian.shortcuts import assign_perm, get_objects_for_user, get_perms
 from home.models import SiteInfo
 
 from misar_web.settings import LOGIN_URL
 
 from .forms import FileShareForm, FileUploadForm, MemberRegistrationForm
-from guardian.shortcuts import get_objects_for_user
-from .models import MemberFile
-from django.contrib.auth.views import (
-    LoginView,
-    LogoutView,
-    PasswordResetView,
-    PasswordResetDoneView,
-    PasswordResetConfirmView,
-    PasswordResetCompleteView,
-)
+from .models import Member, MemberFile
 
 
 class MemberRegisterView(CreateView):
@@ -90,28 +90,43 @@ def member_home(request):
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def files(request):
-    member_files = MemberFile.objects.filter(owner=request.user).order_by("id")
+    DEFAULT_PERMS = [
+        "view_memberfile",
+        "change_memberfile",
+        "delete_memberfile",
+        "share_memberfile",
+    ]
+    siteinfo = SiteInfo.objects.get(id=1)
+    member_files = MemberFile.objects.filter(owner=request.user).order_by("id")  # noqa
     shared_files = get_objects_for_user(
         request.user, "view_memberfile", klass=MemberFile
     ).exclude(owner=request.user)
-    siteinfo = SiteInfo.objects.get(id=1)
     form = FileUploadForm(request.POST or None, request.FILES or None)
     if form.is_valid():
-        form.save(owner=request.user)
+        file = form.save(owner=request.user)
+        for permission in DEFAULT_PERMS:
+            assign_perm(permission, request.user, file)
+
+        member_files = MemberFile.objects.filter(owner=request.user).order_by("id")
         if request.headers.get("HX-Request"):
-            table_html = render_to_string(
-                "members/personal-table.html",
-                {"memberfiles": member_files, "sharedfiles": shared_files},
+            member_table_html = render_to_string(
+                "members/partials/personal-table.html",
+                {"memberfiles": member_files},
                 request,
             )
-            return HttpResponse(table_html)
+
+            return HttpResponse(member_table_html)
         else:
             return redirect("files")
+    else:
+        member_files = MemberFile.objects.filter(owner=request.user).order_by("id")
+        share_form = FileShareForm(user=request.user)
     context = {
         "form": form,
         "memberfiles": member_files,
         "sharedfiles": shared_files,
         "siteinfo": siteinfo,
+        "share_form": share_form,
     }
     return render(request, "members/files.html", context)
 
@@ -122,9 +137,29 @@ def delete_file(request, file_id):
     if request.user == file.owner or request.user.has_perm(
         "members.delete_memberfile", file
     ):
+        file.file.delete()
         file.delete()
-        return redirect("files")
-    return HttpResponseForbidden("You do not have permission to delete this file.")
+    else:
+        messages.error(request, "You do not have permission to delete this file.")
+
+    if request.headers.get("HX-Request"):
+        if "shared-files-table" in request.headers.get("HX-Target", ""):
+            files = get_objects_for_user(
+                request.user, "view_memberfile", klass=MemberFile
+            ).exclude(owner=request.user)
+            table_html = render_to_string(
+                "members/partials/shared-table.html",
+                {"sharedfiles": files},
+                request,
+            )
+        else:
+            files = MemberFile.objects.filter(owner=request.user).order_by("id")
+            table_html = render_to_string(
+                "members/partials/personal-table.html",
+                {"memberfiles": files},
+                request,
+            )
+        return HttpResponse(table_html)
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
@@ -143,17 +178,6 @@ def download_file(request, file_id):
     return response
 
 
-# @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
-# def file_upload(request):
-#     siteinfo = SiteInfo.objects.get(id=1)
-#     form = FileUploadForm(request.POST or None, request.FILES or None)
-#     if form.is_valid():
-#         form.save(owner=request.user)
-#         return redirect("files")
-#     context = {"form": form, "siteinfo": siteinfo}
-#     return render(request, "members/upload.html", context)
-
-
 class ShareFileView(LoginRequiredMixin, View):
     login_url = LOGIN_URL
     redirect_field_name = "redirect_to"
@@ -170,21 +194,28 @@ class ShareFileView(LoginRequiredMixin, View):
         context = {"form": form, "siteinfo": siteinfo}
         return render(request, "members/share_file.html", context)
 
-    def post(self, request):
+    def post(self, request, file_id=None):
         siteinfo = SiteInfo.objects.get(id=1)
         form = FileShareForm(request.POST or None, user=request.user)
         if form.is_valid():
             file = form.cleaned_data["file"]
             recipients = form.cleaned_data["recipient"]
+            assign_to_all = form.cleaned_data["assign_to_all"]
             permissions = form.cleaned_data["permissions"]
 
             if "share_memberfile" not in get_perms(request.user, file):
                 return HttpResponseForbidden(
                     "You do not have permission to share this file."
                 )
-            for recipient in recipients:
-                for permission in permissions:
-                    assign_perm(permission, recipient, file)
+            if assign_to_all:
+                all_users = Member.objects.all().exclude(is_superuser=True)
+                for user in all_users:
+                    for permission in permissions:
+                        assign_perm(permission, user, file)
+            else:
+                for recipient in recipients:
+                    for permission in permissions:
+                        assign_perm(permission, recipient, file)
 
             return redirect("files")
 
