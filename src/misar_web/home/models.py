@@ -15,6 +15,8 @@ class SiteInfo(models.Model):
     po_box = models.CharField(max_length=20)
     city_state_zip = models.CharField(max_length=50)
     team_email = models.EmailField(max_length=50)
+    about_photo_1 = models.ImageField(upload_to="home/files/images")
+    about_photo_2 = models.ImageField(upload_to="home/files/images")
 
     class Meta:
         verbose_name_plural = "information"
@@ -48,3 +50,4 @@ class SearchSpecialty(models.Model):
 
     def __str__(self) -> str:
         return self.specialty
+
