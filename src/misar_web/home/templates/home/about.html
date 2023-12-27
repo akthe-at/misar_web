@@ -1,0 +1,33 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% load tailwind_filters %}
+{% block content %}
+    <div>
+        <div class="flex py-4 bg-neutral-700 items-center justify-center w-full text-center h-auto">
+            <div>
+                <h2 class="pb-3 text-5xl font-semibold text-white">Why Dogs?</h2>
+                <p class="px-4 text-2xl text-white sm:mx-auto: md:mx-auto lg:mx-32 xl:mx-96 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+                    Dogs have a far better ability to smell than do humans and they can pick up the scent of a missing person from a
+                    distance and if that person happens to be covered by brush or other materials that would prevent locating a
+                    person visually.
+                </p>
+                <div class="flex justify-center">
+                    <img class="max-h-96 mx-auto my-3 rounded-lg"
+                         src="{{ siteinfo.about_photo_1.url }}"
+                         alt="dog">
+                </div>
+                <p class="px-4 text-2xl text-white sm:mx-auto: md:mx-auto lg:mx-32 xl:mx-96 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+                    No one trains a dog on their own. It takes many people and many hours of varying training to achieve the level
+                    of competence for a team that is qualified to assist in the search for a missing person.
+                </p>
+                <img class="max-h-96 my-3 mx-auto rounded-lg"
+                     src="{{ siteinfo.about_photo_2.url }}"
+                     alt="Zander">
+                <p class="px-4 text-2xl text-white sm:mx-auto: md:mx-auto lg:mx-32 xl:mx-96 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+                    The dogs consider searching their favorite 'game' just as do dogs who love to chase a ball or frisbee. Finding
+                    what they're looking for brings a reward - generally either a food treat or a toy.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
