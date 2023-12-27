@@ -22,3 +22,9 @@ def contact(request: HttpRequest):
     context = {"siteinfo": siteinfo}
     return render(request=request, template_name="home/contact.html", context=context)
 
+
+def about(request: HttpRequest):
+    siteinfo = SiteInfo.objects.get(id=1)
+    context = {"siteinfo": siteinfo}
+    return render(request=request, template_name="home/about.html", context=context)
+
