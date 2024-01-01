@@ -9,7 +9,7 @@ from django.contrib.auth.views import (
     PasswordResetDoneView,
     PasswordResetView,
 )
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
@@ -17,7 +17,9 @@ from django.views import View
 from django.views.generic import CreateView
 from guardian.shortcuts import assign_perm, get_objects_for_user, get_perms
 from home.models import SiteInfo
-
+import calendar
+from calendar import HTMLCalendar
+from datetime import datetime
 from misar_web.settings import LOGIN_URL
 
 from .forms import FileShareForm, FileUploadForm, MemberRegistrationForm
@@ -82,14 +84,14 @@ class CustomLogoutView(LogoutView):
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
-def member_home(request):
+def member_home(request: HttpRequest):
     siteinfo = SiteInfo.objects.get(id=1)
     context = {"siteinfo": siteinfo}
     return render(request, "members/member_landing.html", context)
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
-def files(request):
+def files(request: HttpRequest):
     DEFAULT_PERMS = [
         "view_memberfile",
         "change_memberfile",
@@ -132,7 +134,7 @@ def files(request):
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
-def delete_file(request, file_id):
+def delete_file(request: HttpRequest, file_id: int):
     file = MemberFile.objects.get(pk=file_id)
     if request.user == file.owner or request.user.has_perm(
         "members.delete_memberfile", file
@@ -221,4 +223,26 @@ class ShareFileView(LoginRequiredMixin, View):
 
         context = {"form": form, "siteinfo": siteinfo}
         return render(request, "members/share_file.html", context)
+
+
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
+def team_calendar(
+    request: HttpRequest,
+    year: int = datetime.now().year,
+    month: str = datetime.now().strftime("%B"),
+):
+    year = int(year)
+    month = month.title()
+    month_number = list(calendar.month_name).index(month)
+    cal = HTMLCalendar().formatmonth(year, month_number)
+
+    siteinfo = SiteInfo.objects.get(id=1)
+    context = {
+        "siteinfo": siteinfo,
+        "year": year,
+        "month": month,
+        "month_number": month_number,
+        "cal": cal,
+    }
+    return render(request, "members/calendar.html", context)
 
