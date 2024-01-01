@@ -10,7 +10,6 @@
             <th scope="col" class="px-6 py-3">File Type</th>
             <th scope="col" class="px-6 py-3">File Size</th>
             <th scope="col" class="px-6 py-3">File Added</th>
-            <th scope="col" class="px-6 py-3">File Last Modified</th>
             <th scope="col" class="px-6 py-3">Share</th>
             <th scope="col" class="px-6 py-3">Delete</th>
             <th scope="col" class="px-6 py-3">Download</th>
@@ -27,7 +26,6 @@
                 <td class="px-6 py-4">{{ file.file.name|extension }}</td>
                 <td class="px-6 py-4">{{ file.file.size|filesize }}</td>
                 <td class="px-6 py-4">{{ file.date_created|date:"m/d/y" }}</td>
-                <td class="px-6 py-4">{{ file.last_modified|date:"m/d/y" }}</td>
                 <td class="px-6 py-4">
                     <a href="{% url 'share' file.id %}"
                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Share
