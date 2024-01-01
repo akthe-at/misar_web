@@ -17,6 +17,9 @@ class SiteInfo(models.Model):
     team_email = models.EmailField(max_length=50)
     about_photo_1 = models.ImageField(upload_to="home/files/images")
     about_photo_2 = models.ImageField(upload_to="home/files/images")
+    about_photo_3 = models.ImageField(upload_to="home/files/images")
+    contact_photo_1 = models.ImageField(upload_to="home/files/images")
+    contact_photo_2 = models.ImageField(upload_to="home/files/images")
 
     class Meta:
         verbose_name_plural = "information"
