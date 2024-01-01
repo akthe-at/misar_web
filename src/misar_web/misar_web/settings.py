@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_tailwind",
     "guardian",
+    "coverage",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
