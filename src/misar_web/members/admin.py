@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from guardian.admin import GuardedModelAdmin
-from .models import Member, MemberFile
+from .models import Member, MemberFile, Location, Event
 # Register your models here.
 
 
@@ -30,4 +30,6 @@ class MemberFileAdmin(GuardedModelAdmin):
 
 admin.site.register(Member, CustomUserAdmin)
 admin.site.register(MemberFile, MemberFileAdmin)
+admin.site.register(Location)
+admin.site.register(Event)
 
