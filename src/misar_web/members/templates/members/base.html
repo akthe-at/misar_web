@@ -13,17 +13,25 @@
         <title>Michigan Search and Rescue</title>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                document.getElementById('personal-table').addEventListener('htmx:afterSwap', function (event) {
-                    var form = document.getElementById('upload-form');
-                    form.reset();
-                    showModal = false;
-                });
-            
-                window.validateForm = function () {
-                    var form = document.getElementById('upload-form');
-                    return form.checkValidity();  // Allow the form to be submitted if it's valid
-                }
-            });
+    var personalTable = document.getElementById('personal-table');
+    var uploadForm = document.getElementById('upload-form');
+
+    if (personalTable) {
+        personalTable.addEventListener('htmx:afterSwap', function (event) {
+            if (uploadForm) {
+                uploadForm.reset();
+            }
+            showModal = false;
+        });
+    }
+
+    window.validateForm = function () {
+        if (uploadForm) {
+            return uploadForm.checkValidity();  // Allow the form to be submitted if it's valid
+        }
+        return false;
+    }
+});
         </script>
     </head>
     <body class="bg-neutral-300">
