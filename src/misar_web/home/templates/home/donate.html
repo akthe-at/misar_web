@@ -1,51 +1,61 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block content %}
-    <div class="p-8">
-        <div class="m-3 text-center text-black">
-            <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"">How to Help?
+    <div>
+        <div class="flex flex-col py-5 bg-black w-full justify-center items-center text-center text-misargreen">
+            <h1 class="flex mb-4 text-4xl font-extrabold leading-none tracking-tight text-white md:text-5xl lg:text-6xl dark:text-white"">How You Can Help
             </h1>
-            <h2 class="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
-                How You Can Help...
-            </h2>
         </div>
-        <div class="flex mt-5">
-            <h1 class="flex mb-2 text-2xl font-bold text-gray-900 dark:text-white">Monetary Donations</h1>
+        <div class="flex flex-row py-5 justify-center items-center mx-auto bg-neutral-600">
+            <div class="flex-col items-center justify-center w-1/2">
+                <h1 class="flex flex-col mb-2 text-2xl font-bold text-white dark:text-white">Monetary Donations</h1>
+                <ul class="flex flex-col list-disc text-white">
+                    <li>Michigan Search and Rescue is a 501(c)3 nonprofit corporation.</li>
+                    <li>Members of MISAR are not paid or compensated for their services in any form.</li>
+                    <li>
+                        The organization operates solely on donations received from the public, grants, and through grass-roots fundraising efforts.
+                    </li>
+                    <li>
+                        Members are expected to pay for and maintain their own equipment with their own money on top of the costs associated with traveling to searches or training.
+                    </li>
+                    <li>
+                        Additionally, canine handlers on the team must provide and care for their canine with their own money. The canines are not property of the organization unlike many law enforcement canines.
+                    </li>
+                    <li>
+                        If you would like to make a donation to Michigan Search and Rescue, please click the "Donate" button below this paragraph, or contact us through our email at Michigansar@gmail.com
+                    </li>
+                </ul>
+            </div>
+            <img class="flex-col max-w-1/2 max-h-96 rounded-lg"
+                 src="{{ siteinfo.donate_photo_1.url }}"
+                 alt="Toby">
         </div>
-        <div>
-            <ul class="flex flex-col list-disc">
-                <li>Michigan Search and Rescue is a 501(c)3 nonprofit corporation.</li>
-                <li>Members of MISAR are not paid or compensated for their services in any form.</li>
-                <li>
-                    The organization operates solely on donations received from the public, grants, and through grass-roots fundraising efforts.
-                </li>
-                <li>
-                    Members are expected to pay for and maintain their own equipment with their own money on top of the costs associated with traveling to searches or training.
-                </li>
-                <li>
-                    Additionally, canine handlers on the team must provide and care for their canine with their own money. The canines are not property of the organization unlike many law enforcement canines.
-                </li>
-                <li>
-                    If you would like to make a donation to Michigan Search and Rescue, please click the "Donate" button below this paragraph, or contact us through our email at Michigansar@gmail.com
-                </li>
-            </ul>
+        <div class="flex flex-row py-5 justify-center items-center mx-auto w-full bg-neutral-700">
+            <img class="flex-col max-h-96 rounded-lg max-w-1/2 mx-auto"
+                 src="{{ siteinfo.donate_photo_2.url }}"
+                 alt="Ezra">
+            <div class="flex-col items-center justify-center w-1/2">
+                <h1 class="flex flex-col mb-2 text-2xl font-bold text-center text-gray-100 dark:text-white">Donate your Time</h1>
+                <p class="flex flex-col font-normal text-white dark:text-white">
+                    We are always looking for people to help with training. If you are a scout troop leader or if you have a day to donate to "get lost for the dogs" we welcome your participation.
+                    Are you interested in becoming involved in search and rescue? We will be happy to invite you out for a day of training so you can see if it's right for you.
+                </p>
+            </div>
         </div>
-        <div class="flex items-center mt-5">
-            <h1 class="mb-2 text-2xl font-bold tracking-tight text-center text-gray-900 dark:text-white">Donate your Time</h1>
+        <div class=" bg-neutral-900 flex flex-row py-5 justify-center items-center mx-auto">
+            <div class="flex flex-col justify-center items-center w-1/2">
+                <h1 class="flex flex-col mb-2 text-2xl font-bold tracking-tight text-center text-white dark:text-white">
+                    Donate Training Space
+                </h1>
+                <p class="flex flex-col font-normal text-white dark:text-white">
+                    MISAR is always looking for new locations to train. If you have acreage or an unoccupied building that you are willing to make available for  aday of use, we would love to hear from you.
+                </p>
+                <h1 class="mb-2 text-2xl font-bold tracking-tight text-center text-white dark:text-white">Tissue Donations</h1>
+                <p class="font-normal text-white dark:text-white">Talk About Tissue Donations Here.</p>
+            </div>
+            <img class="flex-col max-h-96 rounded-lg"
+                 src="{{ siteinfo.donate_photo_3.url }}"
+                 alt="Noli">
         </div>
-        <p class="font-normal text-gray-700 dark:text-gray-400">
-            We are always looking for people to help with training. If you are a scout troop leader or if you have a day to donate to "get lost for the dogs" we welcome your participation.
-            Are you interested in becoming involved in search and rescue? We will be happy to invite you out for a day of training so you can see if it's right for you.
-        </p>
-        <div class="flex items-center mt-5">
-            <h1 class="mb-2 text-2xl font-bold tracking-tight text-center text-gray-900 dark:text-white">Donate Training Space</h1>
-        </div>
-        <p class="font-normal text-gray-700 dark:text-gray-400">
-            MISAR is always looking for new locations to train. If you have acreage or an unoccupied building that you are willing to make available for  aday of use, we would love to hear from you.
-        </p>
-        <div class="flex items-center mt-5">
-            <h1 class="mb-2 text-2xl font-bold tracking-tight text-center text-gray-900 dark:text-white">Tissue Donations</h1>
-        </div>
-        <p class="font-normal text-gray-700 dark:text-gray-400">Talk About Tissue Donations Here.</p>
     </div>
 {% endblock %}
