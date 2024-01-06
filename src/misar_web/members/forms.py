@@ -1,13 +1,14 @@
 from datetime import datetime
 from typing import Any
-from django.core.exceptions import ValidationError
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 from django.db import transaction
 from guardian.shortcuts import assign_perm, get_objects_for_user
 from localflavor.us.forms import USZipCodeField
 
-from members.models import Member, MemberFile
+from members.models import Event, Location, Member, MemberFile
 
 
 class MemberRegistrationForm(UserCreationForm):
@@ -119,7 +120,7 @@ class FileShareForm(forms.ModelForm):
 
     recipient = forms.ModelMultipleChoiceField(
         queryset=Member.objects.all(),
-        widget=forms.SelectMultiple,
+        widget=forms.CheckboxSelectMultiple,
         required=False,
     )
     assign_to_all = forms.BooleanField(required=False)
@@ -130,8 +131,13 @@ class FileShareForm(forms.ModelForm):
     )
 
     permissions = forms.MultipleChoiceField(
-        choices=PERMISSION_CHOICES,
         widget=forms.CheckboxSelectMultiple,
+        choices=(
+            ("view_memberfile", "View"),
+            ("change_memberfile", "Change"),
+            ("delete_memberfile", "Delete"),
+            ("share_memberfile", "Share"),
+        ),
     )
 
     def __init__(self, *args, **kwargs):
@@ -166,4 +172,28 @@ class FileShareForm(forms.ModelForm):
         for recipient in recipients:
             for permission in permissions:
                 assign_perm(permission, recipient, file)
+
+
+class EventLocationForm(forms.ModelForm):
+    """Form for members to create event locations"""
+
+    class Meta:
+        model = Location
+        fields = (
+            "point_of_contact",
+            "phone_number",
+            "email",
+            "name",
+            "website",
+            "description",
+            "address",
+            "city",
+            "state",
+            "zip_code",
+        )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs["class"] = "input_css_class"
 
