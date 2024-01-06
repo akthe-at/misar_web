@@ -1,18 +1,18 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block content %}
-    <div class="bg-neutral-600 flex flex-col-reverse sm:flex-col md:flex-row lg:flex-row xl:flex-row h-auto justify-center items-center">
+    <div class="bg-neutral-100 flex flex-col sm:flex-col-reverse md:flex-row lg:flex-row xl:flex-row h-auto justify-center items-center">
         <div class="size-full flex-1 flex-col">
             <img class="size-full"
                  src="{{ siteinfo.contact_photo_1.url }}"
                  alt="destiny">
         </div>
         <div class="flex-1 flex-col  w-full text-center text-black h-auto">
-            <h1 class="mb-4 text-white uppercase tracking-widest text-4xl font-extrabold">Contact Us</h1>
+            <h1 class="mb-4 text-black uppercase tracking-widest text-4xl font-extrabold">Contact Us</h1>
             <div class="w-full flex-col mt-4 flex space-x-64 justify-center">
-                <div class="text-white">
-                    <h2 class="text-white my-4 text-3xl font-semibold">Mailing Address:</h2>
-                    <div class="text-misargreen">
+                <div class="text-black">
+                    <h2 class="text-black my-4 text-3xl font-semibold">Mailing Address:</h2>
+                    <div class="text-black">
                         {{ siteinfo.street_address }}
                         <br>
                         {{ siteinfo.po_box }}
@@ -22,16 +22,16 @@
                 </div>
             </div>
             <div>
-                <h2 class="text-white text-3xl my-4 font-semibold">Contact Information:</h2>
-                <ul class="mt-4 text-white">
+                <h2 class="text-black text-3xl my-4 font-semibold">Contact Information:</h2>
+                <ul class="mt-4 text-black">
                     <li class="mb-4">
                         <h2 class="mb-1 text-2xl font-semibold">Call:</h2>
-                        <a class="text-misargreen hover:underline hover:text-black transition-all"
+                        <a class="text-black hover:underline hover:text-red-500 transition-all"
                            href="tel:18008185645">{{ siteinfo.dispatch_number }}</a>
                     </li>
                     <li class="mb-4">
                         <h2 class="mb-1 text-2xl font-semibold">Direct Email Inquiries:</h2>
-                        <a class="transition-all hover:underline hover:text-black text-misargreen"
+                        <a class="transition-all hover:underline hover:text-red-500 text-black"
                            href="mailto:{{ siteinfo.team_email }}">{{ siteinfo.team_email }}</a>
                     </li>
                 </ul>
