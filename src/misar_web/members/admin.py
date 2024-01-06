@@ -23,13 +23,43 @@ class CustomUserAdmin(UserAdmin):
 
 
 class MemberFileAdmin(GuardedModelAdmin):
-    search_fields = ("file_name", "file_description")
-    list_display = ("file_name", "file_description", "owner", "date_created")
+    search_fields = ("file_name", "file_description", "owner")
+    list_display = ("file_name", "file", "file_description", "owner", "date_created")
     ordering = ("-date_created",)
 
 
 admin.site.register(Member, CustomUserAdmin)
 admin.site.register(MemberFile, MemberFileAdmin)
-admin.site.register(Location)
-admin.site.register(Event)
+
+
+@admin.register(Location)
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ("name", "address", "city", "state", "zip_code")
+    list_filter = ("name", "city", "state", "zip_code")
+    search_fields = (
+        "name",
+        "address",
+        "city",
+    )
+    ordering = ("name", "city", "state", "zip_code")
+
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = (
+        "event_name",
+        "event_type",
+        "location",
+        "date",
+        "start_time",
+        "end_time",
+        "event_organizer",
+    )
+    list_filter = ("event_name", "location", "date")
+    search_fields = (
+        "event_name",
+        "event_type",
+        "location",
+    )
+    ordering = ("event_name", "event_type", "location", "date")
 
