@@ -1,0 +1,25 @@
+{% extends 'members/base.html' %}
+<div class="container">
+  {% block content %}
+  <a href="{% url 'add_location' %}">Add Event Location</a>
+  <h1 class="font-bold text-red-900"> Events </h1>
+  {% for event in events %}
+  <strong>{{ event }}</strong>
+  <ul>
+    <li>Event Type: {{ event.event_type }}</li>
+    <li>Date: {{ event.date }}</li>
+    <li>Location: {{ event.location }}</li>
+    <li>Location Address: <br />{{ event.location.address }},
+      {{event.location.city}},
+      {{event.location.state}}
+      {{event.location.zip_code}}</li>
+    <li>Description: {{ event.description }}</li>
+    <li>Attending:
+      {% for attendee in event.attendees.all %}
+      {{ attendee }}
+      {% endfor %}</li>
+  </ul>
+  {% endfor %}
+
+  {% endblock %}
+</div>
