@@ -46,6 +46,12 @@ urlpatterns = [
     path("delete_file/<int:file_id>/", views.delete_file, name="delete_file"),
     path("share/<int:file_id>/", ShareFileView.as_view(), name="share"),
     path("download/<int:file_id>/", views.download_file, name="download"),
-    path("<int:year>/<str:month>/", views.team_calendar, name="team_calendar"),
+    path(
+        "events/",
+        views.team_calendar,
+        name="team_calendar",
+    ),
+    path("events/all/", views.all_events, name="all_events"),
+    path("events/add_location/", views.create_location, name="add_location"),
 ]
 
