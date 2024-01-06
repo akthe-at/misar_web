@@ -20,6 +20,9 @@ class SiteInfo(models.Model):
     about_photo_3 = models.ImageField(upload_to="home/files/images")
     contact_photo_1 = models.ImageField(upload_to="home/files/images")
     contact_photo_2 = models.ImageField(upload_to="home/files/images")
+    donate_photo_1 = models.ImageField(upload_to="home/files/images")
+    donate_photo_2 = models.ImageField(upload_to="home/files/images")
+    donate_photo_3 = models.ImageField(upload_to="home/files/images")
 
     class Meta:
         verbose_name_plural = "information"
