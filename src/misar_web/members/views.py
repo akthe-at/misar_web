@@ -22,8 +22,13 @@ from calendar import HTMLCalendar
 from datetime import datetime
 from misar_web.settings import LOGIN_URL
 
-from .forms import FileShareForm, FileUploadForm, MemberRegistrationForm
-from .models import Member, MemberFile
+from .forms import (
+    EventLocationForm,
+    FileShareForm,
+    FileUploadForm,
+    MemberRegistrationForm,
+)
+from .models import Member, MemberFile, Event
 
 
 class MemberRegisterView(CreateView):
@@ -226,15 +231,13 @@ class ShareFileView(LoginRequiredMixin, View):
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
-def team_calendar(
-    request: HttpRequest,
-    year: int = datetime.now().year,
-    month: str = datetime.now().strftime("%B"),
-):
-    year = int(year)
-    month = month.title()
+def team_calendar(request: HttpRequest):
+    now = datetime.now()
+    year = now.year
+    month = now.strftime("%B")
+
     month_number = list(calendar.month_name).index(month)
-    cal = HTMLCalendar().formatmonth(year, month_number)
+    cal = HTMLCalendar().formatmonth(int(year), month_number)
 
     siteinfo = SiteInfo.objects.get(id=1)
     context = {
@@ -244,5 +247,22 @@ def team_calendar(
         "month_number": month_number,
         "cal": cal,
     }
-    return render(request, "members/calendar.html", context)
+    return render(request, "members/events/calendar.html", context)
+
+
+def all_events(request: HttpRequest):
+    siteinfo = SiteInfo.objects.get(id=1)
+    events = Event.objects.all()
+    context = {"siteinfo": siteinfo, "events": events}
+    return render(request, "members/events/all_events.html", context)
+
+
+def create_location(request: HttpRequest):
+    siteinfo = SiteInfo.objects.get(id=1)
+    form = EventLocationForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect("all_events")
+    context = {"siteinfo": siteinfo, "form": form}
+    return render(request, "members/events/add_location.html", context)
 
