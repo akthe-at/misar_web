@@ -74,48 +74,43 @@ class MemberFile(models.Model):
 class Location(models.Model):
     """A class to represent the location for events such as trainings, demos, fundraisers, etc."""
 
-    location_point_of_contact = models.CharField(
-        ("Location Point of Contact, if exists."), max_length=50, null=True
+    point_of_contact = models.CharField(
+        ("Location Point of Contact, if exists."), max_length=50, blank=True
     )
-    location_phone_number = models.CharField(
-        ("Location Phone Number"), max_length=50, null=True
+    phone_number = models.CharField(
+        ("Location Phone Number"), max_length=50, blank=True
     )
-    location_email = models.EmailField(("Location Email"), blank=True)
-    location_name = models.CharField(("Location Name"), max_length=50)
-    location_website = models.URLField(("Location Website"), max_length=75)
-    location_description = models.CharField(("Location Description"), max_length=50)
-    location_address = models.CharField(("Location Address"), max_length=100)
-    location_city = models.CharField(("Location City"), max_length=50)
-    location_state = models.CharField(("Location State"), max_length=50)
-    location_zip_code = USZipCodeField(("Location Zip Code"), null=False, max_length=10)
+    email = models.EmailField(("Location Email"), blank=True)
+    name = models.CharField(("Location Name"), max_length=50)
+    website = models.URLField(("Location Website"), max_length=75, blank=True)
+    description = models.CharField(("Location Description"), max_length=50)
+    address = models.CharField(("Address"), max_length=100)
+    city = models.CharField(("City"), max_length=50)
+    state = models.CharField(("State"), max_length=50)
+    zip_code = USZipCodeField(("Zip Code"), null=False, max_length=10)
 
     def __str__(self):
-        return self.location_name
+        return self.name
 
 
 class Event(models.Model):
     """A class to represent events"""
 
-    event_poster = models.ForeignKey(
-        Member, on_delete=models.CASCADE, related_name="owned_events", null=False
-    )
     event_organizer = models.ForeignKey(
         Member, on_delete=models.CASCADE, related_name="organized_events", null=True
     )
     event_name = models.CharField(("Event Name"), max_length=50)
     description = models.CharField(("Event Description"), max_length=50)
     event_type = models.CharField(("Event Type"), max_length=50)
-    date = models.DateTimeField(("Event Date"))
+    date = models.DateField(("Event Date"))
     location = models.ForeignKey(
-        Location, on_delete=models.CASCADE, related_name="event_location", null=True
+        Location, on_delete=models.SET_NULL, related_name="event_location", null=True
     )
-    address = models.CharField(("Event Address"), max_length=50)
-    city = models.CharField(("Event City"), max_length=50)
-    state = models.CharField(("Event State"), max_length=50)
-    zip_code = USZipCodeField(("Event Zip Code"), null=False, max_length=10)
-    start_time = models.DateTimeField(auto_now_add=True)
-    end_time = models.DateTimeField(auto_now_add=True)
-    special_instructions = models.TextField(("Special Instructions"), max_length=500)
+    start_time = models.DateTimeField(("Start Time"))
+    end_time = models.DateTimeField(("End Time"), blank=True)
+    special_instructions = models.TextField(
+        ("Special Instructions"), max_length=500, blank=True
+    )
     attendees = models.ManyToManyField(
         Member, related_name="event_attendees", blank=True
     )
