@@ -9,7 +9,12 @@ from django.contrib.auth.views import (
     PasswordResetDoneView,
     PasswordResetView,
 )
-from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
+from django.http import (
+    HttpRequest,
+    HttpResponse,
+    HttpResponseForbidden,
+    HttpResponseRedirect,
+)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
@@ -28,7 +33,7 @@ from .forms import (
     FileUploadForm,
     MemberRegistrationForm,
 )
-from .models import Member, MemberFile, Event
+from .models import Member, MemberFile, Event, Location
 
 
 class MemberRegisterView(CreateView):
@@ -258,11 +263,44 @@ def all_events(request: HttpRequest):
 
 
 def create_location(request: HttpRequest):
+    submitted = False
     siteinfo = SiteInfo.objects.get(id=1)
-    form = EventLocationForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect("all_events")
-    context = {"siteinfo": siteinfo, "form": form}
+    if request.method == "POST":
+        form = EventLocationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect("?submitted=True")
+    else:
+        form = EventLocationForm()
+        if "submitted" in request.GET:
+            submitted = True
+
+    context = {"siteinfo": siteinfo, "form": form, "submitted": submitted}
     return render(request, "members/events/add_location.html", context)
+
+
+def list_locations(request: HttpRequest):
+    siteinfo = SiteInfo.objects.get(id=1)
+    location_list = Location.objects.all()
+    context = {"siteinfo": siteinfo, "location_list": location_list}
+    return render(request, "members/events/locations.html", context)
+
+
+def show_location(request: HttpRequest, location_id: int):
+    """View to show specific location information.
+
+    Args:
+        request: HttpRequest Object
+        location_id: The id of the location to show (int)
+
+    Returns:
+        Returns a rendered template with the location information. (HttpResponse)
+    """
+    location = Location.objects.get(pk=location_id)
+    siteinfo = SiteInfo.objects.get(id=1)
+    return render(
+        request,
+        "members/events/show_location.html",
+        {"location": location, "siteinfo": siteinfo},
+    )
 
