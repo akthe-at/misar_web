@@ -53,5 +53,9 @@ urlpatterns = [
     ),
     path("events/all/", views.all_events, name="all_events"),
     path("events/add_location/", views.create_location, name="add_location"),
+    path("events/locations/", views.list_locations, name="location_list"),
+    path(
+        "events/show_location/<location_id>/", views.show_location, name="show_location"
+    ),
 ]
 
