@@ -2,12 +2,15 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
-<H1>Create Location Page</H1>
-<br>
-<form action="." method=POST>
-  {% csrf_token %}
-  {{ form|crispy }}
-  <input type="submit" value="Submit">
-</form>
-
+    <h1>Create Location Page</h1>
+    <br>
+    {% if submitted %}
+        Your location was created succesfully!
+    {% else %}
+        <form action="." method=POST>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Submit">
+        </form>
+    {% endif %}
 {% endblock %}
