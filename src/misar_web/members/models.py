@@ -82,7 +82,9 @@ class Location(models.Model):
     )
     email = models.EmailField(("Location Email"), blank=True)
     name = models.CharField(("Location Name"), max_length=50)
-    website = models.URLField(("Location Website"), max_length=75, blank=True)
+    website = models.URLField(
+        ("Location Website"), max_length=75, null=True, blank=True
+    )
     description = models.CharField(("Location Description"), max_length=50)
     address = models.CharField(("Address"), max_length=100)
     city = models.CharField(("City"), max_length=50)
