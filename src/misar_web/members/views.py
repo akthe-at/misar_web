@@ -32,6 +32,7 @@ from .forms import (
     FileShareForm,
     FileUploadForm,
     MemberRegistrationForm,
+    EventForm,
 )
 from .models import Member, MemberFile, Event, Location
 
@@ -159,11 +160,10 @@ def delete_file(request: HttpRequest, file_id: int):
             files = get_objects_for_user(
                 request.user, "view_memberfile", klass=MemberFile
             ).exclude(owner=request.user)
-            table_html = render_to_string(
-                "members/partials/shared-table.html",
-                {"sharedfiles": files},
-                request,
+            return render(
+                request, "members/files.html#shared-files-table", {"sharedfiles": files}
             )
+
         else:
             files = MemberFile.objects.filter(owner=request.user).order_by("id")
             table_html = render_to_string(
@@ -262,6 +262,37 @@ def all_events(request: HttpRequest):
     return render(request, "members/events/all_events.html", context)
 
 
+def create_event(request: HttpRequest):
+    siteinfo = SiteInfo.objects.get(id=1)
+    if request.method == "POST":
+        form = EventForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("all-events")
+    else:
+        form = EventForm()
+    context = {"siteinfo": siteinfo, "form": form}
+    return render(request, "members/events/add_event.html", context)
+
+
+def delete_event(request: HttpRequest, event_id: int):
+    event = Event.objects.get(pk=event_id)
+    if request.user.has_perm("members.delete_event", event):
+        event.delete()
+    else:
+        messages.error(request, "You do not have permission to delete this event.")
+
+    return redirect("all-events")
+    # if request.headers.get("HX-Request"):
+    #     events = Event.objects.all()
+    #     table_html = render_to_string(
+    #         "members/partials/event-table.html",
+    #         {"events": events},
+    #         request,
+    #     )
+    #     return HttpResponse(table_html)
+
+
 def create_location(request: HttpRequest):
     submitted = False
     siteinfo = SiteInfo.objects.get(id=1)
@@ -302,5 +333,31 @@ def show_location(request: HttpRequest, location_id: int):
         request,
         "members/events/show_location.html",
         {"location": location, "siteinfo": siteinfo},
+    )
+
+
+def update_location(request: HttpResponse, location_id: int):
+    """View to update a location.
+
+    Args:
+    request: HttpRequest Object
+    location_id: The id of the location to update (int)
+
+    returns:
+    Returns a rendered template with the updated location information. (HttpResponse)
+    """
+    location = Location.objects.get(pk=location_id)
+    siteinfo = SiteInfo.objects.get(id=1)
+    form = EventLocationForm(request.POST or None, instance=location)
+
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            return redirect("location_list", location_id=location_id)
+
+    return render(
+        request,
+        "members/events/update_location.html",
+        {"location": location, "siteinfo": siteinfo, "form": form},
     )
 
