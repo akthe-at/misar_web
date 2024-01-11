@@ -1,0 +1,18 @@
+{% extends 'members/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<h1>Create Event Page</h1>
+<br>
+{% if submitted %}
+Your Event was created succesfully!
+{% else %}
+<form action="" method=POST>
+  {% csrf_token %}
+  {{ form|crispy }}
+  <input type="submit" value="Submit"
+    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+
+</form>
+{% endif %}
+{% endblock %}
