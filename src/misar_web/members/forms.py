@@ -179,7 +179,7 @@ class EventLocationForm(forms.ModelForm):
 
     class Meta:
         model = Location
-        fields = (
+        fields = [
             "point_of_contact",
             "phone_number",
             "email",
@@ -190,10 +190,34 @@ class EventLocationForm(forms.ModelForm):
             "city",
             "state",
             "zip_code",
-        )
+        ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs["class"] = "input_css_class"
+
+
+class EventForm(forms.ModelForm):
+    """Form for members to create events"""
+
+    class Meta:
+        model = Event
+        fields = [
+            "event_organizer",
+            "event_name",
+            "description",
+            "event_type",
+            "date",
+            "location",
+            "start_time",
+            "end_time",
+            "special_instructions",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # self.fields["location"].queryset = Location.objects.
         for field in self.fields:
             self.fields[field].widget.attrs["class"] = "input_css_class"
 
