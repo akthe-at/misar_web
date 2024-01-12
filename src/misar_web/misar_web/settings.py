@@ -25,13 +25,17 @@ SECRET_KEY = "django-insecure-43+3*qq&o3*b6kz*mqv!fzdftr*22(9y%wsk!x15qv9t22io^n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["192.168.86.28", "127.0.0.1", "0.0.0.0"]
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": lambda r: False,  # disables it
+    # '...
+}
 
 # Application definition
 
 INSTALLED_APPS = [
     "debug_toolbar",
+    "template_partials",
     "home.apps.HomeConfig",
     "members.apps.MembersConfig",
     "django.contrib.admin",
