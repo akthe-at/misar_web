@@ -122,13 +122,10 @@ def files(request: HttpRequest):
 
         member_files = MemberFile.objects.filter(owner=request.user).order_by("id")
         if request.headers.get("HX-Request"):
-            member_table_html = render_to_string(
-                "members/partials/personal-table.html",
-                {"memberfiles": member_files},
-                request,
+            files = MemberFile.objects.filter(owner=request.user).order_by("id")
+            return render(
+                request, "members/files.html#personal-table", {"memberfiles": files}
             )
-
-            return HttpResponse(member_table_html)
         else:
             return redirect("files")
     else:
@@ -145,7 +142,7 @@ def files(request: HttpRequest):
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
-def delete_file(request: HttpRequest, file_id: int):
+def delete_file(request: HttpRequest, file_id: int) -> HttpResponse | None:
     file = MemberFile.objects.get(pk=file_id)
     if request.user == file.owner or request.user.has_perm(
         "members.delete_memberfile", file
@@ -166,12 +163,9 @@ def delete_file(request: HttpRequest, file_id: int):
 
         else:
             files = MemberFile.objects.filter(owner=request.user).order_by("id")
-            table_html = render_to_string(
-                "members/partials/personal-table.html",
-                {"memberfiles": files},
-                request,
-            )
-        return HttpResponse(table_html)
+        return render(
+            request, "members/files.html#personal-table", {"memberfiles": files}
+        )
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
