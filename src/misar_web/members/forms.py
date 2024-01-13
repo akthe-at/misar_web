@@ -190,10 +190,12 @@ class EventLocationForm(forms.ModelForm):
             "city",
             "state",
             "zip_code",
+            "misar_poc",
         ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["misar_poc"].queryset = Member.objects.filter(is_superuser=False)
         for field in self.fields:
             self.fields[field].widget.attrs["class"] = "input_css_class"
 
@@ -220,4 +222,12 @@ class EventForm(forms.ModelForm):
         # self.fields["location"].queryset = Location.objects.
         for field in self.fields:
             self.fields[field].widget.attrs["class"] = "input_css_class"
+
+
+class LocationCSVForm(forms.Form):
+    """Form for uploading a CSV file of locations"""
+
+    locations = forms.ModelMultipleChoiceField(
+        queryset=Location.objects.all(), widget=forms.CheckboxSelectMultiple
+    )
 

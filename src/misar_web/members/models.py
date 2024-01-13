@@ -90,6 +90,14 @@ class Location(models.Model):
     city = models.CharField(("City"), max_length=50)
     state = models.CharField(("State"), max_length=50)
     zip_code = USZipCodeField(("Zip Code"), null=False, max_length=10)
+    misar_poc = models.ForeignKey(
+        Member,
+        on_delete=models.SET_NULL,
+        related_name="misar_poc",
+        null=True,
+        blank=True,
+        verbose_name="MISAR Point of Contact",
+    )
 
     def __str__(self):
         return self.name

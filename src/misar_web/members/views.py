@@ -20,6 +20,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView
+import csv
 from guardian.shortcuts import assign_perm, get_objects_for_user, get_perms
 from home.models import SiteInfo
 import calendar
@@ -251,7 +252,7 @@ def team_calendar(request: HttpRequest):
 
 def all_events(request: HttpRequest):
     siteinfo = SiteInfo.objects.get(id=1)
-    events = Event.objects.all()
+    events = Event.objects.all().order_by("date")
     context = {"siteinfo": siteinfo, "events": events}
     return render(request, "members/events/all_events.html", context)
 
@@ -309,7 +310,7 @@ def create_location(request: HttpRequest):
 
 def list_locations(request: HttpRequest):
     siteinfo = SiteInfo.objects.get(id=1)
-    location_list = Location.objects.all()
+    location_list = Location.objects.all().order_by("name")
     context = {"siteinfo": siteinfo, "location_list": location_list}
     return render(request, "members/events/locations.html", context)
 
@@ -333,7 +334,7 @@ def update_location(request: HttpResponse, location_id: int):
     if request.method == "POST":
         if form.is_valid():
             form.save()
-            return redirect("location_list", location_id=location_id)
+            return redirect("location_list")
 
     return render(
         request,
@@ -346,4 +347,54 @@ def delete_location(request: HttpRequest, location_id: int):
     location = Location.objects.get(pk=location_id)
     location.delete()
     return redirect("location_list")
+
+
+def location_csv(request: HttpRequest) -> HttpResponse:
+    """A view for exporting locations as a CSV file.
+
+    Args:
+        request: HttpRequest
+
+    Returns:
+        HttpResponse: A CSV file of locations.
+    """
+    if request.method == "POST":
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="locations.csv"'
+        writer = csv.writer(response)
+
+        writer.writerow(
+            [
+                "Location Name",
+                "Address",
+                "City",
+                "State",
+                "Zip Code",
+                "POC Name",
+                "Phone Number",
+                "Email",
+                "Website",
+                "Description",
+                "MISAR Point of Contact",
+            ]
+        )
+        location_ids = request.POST.getlist("location_ids")
+        print(location_ids)
+        print(type(location_ids))
+        locations = Location.objects.filter(pk__in=location_ids).values_list(
+            "name",
+            "address",
+            "city",
+            "state",
+            "zip_code",
+            "point_of_contact",
+            "phone_number",
+            "email",
+            "website",
+            "description",
+            "misar_poc",
+        )
+        for location in locations:
+            writer.writerow(location)
+        return response
 
