@@ -262,13 +262,28 @@ def create_event(request: HttpRequest):
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("all-events")
+            return redirect("all_events")
     else:
         form = EventForm()
     context = {"siteinfo": siteinfo, "form": form}
     return render(request, "members/events/add_event.html", context)
 
 
+def update_event(request: HttpRequest, event_id: int):
+    siteinfo = SiteInfo.objects.get(id=1)
+    event = Event.objects.get(pk=event_id)
+    if request.method == "POST":
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            return redirect("all_events")
+    else:
+        form = EventForm(instance=event)
+    context = {"siteinfo": siteinfo, "form": form}
+    return render(request, "members/events/update_event.html", context)
+
+
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def delete_event(request: HttpRequest, event_id: int):
     event = Event.objects.get(pk=event_id)
     if request.user.has_perm("members.delete_event", event):
@@ -276,15 +291,7 @@ def delete_event(request: HttpRequest, event_id: int):
     else:
         messages.error(request, "You do not have permission to delete this event.")
 
-    return redirect("all-events")
-    # if request.headers.get("HX-Request"):
-    #     events = Event.objects.all()
-    #     table_html = render_to_string(
-    #         "members/partials/event-table.html",
-    #         {"events": events},
-    #         request,
-    #     )
-    #     return HttpResponse(table_html)
+    return redirect("all_events")
 
 
 def create_location(request: HttpRequest):
@@ -312,15 +319,6 @@ def list_locations(request: HttpRequest):
 
 
 def show_location(request: HttpRequest, location_id: int):
-    """View to show specific location information.
-
-    Args:
-        request: HttpRequest Object
-        location_id: The id of the location to show (int)
-
-    Returns:
-        Returns a rendered template with the location information. (HttpResponse)
-    """
     location = Location.objects.get(pk=location_id)
     siteinfo = SiteInfo.objects.get(id=1)
     return render(
@@ -354,4 +352,15 @@ def update_location(request: HttpResponse, location_id: int):
         "members/events/update_location.html",
         {"location": location, "siteinfo": siteinfo, "form": form},
     )
+
+
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
+def delete_location(request: HttpRequest, location_id: int):
+    location = Location.objects.get(pk=location_id)
+    if request.user.has_perm("members.delete_location", location):
+        location.delete()
+    else:
+        messages.error(request, "You do not have permission to delete this location.")
+
+    return redirect("location_list")
 

@@ -62,11 +62,12 @@ urlpatterns = [
         views.update_location,
         name="update_location",
     ),
-    # path(
-    #     "events/delete_location/<location_id>/",
-    #     views.delete_location,
-    #     name="delete_location",
-    # ),
+    path("events/update_event/<event_id>/", views.update_event, name="update_event"),
+    path(
+        "events/delete_location/<location_id>/",
+        views.delete_location,
+        name="delete_location",
+    ),
     path("events/add_event/", views.create_event, name="add_event"),
     path("events/delete_event/<event_id>/", views.delete_event, name="delete_event"),
 ]
