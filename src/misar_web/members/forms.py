@@ -3,13 +3,8 @@ from typing import Any
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.admin.widgets import (
-    AdminDateWidget,
-    AdminTimeWidget,
-)
 from django.core.exceptions import ValidationError
 from django.db import transaction
-from django.forms.fields import DateField
 from guardian.shortcuts import assign_perm, get_objects_for_user
 from localflavor.us.forms import USZipCodeField
 
