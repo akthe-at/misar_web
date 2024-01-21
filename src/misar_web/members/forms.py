@@ -3,8 +3,13 @@ from typing import Any
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.admin.widgets import (
+    AdminDateWidget,
+    AdminTimeWidget,
+)
 from django.core.exceptions import ValidationError
 from django.db import transaction
+from django.forms.fields import DateField
 from guardian.shortcuts import assign_perm, get_objects_for_user
 from localflavor.us.forms import USZipCodeField
 
@@ -200,28 +205,43 @@ class EventLocationForm(forms.ModelForm):
             self.fields[field].widget.attrs["class"] = "input_css_class"
 
 
+class DateTimePickerInput(forms.DateInput):
+    input_type = "datetime"
+
+
 class EventForm(forms.ModelForm):
     """Form for members to create events"""
+
+    EVENT_TYPES = (
+        ("Training", "Training"),
+        ("Demo", "Demo"),
+        ("Fundraiser", "Fundraiser"),
+        ("Camp", "Camp"),
+        ("Testing", "Testing"),
+        ("Other", "Other"),
+    )
 
     class Meta:
         model = Event
         fields = [
             "event_organizer",
             "event_name",
+            "location",
             "description",
             "event_type",
             "date",
-            "location",
             "start_time",
             "end_time",
             "special_instructions",
         ]
 
+    event_type = forms.ChoiceField(widget=forms.RadioSelect, choices=EVENT_TYPES)
+    date = forms.DateField(widget=forms.DateInput(attrs={"type": "date"}))
+    start_time = forms.TimeField(widget=forms.TimeInput(attrs={"type": "time"}))
+    end_time = forms.TimeField(widget=forms.TimeInput(attrs={"type": "time"}))
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # self.fields["location"].queryset = Location.objects.
-        for field in self.fields:
-            self.fields[field].widget.attrs["class"] = "input_css_class"
 
 
 class LocationCSVForm(forms.Form):
