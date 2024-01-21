@@ -1,6 +1,11 @@
+import calendar
+import csv
+from calendar import HTMLCalendar
+from datetime import datetime
+
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import messages
 from django.contrib.auth.views import (
     LoginView,
     LogoutView,
@@ -9,6 +14,7 @@ from django.contrib.auth.views import (
     PasswordResetDoneView,
     PasswordResetView,
 )
+from django.core.paginator import Paginator
 from django.http import (
     HttpRequest,
     HttpResponse,
@@ -16,26 +22,21 @@ from django.http import (
     HttpResponseRedirect,
 )
 from django.shortcuts import get_object_or_404, redirect, render
-from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView
-import csv
 from guardian.shortcuts import assign_perm, get_objects_for_user, get_perms
 from home.models import SiteInfo
-import calendar
-from calendar import HTMLCalendar
-from datetime import datetime
 from misar_web.settings import LOGIN_URL
 
 from .forms import (
+    EventForm,
     EventLocationForm,
     FileShareForm,
     FileUploadForm,
     MemberRegistrationForm,
-    EventForm,
 )
-from .models import Member, MemberFile, Event, Location
+from .models import Event, Location, Member, MemberFile
 
 
 class MemberRegisterView(CreateView):
@@ -78,8 +79,6 @@ class CustomPasswordResetCompleteView(PasswordResetCompleteView):
 
 
 class CustomLoginView(LoginView):
-    """Extend base LoginView to add extra data"""
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["siteinfo"] = SiteInfo.objects.get(id=1)
@@ -87,8 +86,6 @@ class CustomLoginView(LoginView):
 
 
 class CustomLogoutView(LogoutView):
-    """Extend base LoginView to add extra data"""
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["siteinfo"] = SiteInfo.objects.get(id=1)
@@ -250,6 +247,7 @@ def team_calendar(request: HttpRequest):
     return render(request, "members/events/calendar.html", context)
 
 
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def all_events(request: HttpRequest):
     siteinfo = SiteInfo.objects.get(id=1)
     events = Event.objects.all().order_by("date")
@@ -257,6 +255,7 @@ def all_events(request: HttpRequest):
     return render(request, "members/events/all_events.html", context)
 
 
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def create_event(request: HttpRequest):
     siteinfo = SiteInfo.objects.get(id=1)
     if request.method == "POST":
@@ -270,6 +269,7 @@ def create_event(request: HttpRequest):
     return render(request, "members/events/add_event.html", context)
 
 
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def update_event(request: HttpRequest, event_id: int):
     siteinfo = SiteInfo.objects.get(id=1)
     event = Event.objects.get(pk=event_id)
@@ -291,6 +291,20 @@ def delete_event(request: HttpRequest, event_id: int):
     return redirect("all_events")
 
 
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
+def register_for_event(request: HttpRequest, event_id: int):
+    event = Event.objects.get(pk=event_id)
+    if request.method == "POST":
+        if request.user in event.attendees.all():
+            event.attendees.remove(request.user)
+        else:
+            event.attendees.add(request.user)
+    event = Event.objects.get(pk=event_id)
+    context = {"event": event}
+    return render(request, "members/events/all_events.html#attendeelist", context)
+
+
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def create_location(request: HttpRequest):
     submitted = False
     siteinfo = SiteInfo.objects.get(id=1)
@@ -308,13 +322,24 @@ def create_location(request: HttpRequest):
     return render(request, "members/events/add_location.html", context)
 
 
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def list_locations(request: HttpRequest):
     siteinfo = SiteInfo.objects.get(id=1)
     location_list = Location.objects.all().order_by("name")
-    context = {"siteinfo": siteinfo, "location_list": location_list}
+
+    # PAGEINATION
+    p = Paginator(location_list, 10)
+    page = request.GET.get("page")
+    locations = p.get_page(page)
+
+    context = {
+        "siteinfo": siteinfo,
+        "locations": locations,
+    }
     return render(request, "members/events/locations.html", context)
 
 
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def show_location(request: HttpRequest, location_id: int):
     location = Location.objects.get(pk=location_id)
     siteinfo = SiteInfo.objects.get(id=1)
@@ -326,6 +351,7 @@ def show_location(request: HttpRequest, location_id: int):
     )
 
 
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def update_location(request: HttpResponse, location_id: int):
     location = Location.objects.get(pk=location_id)
     siteinfo = SiteInfo.objects.get(id=1)
@@ -343,12 +369,14 @@ def update_location(request: HttpResponse, location_id: int):
     )
 
 
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def delete_location(request: HttpRequest, location_id: int):
     location = Location.objects.get(pk=location_id)
     location.delete()
     return redirect("location_list")
 
 
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def location_csv(request: HttpRequest) -> HttpResponse:
     """A view for exporting locations as a CSV file.
 
@@ -379,8 +407,7 @@ def location_csv(request: HttpRequest) -> HttpResponse:
             ]
         )
         location_ids = request.POST.getlist("location_ids")
-        print(location_ids)
-        print(type(location_ids))
+
         locations = Location.objects.filter(pk__in=location_ids).values_list(
             "name",
             "address",
