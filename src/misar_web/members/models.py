@@ -112,12 +112,12 @@ class Event(models.Model):
     event_name = models.CharField(("Event Name"), max_length=50)
     description = models.CharField(("Event Description"), max_length=50)
     event_type = models.CharField(("Event Type"), max_length=50)
-    date = models.DateField(("Event Date"))
+    date = models.DateTimeField(("Event Date"))
     location = models.ForeignKey(
         Location, on_delete=models.SET_NULL, related_name="event_location", null=True
     )
-    start_time = models.DateTimeField(("Start Time"))
-    end_time = models.DateTimeField(("End Time"), blank=True)
+    start_time = models.TimeField(("Start Time"))
+    end_time = models.TimeField(("End Time"), null=True, blank=True)
     special_instructions = models.TextField(
         ("Special Instructions"), max_length=500, blank=True
     )
