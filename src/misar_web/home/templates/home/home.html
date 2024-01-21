@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
     <div>
+        <!----- FIXME:: - Check if making the background image smaller then-reuploading improves the performance of this -->
         <div class="flex items-center justify-center w-full text-center bg-fixed bg-bottom bg-cover h-96"
              style="background-image: url({{ siteinfo.home_page_image.url }})">
             <div class="absolute flex flex-col items-center justify-center h-64 background-blend-overlay">
