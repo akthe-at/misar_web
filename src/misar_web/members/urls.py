@@ -48,10 +48,9 @@ urlpatterns = [
     path("download/<int:file_id>/", views.download_file, name="download"),
     path(
         "events/",
-        views.team_calendar,
-        name="team_calendar",
+        views.all_events,
+        name="all_events",
     ),
-    path("events/all/", views.all_events, name="all_events"),
     path("events/add_location/", views.create_location, name="add_location"),
     path("events/locations/", views.list_locations, name="location_list"),
     path(
@@ -71,5 +70,10 @@ urlpatterns = [
     path("events/add_event/", views.create_event, name="add_event"),
     path("events/delete_event/<event_id>/", views.delete_event, name="delete_event"),
     path("location_csv", views.location_csv, name="location_csv"),
+    path(
+        "register_for_event/<int:event_id>/",
+        views.register_for_event,
+        name="register_for_event",
+    ),
 ]
 
