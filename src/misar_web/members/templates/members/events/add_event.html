@@ -2,17 +2,22 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
-<h1>Create Event Page</h1>
-<br>
-{% if submitted %}
-Your Event was created succesfully!
-{% else %}
-<form action="" method=POST>
-  {% csrf_token %}
-  {{ form|crispy }}
-  <input type="submit" value="Submit"
-    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-
-</form>
-{% endif %}
+    <h1 class="my-4 items-center text-center justify-center font-bold text-4xl">Create New Event</h1>
+    <div class="flex items-center justify-center"
+        <div class="items-center justify-center flex-col">
+            {% if submitted %}
+                Your Event was created succesfully!
+            {% else %}
+                <form action="" method=POST>
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="text-center justify-center items-center">
+                        <input type="submit"
+                               value="Submit"
+                               class="w-1/2 items-center justify-center text-center px-2 text-white mb-3 bg-misargreen hover:bg-neutral-500 focus:ring-4 focus:outline-none focus:ring-misargreen font-bold rounded-lg text-sm  py-2.5 inline-flex my-2 me-2 ms-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
