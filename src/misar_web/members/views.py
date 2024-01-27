@@ -424,4 +424,3 @@ def location_csv(request: HttpRequest) -> HttpResponse:
         for location in locations:
             writer.writerow(location)
         return response
-

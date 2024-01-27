@@ -193,6 +193,8 @@ class EventLocationForm(forms.ModelForm):
             "misar_poc",
         ]
 
+    website = forms.URLField(required=False, assume_scheme="https")
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["misar_poc"].queryset = Member.objects.filter(is_superuser=False)
@@ -245,4 +247,3 @@ class LocationCSVForm(forms.Form):
     locations = forms.ModelMultipleChoiceField(
         queryset=Location.objects.all(), widget=forms.CheckboxSelectMultiple
     )
-
