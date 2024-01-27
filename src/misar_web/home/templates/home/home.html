@@ -18,15 +18,23 @@
                 <p class="px-4 text-2xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64 sm:px-6 md:px-8 lg:px-12 xl:px-16">
                     {{ siteinfo.mission_statement }}
                 </p>
+                q
             </div>
         </div>
-        <div class="flex flex-col items-center justify-center w-full my-auto text-center min-h-80 bg-neutral-600">
-            <h2 class="pb-3 mt-20 mb-4 text-2xl font-semibold text-white sm:text-3xl md:text-4xl lg:text-5xl">
-                Search Specialties
-            </h2>
-            <div class="grid w-10/12 grid-cols-2 px-1 mx-2 mb-24 sm:px-6 md:px-8 lg:px-12 xl:px-16 sm:grid-cols-2 md:grid-cols-3 gap-y-10 sm:w-2/3 md:w-1/2 lg:w-full">
+        <div class="flex flex-col flex-wrap py-2 max-h-1/6 justify-center bg-neutral-600 text-center  align-items-center">
+            <h2 class="flex flex-col my-4 font-semibold text-white text-5xl">Search Specialties</h2>
+            <div class="flex-col grid gap-2 place-items-center text-center w-full justify-center align-items-center grid-cols-2 sm:grid-cols-2 md:grid-cols-3  sm:w-2/3 md:w-1/2 lg:w-full">
                 {% for spec in search_spec %}
-                    {% include 'home/includes/discipline_cards.html' with object=spec %}
+                    <figure class="relative text-center items-center justify-center rounded-lg  hover:scale-105 transition-all duration-300 cursor-pointer filter grayscale-0 hover">
+                        <a href="#">
+                            <img class="w-56 h-56 object-scale-down transition-all rounded-lg image-to-blur"
+                                 src="{{ spec.icon.url }}"
+                                 alt="image description">
+                        </a>
+                        <figcaption class="absolute inset-0 flex w-full items-center justify-center place-items-center text-xs sm:text-sm md:text-base lg:text-3xl text-center text-transparent hover:text-black  hover:font-black p-2 mx-auto">
+                            <div class="z-1 shrink text-center">{{ spec.brief_synopsis }}</div>
+                        </figcaption>
+                    </figure>
                 {% endfor %}
             </div>
         </div>
@@ -71,4 +79,9 @@
                 </div>
             </div>
         </div>
+        <style>
+    figure.hover:hover .image-to-blur {
+      filter: blur(15px);
+    }
+        </style>
     {% endblock %}
