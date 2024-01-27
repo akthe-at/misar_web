@@ -26,8 +26,11 @@
                 <td class="px-6 py-4">{{ file.file.name|extension }}</td>
                 <td class="px-6 py-4">{{ file.file.size|filesize }}</td>
                 <td class="px-6 py-4">{{ file.date_created|date:"m/d/y" }}</td>
-                <td class="px-6 py-4">
-                    <a href="{% url 'share' file.id %}"
+                <td class="px-6 py-4" x-data="{ showShareModal: false }">
+                    <a @click="showShareModal = true"
+                       data-modal-target="share-modal"
+                       data-modal-toggle="share-modal"
+                       href="{% url 'share' file.id %}"
                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Share
                     File</a>
                 </td>
