@@ -6,33 +6,32 @@
         <div class="flex items-center justify-center w-full text-center bg-fixed bg-bottom bg-cover h-96"
              style="background-image: url({{ siteinfo.home_page_image.url }})">
             <div class="absolute flex flex-col items-center justify-center h-64 background-blend-overlay">
-                <h2 class="mb-2 text-5xl font-semibold text-white">Our Team</h2>
-                <p class="px-4 text-2xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+                <h2 class="mb-2 inset-0 text-5xl font-semibold text-white">Our Team</h2>
+                <p class="px-4 inset-0 text-2xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64 sm:px-6 md:px-8 lg:px-12 xl:px-16">
                     {{ siteinfo.description }}
                 </p>
             </div>
         </div>
         <div class="flex items-center justify-center w-full text-center h-80 bg-neutral-900">
             <div class="text-center">
-                <h2 class="pb-3 text-5xl font-semibold text-white">Our Mission</h2>
-                <p class="px-4 text-2xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+                <h2 class="inset-0 pb-3 text-5xl font-semibold text-white">Our Mission</h2>
+                <p class="inset-0 px-4 text-2xl text-white sm:mx-auto md:mx-auto lg:mx-32 xl:mx-64 sm:px-6 md:px-8 lg:px-12 xl:px-16">
                     {{ siteinfo.mission_statement }}
                 </p>
-                q
             </div>
         </div>
-        <div class="flex flex-col flex-wrap py-2 max-h-1/6 justify-center bg-neutral-600 text-center  align-items-center">
-            <h2 class="flex flex-col my-4 font-semibold text-white text-5xl">Search Specialties</h2>
-            <div class="flex-col grid gap-2 place-items-center text-center w-full justify-center align-items-center grid-cols-2 sm:grid-cols-2 md:grid-cols-3  sm:w-2/3 md:w-1/2 lg:w-full">
+        <div class="flex flex-col flex-wrap justify-center py-2 text-center max-h-1/6 bg-neutral-600 align-items-center">
+            <h2 class="flex flex-col my-4 text-5xl font-semibold text-white">Search Specialties</h2>
+            <div class="grid mx-auto justify-center grid-cols-2 gap-1 px-2 text-center place-items-center align-items-center sm:grid-cols-2 md:grid-cols-3">
                 {% for spec in search_spec %}
-                    <figure class="relative text-center items-center justify-center rounded-lg  hover:scale-105 transition-all duration-300 cursor-pointer filter grayscale-0 hover">
+                    <figure class="relative items-center justify-center m-4 text-center transition-all duration-300 cursor-pointer rounded-lg hover:scale-105 filter grayscale-0 hover">
                         <a href="#">
-                            <img class="w-56 h-56 object-scale-down transition-all rounded-lg image-to-blur"
+                            <img class="object-cover max-w-56 max-h-56 rounded-lg transition-all image-to-blur"
                                  src="{{ spec.icon.url }}"
                                  alt="image description">
                         </a>
-                        <figcaption class="absolute inset-0 flex w-full items-center justify-center place-items-center text-xs sm:text-sm md:text-base lg:text-3xl text-center text-transparent hover:text-black  hover:font-black p-2 mx-auto">
-                            <div class="z-1 shrink text-center">{{ spec.brief_synopsis }}</div>
+                        <figcaption class="absolute inset-0 flex items-center justify-center w-full p-2 mx-auto text-xs text-center text-transparent place-items-center sm:text-sm md:text-base lg:text-3xl hover:text-black hover:font-black">
+                            <div class="text-center z-1 shrink">{{ spec.brief_synopsis }}</div>
                         </figcaption>
                     </figure>
                 {% endfor %}
@@ -67,15 +66,15 @@
             </div>
             <div class="flex flex-row items-center justify-center w-full text-center bg-fixed bg-top bg-cover h-[28rem] bg-neutral-900"
                  style="background-image: url({{ siteinfo.home_page_image.url }})">
-                <div class="flex flex-col w-1/2 p-4 justify-items-center items-center text-center text-white">
+                <div class="flex flex-col items-center w-1/2 p-4 text-center text-white justify-items-center">
                     <h2 class="flex flex-col text-4xl font-semibold text-white hover:text-blue-400">
                         <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a>
                     </h2>
                 </div>
-                <div class="flex justify-items-start flex-col h-full w-auto p-4">
+                <div class="flex flex-col w-auto h-full p-4 justify-items-start">
                     <img src="{{ siteinfo.alternate_logo.url }}"
                          alt="MISAR LOGO"
-                         class="flex py-6 flex-col w-full h-full object-scale-down">
+                         class="flex flex-col object-scale-down w-full h-full py-6">
                 </div>
             </div>
         </div>
