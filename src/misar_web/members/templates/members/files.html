@@ -6,11 +6,11 @@
 {% load partials %}
 <!-- Main Page HTML -->
 {% block content %}
-    <div class="min-w-0 items-center justify-center p-6 mx-auto text-center text-stone-800">
+    <div class="min-w-0 items-center justify-center lg:p-6 sm:w-full mx-auto text-center text-stone-800">
         <section id="messages">
             {% partial messages %}
         </section>
-        <h2 class="text-4xl font-bold text-red-800">Member File Storage</h2>
+        <h2 class="text-4xl font-bold text-misargreen">Member File Storage</h2>
         <h2 class="m-3 font-semibold text-black text 3xl">Your Files</h2>
         <div x-data="{ showModal: false }"
              class="flex flex-row m-3 place-content-around">
@@ -19,7 +19,7 @@
                 <button @click="showModal = true"
                         data-modal-target="upload-modal"
                         data-modal-toggle="upload-modal"
-                        class="px-2 text-white mb-3 bg-misargreen hover:bg-neutral-500 focus:ring-4 focus:outline-none focus:ring-misargreen font-medium rounded-lg text-sm  py-2.5 text-center inline-flex items-center me-2 ms-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        class="px-2 text-white mb-3 bg-misargreen hover:bg-neutral-500 focus:ring-4 focus:outline-none focus:ring-misargreen font-medium rounded-lg text-sm  py-2.5 text-center inline-flex items-center me-2 ms-2 dark:bg-misargreen dark:hover:bg-neutral-500 dark:focus:ring-4"
                         type="button">
                     <svg class="w-[18px] h-[18px] text-gray-800 dark:text-white"
                          aria-hidden="true"
@@ -144,7 +144,7 @@
                        data-modal-target="share-modal"
                        data-modal-toggle="share-modal"
                        href="{% url 'share' file.id %}"
-                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Share
+                       class="font-medium text-misargreen dark:text-misargreen hover:underline">Share
                     File</a>
                 </td>
                 <td class="px-6 py-4">
@@ -155,7 +155,7 @@
                 </td>
                 <td class="px-6 py-4">
                     <a href="{% url 'download' file.id %}"
-                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Download</a>
+                       class="font-medium text-misargreen dark:text-misargreen hover:underline">Download</a>
                 </td>
             </tr>
         {% endfor %}
@@ -233,7 +233,7 @@
                 <td class="px-6 py-4">{{ file.date_created|date:"m/d/y" }}</td>
                 <td class="px-6 py-4">
                     <a href="{% url 'share' file.id %}"
-                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Share
+                       class="font-medium text-misargreen dark:text-misargreen hover:underline">Share
                     File</a>
                 </td>
                 <td class="px-6 py-4">
@@ -244,7 +244,7 @@
                 </td>
                 <td class="px-6 py-4">
                     <a href="{% url 'download' file.id %}"
-                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Download</a>
+                       class="font-medium text-misargreen dark:text-misargreen hover:underline">Download</a>
                 </td>
             </tr>
         {% endfor %}
