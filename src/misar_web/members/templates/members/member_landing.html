@@ -3,6 +3,8 @@
 {% block content %}
     <div class="items-center p-8 text-center">
         <h1 class="text-4xl text-black">This is the landing page for members after they login</h1>
+        <h2 class="text-3xl text-black">Welcome! You are currently logged in as:</h2>
+        <h2 class="text-3xl text-black italic">{{ request.user.username }}</h2>
         <a class="underline font-semibold hover:text-red-900"
            href="{% url 'files' %}">Member Files Page</a>
         <div>
