@@ -6,12 +6,12 @@
 {% load partials %}
 <!-- Main Page HTML -->
 {% block content %}
-    <div class="min-w-0 items-center justify-center lg:p-6 sm:w-full mx-auto text-center text-stone-800">
+    <div class="min-w-0 items-center justify-center my-2 lg:p-6 sm:w-full mx-auto text-center  text-stone-800">
         <section id="messages">
             {% partial messages %}
         </section>
         <h2 class="text-4xl font-bold text-misargreen">Member File Storage</h2>
-        <h2 class="m-3 font-semibold text-black text 3xl">Your Files</h2>
+        <h2 class="m-3 font-semibold dark:text-white text-black text 3xl">Your Files</h2>
         <div x-data="{ showModal: false }"
              class="flex flex-row m-3 place-content-around">
             <a href="javascript:void(0);">
@@ -92,19 +92,19 @@
              hx-target="personal-table"
              hx-select="table"
              class="flex flex-col justify-between m-3">
-            <div class="relative mx-auto overflow-x-auto rounded-lg sm:max-w-2/3 lg:max-w-2/3">
+            <div class="relative overflow-x-auto rounded-lg sm:max-w-2/3 lg:max-w-2/3">
                 <div id="personal-files-table">{% partial personal-table %}</div>
             </div>
         </div>
     </div>
     <!-- The Beginning of the Share files Table -->
     <div>
-        <div class="items-center justify-center p-6 m-3 mx-auto text-center text-stone-800">
-            <h2 class="m-3 font-semibold text-black text 3xl">Shared Files</h2>
-            Here is a list of files that others have shared with you:
-            <div class="flex flex-col justify-between m-3">
+        <div class="min-w-0 items-center justify-center my-2 lg:p-6 sm:w-full mx-auto text-center  text-stone-800">
+            <h2 class="mt-3 md:m-3 font-semibold dark:text-white text-black text 3xl">Shared Files</h2>
+            <div class="flex flex-col dark:text-white justify-between md:m-3">
+                <p class="md:mb-3">Here is a list of files that others have shared with you:</p>
                 <div id="shared-files-table"
-                     class="relative mx-auto overflow-x-auto rounded-lg sm:max-w-2/3 lg:max-w-2/3">
+                     class="relative overflow-x-auto rounded-lg sm:max-w-2/3 lg:max-w-2/3">
                     {% partial shared-files-table %}
                 </div>
             </div>
@@ -116,7 +116,7 @@
 {% startpartial personal-table %}
 <table id="personal-table"
        class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-stone-700 dark:text-gray-400">
         <tr>
             <th scope="col" class="px-6 py-3">File Name</th>
             <th scope="col" class="px-6 py-3">File Description</th>
@@ -130,7 +130,7 @@
     </thead>
     <tbody>
         {% for file in memberfiles %}
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <tr class="bg-white border-black dark:bg-black dark:border-black hover:bg-gray-50 dark:hover:bg-gray-600">
                 <th scope="row"
                     class="px-6 py-4 text-gray-900 font-large whitespace-nowrap dark:text-white">
                     <a href="{{ file.file.url }}">{{ file.file_name }}</a>
@@ -208,7 +208,7 @@
 {% startpartial shared-files-table %}
 <table id="shared-table"
        class="min-w-0 w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-stone-600 dark:text-gray-400">
         <tr>
             <th scope="col" class="px-6 py-3">File Name</th>
             <th scope="col" class="px-6 py-3">File Description</th>
@@ -222,7 +222,7 @@
     </thead>
     <tbody>
         {% for file in sharedfiles %}
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <tr class="bg-white border-black dark:bg-black dark:border-black hover:bg-gray-50 dark:hover:bg-gray-600">
                 <th scope="row"
                     class="px-6 py-4 text-gray-900 font-large whitespace-nowrap dark:text-white">
                     <a href="{{ file.file.url }}">{{ file.file_name }}</a>
