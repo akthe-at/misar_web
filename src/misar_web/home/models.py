@@ -23,6 +23,7 @@ class SiteInfo(models.Model):
     donate_photo_1 = models.ImageField(upload_to="home/files/images")
     donate_photo_2 = models.ImageField(upload_to="home/files/images")
     donate_photo_3 = models.ImageField(upload_to="home/files/images")
+    blank_icon = models.ImageField(upload_to="home/files/images")
 
     class Meta:
         verbose_name_plural = "information"
