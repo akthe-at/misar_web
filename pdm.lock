@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform"]
 lock_version = "4.4.1"
-content_hash = "sha256:2effd17d9a73573818f1432a444543ad657f829ed4e0322bc3dd92a94b4cbb41"
+content_hash = "sha256:4ec5376fdee453c5b8d55f7b5b414db5fc0d049005ebe41cd4c0264a31d64604"
 
 [[package]]
 name = "asgiref"
@@ -106,16 +106,16 @@ files = [
 
 [[package]]
 name = "crispy-tailwind"
-version = "1.0.0"
+version = "1.0.3"
 requires_python = ">=3.8"
-summary = "A tailwind package for Django Crispy Forms"
+summary = "Tailwind CSS for Django Crispy Forms"
 dependencies = [
     "django-crispy-forms>=2.0",
     "django>=4.2",
 ]
 files = [
-    {file = "crispy-tailwind-1.0.0.tar.gz", hash = "sha256:947e1125faad2e3b1bf678204e37f847b36749c1c274fc8d82e57ff74aa96945"},
-    {file = "crispy_tailwind-1.0.0-py3-none-any.whl", hash = "sha256:7cae27002f26212b2ced5bbc253062af1fd6a1b71e2b25a88720b5ca9b306572"},
+    {file = "crispy-tailwind-1.0.3.tar.gz", hash = "sha256:2bc9f616d406e4b003f25d46fcb0079f1c2522719d97adb107667271d849459a"},
+    {file = "crispy_tailwind-1.0.3-py3-none-any.whl", hash = "sha256:31427f66b1c4fd0d6fb040f4197cfb97d104cdbe7641ea2dea940c0057c4db4b"},
 ]
 
 [[package]]
