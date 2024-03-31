@@ -27,6 +27,11 @@ dev = [
   "django-debug-toolbar>=4.2.0",
 ]
 
+[tools.basedpyright]
+include = ["src"]
+exclude = ["**/node_modules", "**/__pycache__", "src/local-cdn"]
+venvPath = ".venv"
+
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "misar_web.settings"
 python_files = ["test_*.py", "*_test.py", "testing/python/*.py"]
