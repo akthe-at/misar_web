@@ -11,6 +11,13 @@ def home(request: HttpRequest):
     return render(request=request, template_name="home/home.html", context=context)
 
 
+def icon_modal(request: HttpRequest, spec_id: int):
+    specialty = SearchSpecialty.objects.get(pk=spec_id)
+    return render(
+        request, "home/home.html#search_spec_modal", context={"specialty": specialty}
+    )
+
+
 def donate(request: HttpRequest):
     siteinfo = SiteInfo.objects.get(id=1)
     context = {"siteinfo": siteinfo, "donate": donate}
@@ -27,4 +34,3 @@ def about(request: HttpRequest):
     siteinfo = SiteInfo.objects.get(id=1)
     context = {"siteinfo": siteinfo}
     return render(request=request, template_name="home/about.html", context=context)
-
