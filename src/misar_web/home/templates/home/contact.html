@@ -1,46 +1,42 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block content %}
-    <div class="bg-neutral-700 flex flex-col sm:flex-col-reverse md:flex-row lg:flex-row xl:flex-row h-auto justify-center items-center">
-        <div class="size-full flex-1 flex-col">
-            <img class="size-full"
-                 src="{{ siteinfo.contact_photo_1.url }}"
-                 alt="destiny">
+<div
+  class="flex h-auto flex-col items-center justify-center bg-stone-400 sm:flex-col-reverse md:flex-row lg:flex-row xl:flex-row">
+  <div class="size-full flex-1 flex-col">
+    <img class="size-full" src="{{ siteinfo.contact_photo_1.url }}" alt="destiny">
+  </div>
+  <div class="my-20 h-auto  w-full flex-1 flex-col text-center">
+    <h1 class="mb-4 text-5xl font-extrabold uppercase tracking-widest text-white">Contact Us</h1>
+    <div class="mt-4 flex w-full flex-col justify-center space-x-64">
+      <div>
+        <h2 class="my-4 text-3xl font-semibold text-white">Mailing Address:</h2>
+        <div class="text-white">
+          {{ siteinfo.street_address }}
+          <br>
+          {{ siteinfo.po_box }}
+          <br>
+          {{ siteinfo.city_state_zip }}
         </div>
-        <div class="flex-1 flex-col  my-20 w-full text-center h-auto">
-            <h1 class="mb-4 text-white uppercase tracking-widest text-5xl font-extrabold">Contact Us</h1>
-            <div class="w-full flex-col mt-4 flex space-x-64 justify-center">
-                <div>
-                    <h2 class="text-white my-4 text-3xl font-semibold">Mailing Address:</h2>
-                    <div class="text-white">
-                        {{ siteinfo.street_address }}
-                        <br>
-                        {{ siteinfo.po_box }}
-                        <br>
-                        {{ siteinfo.city_state_zip }}
-                    </div>
-                </div>
-            </div>
-            <div>
-                <h2 class="text-white text-3xl my-4 font-semibold">Contact Information:</h2>
-                <ul class="mt-4 text-white">
-                    <li class="mb-4">
-                        <h2 class="mb-1 text-2xl font-semibold">Call:</h2>
-                        <a class="text-white hover:underline hover:text-misargreen transition-all"
-                           href="tel:18008185645">{{ siteinfo.dispatch_number }}</a>
-                    </li>
-                    <li class="mb-4">
-                        <h2 class="mb-1 text-2xl font-semibold">Direct Email Inquiries:</h2>
-                        <a class="transition-all hover:underline hover:misargreen text-white"
-                           href="mailto:{{ siteinfo.team_email }}">{{ siteinfo.team_email }}</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="h-lvh size-full flex-1 flex-col">
-            <img class="size-full"
-                 src="{{ siteinfo.contact_photo_2.url }}"
-                 alt="whiskey">
-        </div>
+      </div>
     </div>
+    <div>
+      <h2 class="my-4 text-3xl font-semibold text-white">Contact Information:</h2>
+      <ul class="mt-4 text-white">
+        <li class="mb-4">
+          <h2 class="mb-1 text-2xl font-semibold">Call:</h2>
+          <a class="text-white transition-all hover:text-misargreen hover:underline" href="tel:18008185645">{{ siteinfo.dispatch_number }}</a>
+        </li>
+        <li class="mb-4">
+          <h2 class="mb-1 text-2xl font-semibold">Direct Email Inquiries:</h2>
+          <a class="hover:misargreen text-white transition-all hover:underline"
+            href="mailto:{{ siteinfo.team_email }}">{{ siteinfo.team_email }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="h-lvh size-full flex-1 flex-col">
+    <img class="size-full" src="{{ siteinfo.contact_photo_2.url }}" alt="whiskey">
+  </div>
+</div>
 {% endblock %}
