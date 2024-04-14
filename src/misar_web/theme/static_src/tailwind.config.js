@@ -31,7 +31,7 @@ module.exports = {
          * patterns match your project structure.
          */
         /* JS 1: Ignore any JavaScript in node_modules folder. */
-        // '!../../**/node_modules',
+        // '!../../**/node_modules/flowbite/**/*.js',
         /* JS 2: Process all JavaScript files in the project. */
         // '../../**/*.js',
 
@@ -43,7 +43,9 @@ module.exports = {
     ],
     theme: {
     fontFamily: {
-    'sans': 'Arial',
+    // 'sans': ['Fira Sans',]
+    // 'sans': ['Inter',]
+      'sans':['Maiah'],
     },
         extend: {
       colors: {
@@ -58,6 +60,7 @@ module.exports = {
          * for forms. If you don't like it or have own styling for forms,
          * comment the line below to disable '@tailwindcss/forms'.
          */
+        require('flowbite/plugin'),
         require('@tailwindcss/forms'),
         require('@tailwindcss/typography'),
         require('@tailwindcss/line-clamp'),
