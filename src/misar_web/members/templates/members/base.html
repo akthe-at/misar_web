@@ -2,46 +2,48 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="{% static 'home/main.css' %}">
-        <link rel="shortcut icon" href="{% static 'home/favicon.ico' %}" />
-        <script src="https://unpkg.com/htmx.org@1.9.9"></script>
-        <script defer
-                src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-        <title>Michigan Search and Rescue</title>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-    var personalTable = document.getElementById('personal-table');
-    var uploadForm = document.getElementById('upload-form');
 
-    if (personalTable) {
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{% static 'home/main.css' %}">
+  <link rel="shortcut icon" href="{% static 'home/favicon.ico' %}" />
+  <script src="https://unpkg.com/htmx.org@1.9.9"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <title>Michigan Search and Rescue</title>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var personalTable = document.getElementById('personal-table');
+      var uploadForm = document.getElementById('upload-form');
+
+      if (personalTable) {
         personalTable.addEventListener('htmx:afterSwap', function (event) {
-            if (uploadForm) {
-                uploadForm.reset();
-            }
-            showModal = false;
+          if (uploadForm) {
+            uploadForm.reset();
+          }
+          showModal = false;
         });
-    }
+      }
 
-    window.validateForm = function () {
+      window.validateForm = function () {
         if (uploadForm) {
-            return uploadForm.checkValidity();  // Allow the form to be submitted if it's valid
+          return uploadForm.checkValidity();  // Allow the form to be submitted if it's valid
         }
         return false;
-    }
-});
-        </script>
-    </head>
-    <body class="bg-neutral-300">
-        {% tailwind_css %}
-        {% include 'members/includes/navbar_members.html' %}
-        {% block content %}{% endblock %}
-        <script>
+      }
+    });
+  </script>
+</head>
+
+<body class="bg-neutral-300 dark:bg-stone-800">
+  {% tailwind_css %}
+  {% include 'members/includes/navbar_members.html' %}
+  {% block content %}{% endblock %}
+  <script>
     document.body.addEventListener('htmx:configRequest', (event) => {
-        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+      event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
     })
-        </script>
-    </body>
+  </script>
+</body>
+
 </html>
