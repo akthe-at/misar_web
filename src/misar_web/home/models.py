@@ -18,6 +18,7 @@ class SiteInfo(models.Model):
     about_photo_1 = models.ImageField(upload_to="home/files/images")
     about_photo_2 = models.ImageField(upload_to="home/files/images")
     about_photo_3 = models.ImageField(upload_to="home/files/images")
+    mipsarc_logo = models.ImageField(upload_to="home/files/images")
     contact_photo_1 = models.ImageField(upload_to="home/files/images")
     contact_photo_2 = models.ImageField(upload_to="home/files/images")
     donate_photo_1 = models.ImageField(upload_to="home/files/images")
@@ -49,12 +50,13 @@ class SearchSpecialty(models.Model):
 
     specialty = models.CharField(max_length=50)
     brief_synopsis = models.CharField(max_length=200)
-    long_description = models.CharField(max_length=500)
+    long_description = models.TextField(max_length=800)
     icon = models.ImageField(upload_to="home/files/images")
+    transparent_icon = models.ImageField(upload_to="home/files/images")
+    specialty_photo = models.ImageField(upload_to="home/files/images")
 
     class Meta:
         verbose_name_plural = "Search Specialties"
 
     def __str__(self) -> str:
         return self.specialty
-
