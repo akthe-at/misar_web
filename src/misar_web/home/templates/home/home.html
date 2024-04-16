@@ -1,143 +1,196 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% load partials %}
-  {% block content %}
-<div x-data="{ showModal: false, showVolunteerModal: false }">
-  <div 
-    class="align-items-center flex h-80 min-w-0 flex-col flex-wrap justify-center bg-cover bg-[top_right_-8rem] py-2 text-center md:bg-fixed lg:h-96 lg:bg-bottom"
-    style="background-image: url({{ siteinfo.home_page_image.url }})"></div>
-  <div class="min-h-96 flex flex-col items-center justify-center bg-stone-400 py-8 lg:py-[72px]">
-    <div class="flex w-5/6 flex-col text-center lg:w-3/4">
-      <h2 class="inset-0 pb-2 pt-3 text-5xl font-bold text-stone-700">Our Team</h2>
-      <p class="inset-0 pb-3 text-xl text-stone-700 md:text-2xl">{{ siteinfo.description }}</p>
-      <hr class="md:40 mx-auto my-4 h-1 w-32 rounded border-0 bg-stone-300 dark:bg-stone-300 md:my-10">
-      <h2 class="inset-0 pb-2 pt-3 text-5xl font-bold text-stone-700">Our Mission</h2>
-      <p class="inset-0 pb-3 text-xl text-stone-700 md:text-2xl">{{ siteinfo.mission_statement }}</p>
-    </div>
-  </div>
-  <div
-    class="max-h-1/6 align-items-center flex flex-col flex-wrap justify-center bg-stone-700 py-2 text-center lg:py-[72px]">
-    <h2 class="my-4 flex flex-col text-5xl font-semibold text-white">Search Specialties</h2>
-    <div
-      class="align-items-center mx-auto grid grid-cols-2 place-items-center justify-center gap-1 px-2 text-center sm:grid-cols-2 md:grid-cols-3">
-      {% for spec in search_spec %}
-      <!-- Also the Modal Toggle -->
-      <figure hx-get="{% url 'icon_modal' spec.id %}" hx-trigger="click" hx-swap="innerHTML" hx-target="#modal-body" @click="showModal = true" data-modal-target="specialty-modal" data-modal-toggle="specialty-modal"
-        class="group relative m-4 cursor-pointer items-center justify-center rounded-lg text-center grayscale-0 filter transition-all duration-300 hover:scale-105">
-        <a href="#">
-          <div
-            class="bg-[url('{{ spec.icon.url }}')] hover:bg-[url('{{ siteinfo.blank_icon.url }}')] max-w-56 max-h-56 rounded-lg bg-cover group-hover:hidden">
-            <img class="max-w-56 visible max-h-56 rounded-lg object-cover transition-all hover:collapse"
-              src="{{ spec.icon.url }}" alt="image description">
-          </div>
-          <div class="hidden group-hover:block ">
-            <img class="max-w-56 max-h-56 rounded-lg object-cover transition-all" src="{{ siteinfo.blank_icon.url }}"
-              alt="image description">
-        </a>
-        <figcaption
-          class="hover:mix-blend-burn absolute inset-0 mx-auto flex w-full place-items-center items-center justify-center p-2 text-center text-xs text-transparent hover:font-black hover:text-misargreen sm:text-sm md:text-base lg:text-3xl">
-          <div class="z-1 shrink text-center">{{ spec.brief_synopsis }}</div>
-        </figcaption>
-      </figure>
-      {% endfor %}
-        </div>
-      </div>
-    </div>
-  <div class="flex h-80 w-full flex-col items-center justify-center bg-stone-400 text-center">
-    <h2 class="pb-3 text-5xl font-semibold text-stone-700">Emergency Dispatch</h2>
-    <h4 class="mb-3 px-4 text-2xl text-stone-700 sm:mx-auto sm:px-6 md:mx-auto md:px-8 lg:mx-32 lg:px-12 xl:mx-64 xl:px-16">
-      For Immediate Dispatch of K9 Teams:
-    </h4>
-    <a href="tel:18008185645" <button
-      class="flex w-36 rounded bg-misargreen px-4 py-2 font-bold text-white hover:bg-red-700">
-      {{ siteinfo.dispatch_number }}
-    </a>
-  </div>
-    <div
-    class="flex h-[36rem] w-full flex-col items-center justify-center bg-stone-900 bg-cover bg-fixed bg-top py-32 text-center lg:flex-row lg:py-[72px]"
-    style="background-image:linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{ siteinfo.home_page_image.url }})">
-    <div class="flex w-1/2 flex-col-reverse items-center justify-center text-center text-white sm:px-3 lg:flex-col">
-      <div class="flex w-full flex-col items-center justify-center text-center">
-        <h2 class="mb-3 mt-6 text-3xl font-semibold text-white lg:text-6xl">Get Involved</h2>
-        <div class="flex flex-col justify-center gap-2 text-center lg:flex-row">
-          <a href="#" class="">
-            <button
-              class="flex w-36 items-center justify-center rounded bg-misargreen px-4 py-2 font-bold text-white hover:bg-white hover:text-black">
-              Donate
-            </button>
-          </a>
-
-            <button  @click="showVolunteerModal = true" data-modal-target="volunteer-modal" data-modal-toggle="volunteer-modal"
-              class="mb-3 flex w-36 items-center justify-center rounded bg-misargreen px-4 py-2 font-bold text-white hover:bg-white hover:text-black">
-              Volunteer
-            </button>
-        </div>
-        <hr class="mx-auto my-3 h-1 w-24 rounded border-0 bg-white dark:bg-white md:my-10">
-        <h2 class="mb-3 flex flex-col text-3xl font-semibold italic text-white hover:text-blue-400 lg:text-5xl">
-          <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on
-            Facebook!</a>
-        </h2>
-      </div>
-    </div>
-    <div class="align-items-center flex h-full w-1/2 flex-col items-center justify-center">
-      <img src="{{ siteinfo.alternate_logo.url }}" alt="MISAR LOGO"
-        class="flex h-full w-full flex-col object-scale-down py-4 lg:py-8">
-    </div>
-
-<!-- Large Icon Modal -->
-<div x-show="showModal" id="specialty-modal" tabindex="-1" class="fixed left-0 right-0 top-0 z-50 flex hidden h-[calc(100%-1rem)] max-h-full w-full justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
-  <div @click.outside="showModal = false" class="relative max-h-full w-full max-w-4xl">
-    <!-- Modal content -->
-    <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
-      <div id="modal-body" class="space-y-4  rounded-2xl bg-stone-200 p-4 md:p-5">
-        {% partial search_spec_modal %}
-      </div>
-    </div>
-  </div>
-</div>
-  <!-- Large Volunteer Modal-- Does not use a partial -->
-  <div x-show="showVolunteerModal" id="volunteer-modal" tabindex="-1" class="fixed left-0 right-0 top-0 z-50 flex hidden h-[calc(100%-1rem)] max-h-full w-full justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
-    <div @click.outside="showVolunteerModal = false" class="relative max-h-full w-full max-w-4xl">
-    <!-- Modal content -->
-      <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
-        <div id="volunteer-modal-body" class="space-y-4  rounded-2xl bg-stone-200 p-4 md:p-5">
-          <div class="align-items-center flex w-full flex-col items-center justify-center">
-    <h2 class="my-2 flex-col text-3xl font-black">Interested in Joining or Helping Out?</h2>
-                                    </div>
-              <div class="my-1 text-xl flex flex-col items-center justify-center gap-2 text-left">
-            <p>Michigan Search and Rescue trains one weeknight each week and one or two weekend days per month. Visiting handlers and those interested in joining a SAR team are welcome to join us at trainings.</p>
-            <br>
-            <p> For those considering getting involved in canine search and rescue, we encourage attendance at several training sessions prior to making the commitment.</p>
-            <br>
-            <p>Prospective Members are subject to a background check and all membes are required to complete field support training, which includes compass, scent theory, radio protocols, crime scene preservation and search strategy. Additionally, members are now required to meet standards set forth by the Michigan Professional Search and Rescue Council (MIPSARC). </p>
-            <br>
-            <p> Search and rescue often requires driving long distances to participate in training and many hours of training in all types of weather conditions. In addition, many hours must be spent training on your own as well. Searches rarely occur at convenient times and members must be willing to drop everything to participate in a search.</p>
-            <br>
-            <p> If you are interested in joining, please email us at <a class="text-misargreen" href="mailto:michiganSAR@gmail.com">michiganSAR@gmail.com</a></p>
+{% block content %}
+    <div x-data="{ showModal: false, showVolunteerModal: false }">
+        <div class="align-items-center flex h-80 min-w-0 flex-col flex-wrap justify-center bg-cover bg-[top_right_-8rem] py-2 text-center md:bg-fixed lg:h-96 lg:bg-bottom"
+             style="background-image: url({{ siteinfo.home_page_image.url }})"></div>
+        <div class="min-h-96 flex flex-col items-center justify-center bg-stone-400 py-8 lg:py-[72px]">
+            <div class="flex w-5/6 flex-col text-center lg:w-3/4">
+                <h2 class="inset-0 pb-2 pt-3 text-5xl font-bold text-stone-700">Our Team</h2>
+                <p class="inset-0 pb-3 text-xl text-stone-700 md:text-2xl">{{ siteinfo.description }}</p>
+                <hr class="md:40 mx-auto my-4 h-1 w-32 rounded border-0 bg-stone-300 dark:bg-stone-300 md:my-10">
+                <h2 class="inset-0 pb-2 pt-3 text-5xl font-bold text-stone-700">Our Mission</h2>
+                <p class="inset-0 pb-3 font-[Inter] text-xl text-stone-700 md:text-2xl">{{ siteinfo.mission_statement }}</p>
             </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-{% endblock %}
-
-            <!-- Modal body -->
-{% partialdef search_spec_modal %}
-<div class="align-items-center flex w-full flex-col items-center justify-center">
-    <h2 class="my-2 flex-col text-3xl font-black">{{ specialty.specialty }}</h2>
+        <div class="max-h-1/6 align-items-center flex flex-col flex-wrap justify-center bg-stone-700 py-2 text-center lg:py-[72px]">
+            <h2 class="my-4 flex flex-col text-5xl font-semibold text-white">Search Specialties</h2>
+            <div class="align-items-center mx-auto grid grid-cols-2 place-items-center justify-center gap-1 px-2 text-center sm:grid-cols-2 md:grid-cols-3">
+                {% for spec in search_spec %}
+                    <!-- Also the Modal Toggle -->
+                    <figure hx-get="{% url 'icon_modal' spec.id %}"
+                            hx-trigger="click"
+                            hx-swap="innerHTML"
+                            hx-target="#modal-body"
+                            @click="showModal = true"
+                            data-modal-target="specialty-modal"
+                            data-modal-toggle="specialty-modal"
+                            class="group relative m-4 cursor-pointer items-center justify-center rounded-lg text-center grayscale-0 filter transition-all duration-300 hover:scale-105">
+                        <a href="#">
+                            <div class="bg-[url('{{ spec.icon.url }}')] hover:bg-[url('{{ siteinfo.blank_icon.url }}')] max-w-56 max-h-56 rounded-lg bg-cover group-hover:hidden">
+                                <img class="max-w-56 visible max-h-56 rounded-lg object-cover transition-all hover:collapse"
+                                     src="{{ spec.icon.url }}"
+                                     alt="image description">
+                            </div>
+                            <div class="hidden group-hover:block ">
+                                <img class="max-w-56 max-h-56 rounded-lg object-cover transition-all"
+                                     src="{{ siteinfo.blank_icon.url }}"
+                                     alt="image description">
+                            </a>
+                            <figcaption class="hover:mix-blend-burn absolute inset-0 mx-auto flex w-full place-items-center items-center justify-center p-2 text-center text-xs text-transparent hover:font-black hover:text-misargreen sm:text-sm md:text-base lg:text-3xl">
+                                <div class="z-1 shrink text-center">{{ spec.brief_synopsis }}</div>
+                            </figcaption>
+                        </figure>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="flex h-80 w-full flex-col items-center justify-center bg-stone-400 text-center">
+            <h2 class="pb-3 text-5xl font-semibold text-stone-700">Emergency Dispatch</h2>
+            <h4 class="mb-3 px-4 text-2xl text-stone-700 sm:mx-auto sm:px-6 md:mx-auto md:px-8 lg:mx-32 lg:px-12 xl:mx-64 xl:px-16">
+                For Immediate Dispatch of K9 Teams:
+            </h4>
+            <a href="tel:18008185645"
+                <button class="flex w-36 rounded bg-misargreen px-4 py-2 font-bold text-white hover:bg-red-700">
+                    {{ siteinfo.dispatch_number }}
+                </a>
+            </div>
+            <div class="flex h-[36rem] w-full flex-col items-center justify-center bg-stone-900 bg-cover bg-fixed bg-top py-32 text-center lg:flex-row lg:py-[72px]"
+                 style="background-image:linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{ siteinfo.home_page_image.url }})">
+                <div class="flex w-1/2 flex-col-reverse items-center justify-center text-center text-white sm:px-3 lg:flex-col">
+                    <div class="flex w-full flex-col items-center justify-center text-center">
+                        <h2 class="mb-3 mt-6 text-3xl font-semibold text-white lg:text-6xl">Get Involved</h2>
+                        <div class="flex flex-col justify-center gap-2 text-center lg:flex-row">
+                            <a href="#" class="">
+                                <button class="flex w-36 items-center justify-center rounded bg-misargreen px-4 py-2 font-bold text-white hover:bg-white hover:text-black">
+                                    Donate
+                                </button>
+                            </a>
+                            <button @click="showVolunteerModal = true"
+                                    data-modal-target="volunteer-modal"
+                                    data-modal-toggle="volunteer-modal"
+                                    class="mb-3 flex w-36 items-center justify-center rounded bg-misargreen px-4 py-2 font-bold text-white hover:bg-white hover:text-black">
+                                Volunteer
+                            </button>
+                        </div>
+                        <hr class="mx-auto my-3 h-1 w-24 rounded border-0 bg-white dark:bg-white md:my-10">
+                        <h2 class="mb-3 flex flex-col text-3xl font-semibold italic text-white hover:text-blue-400 lg:text-5xl">
+                            <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on
+                            Facebook!</a>
+                        </h2>
+                    </div>
+                </div>
+                <div class="align-items-center flex h-full w-1/2 flex-col items-center justify-center">
+                    <img src="{{ siteinfo.alternate_logo.url }}"
+                         alt="MISAR LOGO"
+                         class="flex h-full w-full flex-col object-scale-down py-4 lg:py-8">
+                </div>
+                <!-- large icon modal -->
+                <div x-show="showModal"
+                     id="specialty-modal"
+                     tabindex="-1"
+                     class="fixed left-0 right-0 top-0 z-50 flex hidden h-[calc(100%-1rem)] max-h-full w-full justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
+                    <div @click.outside="showmodal = false"
+                         class="relative max-h-full w-full max-w-4xl">
+                        <!-- modal content -->
+                        <div class="relative rounded-lg bg-stone-200 shadow dark:bg-gray-700">
+                            <div class="align-items-right mx-4 flex justify-end">
+                                <button type="button"
+                                        @click="showModal = false"
+                                        class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden"
+                                        data-modal-hide="specialty-modal">
+                                    <svg class="h-5 w-5"
+                                         aria-hidden="true"
+                                         xmlns="http://www.w3.org/2000/svg"
+                                         fill="none"
+                                         viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+                            <div id="modal-body"
+                                 class="space-y-2  rounded-2xl bg-stone-200 p-4 md:p-5">
+                                {% partial search_spec_modal %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Large Volunteer Modal-- Does not use a partial -->
+                <div x-show="showVolunteerModal"
+                     id="volunteer-modal"
+                     tabindex="-1"
+                     class="fixed left-0 right-0 top-0 z-50 flex hidden h-[calc(100%-1rem)] max-h-full w-full justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
+                    <div @click.outside="showVolunteerModal = false"
+                         class="relative max-h-full w-full max-w-4xl rounded-lg bg-stone-200 shadow dark:bg-gray-700">
+                        <div class="align-items-right mx-4 flex justify-end">
+                            <button type="button"
+                                    @click="showVolunteerModal = false"
+                                    class="ms-auto my-4 inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden"
+                                    data-modal-hide="volunteer-modal">
+                                <svg class="h-5 w-5"
+                                     aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     fill="none"
+                                     viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
+                        <!-- Modal content -->
+                        <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
+                            <div class="flex flex-row items-center justify-center rounded-t border-b bg-stone-200 p-4 dark:border-gray-600 md:p-5">
+                                <h2 class="my-2 flex-col text-3xl font-black">Interested in Joining or Helping Out?</h2>
+                            </div>
+                            <div id="volunteer-modal-body"
+                                 class="space-y-2 rounded-lg bg-stone-200 p-4 md:p-5">
+                                <div class="my-1 flex flex-col items-center justify-center gap-2 text-left text-xl">
+                                    <p>
+                                        Michigan Search and Rescue trains one weeknight each week and one or two weekend days per month. Visiting handlers and those interested in joining a SAR team are welcome to join us at trainings.
+                                    </p>
+                                    <br>
+                                    <p>
+                                        For those considering getting involved in canine search and rescue, we encourage attendance at several training sessions prior to making the commitment.
+                                    </p>
+                                    <br>
+                                    <p>
+                                        Prospective Members are subject to a background check and all membes are required to complete field support training, which includes compass, scent theory, radio protocols, crime scene preservation and search strategy. Additionally, members are now required to meet standards set forth by the Michigan Professional Search and Rescue Council (MIPSARC).
+                                    </p>
+                                    <br>
+                                    <p>
+                                        Search and rescue often requires driving long distances to participate in training and many hours of training in all types of weather conditions. In addition, many hours must be spent training on your own as well. Searches rarely occur at convenient times and members must be willing to drop everything to participate in a search.
+                                    </p>
+                                    <br>
+                                    <p>
+                                        If you are interested in joining, please email us at <a class="text-misargreen" href="mailto:michiganSAR@gmail.com">michiganSAR@gmail.com</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+        <!-- Modal body -->
+        {% partialdef search_spec_modal %}
+        <!-- Modal header -->
+        <div class="flex w-full items-center justify-center rounded-t border-b p-4 dark:border-gray-600 md:p-5">
+            <h2 class="my-2 flex-col text-3xl font-black">{{ specialty.specialty }}</h2>
+        </div>
+        <div class="align-items-center flex w-full flex-col items-center justify-center">
             <img class="max-w-56 visible my-2 max-h-56 flex-row rounded-lg object-cover"
-              src="{{ specialty.transparent_icon.url }}" alt="search specialty icons">
-  </div>
-              <div class="my-1 flex flex-col items-center justify-center gap-2 text-left">
-                <p class="my-2 flex-col text-xl text-stone-700">{{ specialty.long_description }}</p>
-<div class="my-2 flex-col">
-  <img class="max-h-96 flex-row rounded-lg"
-    src="{{ specialty.specialty_photo.url }}" alt="search specialty icons">
-    </div>
+                 src="{{ specialty.transparent_icon.url }}"
+                 alt="search specialty icons">
+        </div>
+        <div class="my-1 flex flex-col items-center justify-center gap-2 text-left">
+            <p class="my-2 flex-col font-[Inter] text-xl text-stone-700">{{ specialty.long_description }}</p>
+            <div class="my-2 flex-col">
+                <h2 .
+                    <img class="max-h-96 flex-row rounded-lg"
+                         src="{{ specialty.specialty_photo.url }}"
+                         alt="search specialty icons">
+                </div>
             </div>
-{% endpartialdef %}
-
-
+        {% endpartialdef %}
