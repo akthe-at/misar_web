@@ -6,11 +6,11 @@
          class="relative w-full overflow-x-auto shadow-md sm:rounded-lg">
         <form method="post" action="{% url 'location_csv' %}">
             {% csrf_token %}
-            <div class="pb-4 bg-white dark:bg-gray-900">
+            <div class="bg-stone-300 pb-4 dark:bg-gray-900">
                 <label for="table-search" class="sr-only">Search</label>
                 <div class="relative mt-1">
-                    <div class="absolute inset-y-0 flex items-center pointer-events-none rtl:inset-r-0 start-0 ps-3">
-                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                    <div class="rtl:inset-r-0 pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
+                        <svg class="h-4 w-4 text-gray-500 dark:text-gray-400"
                              aria-hidden="true"
                              xmlns="http://www.w3.org/2000/svg"
                              fill="none"
@@ -20,22 +20,22 @@
                     </div>
                     <input type="text"
                            id="table-search"
-                           class="block pt-2 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           class="block w-80 rounded-lg border border-gray-300 bg-gray-50 ps-10 pt-2 text-sm text-gray-900 hover:ring-4 hover:ring-misargreen focus:border-misargreen focus:ring-misargreen dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-misargreen dark:focus:ring-misargreen"
                            placeholder="Search for locations">
                 </div>
                 <button type="submit"
-                        class="inline-flex items-center px-3 py-2 m-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        class="m-3 inline-flex items-center rounded-lg bg-misargreen px-3 py-2 text-center text-sm font-medium text-white hover:bg-white hover:text-black hover:ring-4 hover:ring-misargreen focus:outline-none focus:ring-4 focus:ring-misargreen focus:ring-misargreen dark:bg-misargreen dark:hover:bg-misargreen dark:focus:ring-misargreen"
                         href="{% url 'location_csv' %}">Export to CSV</button>
             </div>
             <table id="location-table"
-                   class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                   class="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
+                <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="p-4">
                             <div class="flex items-center">
                                 <input id="checkbox-all-search"
                                        type="checkbox"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                       class="focus:misargreen h-4 w-4 rounded border-gray-300 bg-gray-100 text-misargreen focus:ring-2 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-misargreen dark:focus:ring-offset-gray-800">
                                 <label for="checkbox-all-search" class="sr-only">checkbox</label>
                             </div>
                         </th>
@@ -48,21 +48,21 @@
                 </thead>
                 <tbody>
                     {% for location in locations %}
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <tr class="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
                             <td class="w-4 p-4">
                                 <div class="flex items-center">
                                     <input id="checkbox-table-search-{{ location.id }}"
                                            type="checkbox"
                                            value="{{ location.id }}"
                                            name="location_ids"
-                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                           class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-misargreen focus:ring-2 focus:ring-misargreen dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-misargreen dark:focus:ring-offset-gray-800">
                                     <label for="checkbox-table-search-{{ location.id }}" class="sr-only">checkbox</label>
                                 </div>
                             </td>
                             <th scope="row"
-                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                                 <a @click.prevent="showLocationModal = true; openModal({{ location.id }})"
-                                   class="text-blue-600"
+                                   class="text-misargreen"
                                    hx-get="{% url 'show_location' location.id %}"
                                    hx-trigger="click"
                                    hx-target="#inner-popup"
@@ -78,29 +78,29 @@
                 </form>
             </tbody>
         </table>
-        <div class="flex justify-center m-2">Page {{ locations.number }} of {{ locations.paginator.num_pages }}</div>
+        <div class="m-2 flex justify-center">Page {{ locations.number }} of {{ locations.paginator.num_pages }}</div>
         <div class="flex justify-center">
             <div class="flex">
                 {% if locations.has_previous %}
-                    <a class="flex flex-col max-w-xs items-center justify-center px-3 h-8 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    <a class="ms-3 flex h-8 max-w-xs flex-col items-center justify-center rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                        href="?page=1">&laquo; First</a>
-                    <a class="flex flex-row max-w-xs items-center justify-center px-3 h-8 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    <a class="ms-3 flex h-8 max-w-xs flex-row items-center justify-center rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                        href="?page={{ locations.previous_page_number }}">Previous</a>
                 {% else %}
-                    <a class="flex flex-col max-w-xs items-center justify-center px-3 h-8 ms-3 text-sm font-medium text-gray-200 bg-gray-400 border border-gray-300 rounded-lg  dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                    <a class="ms-3 flex h-8 max-w-xs flex-col items-center justify-center rounded-lg border border-gray-300 bg-gray-400 px-3 text-sm font-medium text-gray-200  dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
                        href="?page=1">&laquo; First</a>
-                    <a class="flex flex-col max-w-xs items-center justify-center px-3 h-8 ms-3 text-sm font-medium text-gray-200 bg-gray-400 border border-gray-300 rounded-lg  dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                    <a class="ms-3 flex h-8 max-w-xs flex-col items-center justify-center rounded-lg border border-gray-300 bg-gray-400 px-3 text-sm font-medium text-gray-200  dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
                        href="">Previous</a>
                 {% endif %}
                 {% if locations.has_next %}
-                    <a class="flex flex-row max-w-xs items-center justify-center px-3 h-8 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    <a class="ms-3 flex h-8 max-w-xs flex-row items-center justify-center rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                        href="?page={{ locations.next_page_number }}">Next</a>
-                    <a class="flex flex-row max-w-xs items-center justify-center px-3 h-8 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    <a class="ms-3 flex h-8 max-w-xs flex-row items-center justify-center rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                        href="?page={{ locations.paginator.num_pages }}">Last &raquo;</a>
                 {% else %}
-                    <a class="flex flex-row max-w-xs items-center justify-center px-3 h-8 ms-3 text-sm font-medium text-gray-200 bg-gray-400 border border-gray-300 rounded-lg  dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                    <a class="ms-3 flex h-8 max-w-xs flex-row items-center justify-center rounded-lg border border-gray-300 bg-gray-400 px-3 text-sm font-medium text-gray-200  dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
                        href="">Next</a>
-                    <a class="flex flex-row max-w-xs items-center justify-center px-3 h-8 ms-3 text-sm font-medium text-gray-200 bg-gray-400 border border-gray-300 rounded-lg  dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                    <a class="ms-3 flex h-8 max-w-xs flex-row items-center justify-center rounded-lg border border-gray-300 bg-gray-400 px-3 text-sm font-medium text-gray-200  dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
                        href="?page={{ locations.paginator.num_pages }}">Last &raquo;</a>
                 {% endif %}
                 <br>
@@ -108,14 +108,14 @@
             <div x-show="showLocationModal"
                  id="popup-modal"
                  tabindex="-1"
-                 class="backdrop-blur-md flex justify-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                 class="fixed left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden backdrop-blur-md md:inset-0">
                 <div @click.outside="showLocationModal = false"
                      class="relative rounded-lg shadow-xl dark:bg-gray-700">
                     <button type="button"
                             @click="showLocationModal = false"
-                            class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
                             data-modal-hide="popup-modal">
-                        <svg class="w-3 h-3"
+                        <svg class="h-3 w-3"
                              aria-hidden="true"
                              xmlns="http://www.w3.org/2000/svg"
                              fill="none"
@@ -125,17 +125,17 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                     <div id="inner-popup"
-                         class="flex items-center justify-between w-full p-2 rounded bg-neutral-100 md:p-2 "></div>
+                         class="flex w-full items-center justify-between rounded bg-stone-100 p-2 md:p-2 "></div>
                 </div>
             </div>
         </div>
     {% endblock %}
     <!-- START OF PARTIALS -->
     <!-- BEGIN SHOW_LOCATION PARTIAL -->
-    {% startpartial show_location %}
-    <div class="flex items-center justify-between w-full bg-neutral-200">
+    {% partialdef show_location %}
+    <div class="flex w-full items-center justify-between bg-stone-200">
         <div class="flex justify-end px-4 pt-4">
-            <div class="flex flex-col mt-3 pb-10 place-content-center">
+            <div class="mt-3 flex flex-col place-content-center pb-10">
                 <h5 class="mb-1 text-xl font-medium text-black dark:text-white">Location: {{ location }}</h5>
                 <span class="text-sm text-black dark:text-black">
                     <ul class="">
@@ -154,19 +154,19 @@
                         </ul>
                     {% endif %}
                 </span>
-                <div class="flex justify-center mt-4 md:mt-6">
+                <div class="mt-4 flex justify-center md:mt-6">
                     <button href="{% url 'update_location' location.id %}"
-                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            class="dark:hover-text-white inline-flex items-center rounded-lg bg-misargreen px-3 py-2 text-center text-sm font-medium text-white hover:bg-white hover:ring-4 focus:outline-none focus:ring-4 focus:ring-misargreen dark:bg-misargreen dark:hover:bg-white dark:focus:ring-misargreen">
                         Edit Location
                     </button>
                     <button hx-confirm="Are you sure you want to delete this location?"
-                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            class="inline-flex items-center rounded-lg bg-misargreen px-3 py-2 text-center text-sm font-medium text-white hover:bg-misargreen focus:outline-none focus:ring-4 focus:ring-misargreen dark:bg-misargreen dark:hover:bg-misargreen dark:focus:ring-misargreen">
                         Delete Event
                     </button>
                 </div>
             </div>
         </div>
     </div>
-{% endpartial %}
+{% endpartialdef %}
 <!-- BEGIN EDIT LOCATION PARTIAL -->
 <!-- BEGIN SHOW_LOCATION PARTIAL -->
