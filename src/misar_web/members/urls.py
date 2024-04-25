@@ -76,4 +76,3 @@ urlpatterns = [
         name="register_for_event",
     ),
 ]
-
