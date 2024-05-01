@@ -4,13 +4,13 @@ from django.urls import path
 
 from . import views
 from .views import (
-    ShareFileView,
     CustomLoginView,
     CustomLogoutView,
-    CustomPasswordResetView,
-    CustomPasswordResetDoneView,
-    CustomPasswordResetConfirmView,
     CustomPasswordResetCompleteView,
+    CustomPasswordResetConfirmView,
+    CustomPasswordResetDoneView,
+    CustomPasswordResetView,
+    ShareFileView,
 )
 
 urlpatterns = [
@@ -53,6 +53,7 @@ urlpatterns = [
     ),
     path("events/add_location/", views.create_location, name="add_location"),
     path("events/locations/", views.list_locations, name="location_list"),
+    path("events/locations/search", views.search_locations, name="location_search"),
     path(
         "events/show_location/<location_id>/", views.show_location, name="show_location"
     ),
