@@ -164,7 +164,7 @@ files = [
 
 [[package]]
 name = "django"
-version = "5.0.1"
+version = "5.0.4"
 requires_python = ">=3.10"
 summary = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 dependencies = [
@@ -173,8 +173,8 @@ dependencies = [
     "tzdata; sys_platform == \"win32\"",
 ]
 files = [
-    {file = "Django-5.0.1-py3-none-any.whl", hash = "sha256:f47a37a90b9bbe2c8ec360235192c7fddfdc832206fcf618bb849b39256affc1"},
-    {file = "Django-5.0.1.tar.gz", hash = "sha256:8c8659665bc6e3a44fefe1ab0a291e5a3fb3979f9a8230be29de975e57e8f854"},
+    {file = "Django-5.0.4-py3-none-any.whl", hash = "sha256:916423499d75d62da7aa038d19aef23d23498d8df229775eb0a6309ee1013775"},
+    {file = "Django-5.0.4.tar.gz", hash = "sha256:4bd01a8c830bb77a8a3b0e7d8b25b887e536ad17a81ba2dce5476135c73312bd"},
 ]
 
 [[package]]
@@ -306,14 +306,14 @@ files = [
 
 [[package]]
 name = "django-template-partials"
-version = "23.4"
+version = "24.2"
 summary = "django-template-partials"
 dependencies = [
     "Django",
 ]
 files = [
-    {file = "django-template-partials-23.4.tar.gz", hash = "sha256:f762b0b7b2222462df0845f0556792640b769eb832eae218a0e7dadd4e5606cc"},
-    {file = "django_template_partials-23.4-py2.py3-none-any.whl", hash = "sha256:d83d9c2d2836be769919e9aaf394d5feb1ac86e1187083030398308070122fca"},
+    {file = "django-template-partials-24.2.tar.gz", hash = "sha256:e594063faec6d012df3a4170edf3c5dcc07c82b1c311aa42a1a5838493fd3a72"},
+    {file = "django_template_partials-24.2-py2.py3-none-any.whl", hash = "sha256:b859072e6b3cd780743399bf5e9cee8be1c56c88844425a4e669a65c136205b2"},
 ]
 
 [[package]]
