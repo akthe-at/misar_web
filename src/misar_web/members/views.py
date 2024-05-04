@@ -79,6 +79,9 @@ class CustomPasswordResetCompleteView(PasswordResetCompleteView):
 
 
 class CustomLoginView(LoginView):
+    def form_invalid(self, form):
+        messages.error(self.request, "Incorrect username or password.")
+        return super().form_invalid(form)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["siteinfo"] = SiteInfo.objects.get(id=1)
