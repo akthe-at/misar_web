@@ -2,27 +2,57 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% load tailwind_filters %}
+{% load partials %}
 {% block content %}
-    <div class="p-8 text-center text-stone-800">
+    <div class="p-8  text-center text-stone-800">
         <div>
             <h2 class="text-5xl">Member Login</h2>
+            <div class="items-center justify-center">
+                <section id="w-full justify-center items-center messages">
+                    {% partial messages %}
+                </section>
+            </div>
         </div>
     </div>
     <div>
-        <form class="max-w-sm mx-auto text-white" method="POST">
-            <div class="mb-5 align-middle text-formcontrol cursor-text">
+        <form class="mx-auto max-w-sm  text-white" method="POST">
+            <div class="text-formcontrol mb-5 cursor-text  align-middle">
                 {% csrf_token %}
-                {{ form|crispy }}
+                <div id="div_id_username" class="mb-3">
+                    <label for="id_username" class="mb-2 block text-sm font-bold text-gray-700">
+                        Username<span class="asteriskField">*</span>
+                    </label>
+                    <input type="text"
+                           name="username"
+                           autofocus
+                           autocapitalize="none"
+                           autocomplete="username"
+                           maxlength="150"
+                           class="textinput block w-full appearance-none rounded-lg border border-gray-300 bg-white px-4 py-2 leading-normal text-gray-700 focus:outline-none focus:ring-misargreen"
+                           required
+                           id="id_username">
+                </div>
+                <div id="div_id_password" class="mb-3">
+                    <label for="id_password" class="mb-2 block text-sm font-bold text-gray-700">
+                        Password<span class="asteriskField">*</span>
+                    </label>
+                    <input type="password"
+                           name="password"
+                           autocomplete="current-password"
+                           class="passwordinput block w-full appearance-none rounded-lg border border-gray-300 bg-white px-4 py-2 leading-normal text-gray-700 focus:outline-none focus:ring-misargreen"
+                           required
+                           id="id_password">
+                </div>
                 <div class="container mx-0 flex min-w-full flex-col items-center px-10 py-10">
-                    <button class="flex flex-col items-center px-4 py-2 font-bold text-center rounded bg-misargreen hover:bg-white hover:text-black w-44">
+                    <button class="flex w-44 flex-col items-center rounded bg-misargreen px-4 py-2 text-center font-bold hover:bg-white hover:text-black">
                         Login
                     </button>
                 </div>
             </div>
         </form>
-        <div class="text-center text-stone-800 align-middle">
+        <div class="text-center align-middle text-stone-800">
             <label>
-                Don't have an account? <a class="text-red-700 hover:text-black font-semibold"
+                Don't have an account? <a class="font-semibold text-red-700 hover:text-black"
     href="{% url 'register' %}">Register</a>
             </label>
             <p>
@@ -32,3 +62,44 @@
         </div>
     </div>
 {% endblock %}
+{% partialdef messages %}
+{% if messages %}
+    {% for message in messages %}
+        <div x-init="setTimeout(() => dismissed=true, 2500)"
+             x-data="{dismissed: false}"
+             x-show="!dismissed">
+            {% if message.tags == 'error' %}
+                <div id="toast-warning"
+                     class="absolute bottom-0 right-0 z-50 mx-auto max-w-xs translate-x-[-50%] translate-y-[-50%] transform rounded-lg bg-stone-200 p-4 text-red-600 shadow-stone-900 dark:bg-gray-800 dark:text-gray-400"
+                     role="alert">
+                    <div class="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-white text-red-700 dark:bg-orange-700 dark:text-orange-200">
+                        <svg class="h-5 w-5"
+                             aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg"
+                             fill="currentColor"
+                             viewBox="0 0 20 20">
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z" />
+                        </svg>
+                        <span class="sr-only">Warning icon</span>
+                    </div>
+                    <div class="text-md ms-3 p-4 font-[Inter] font-bold">{{ message }}</div>
+                    <button @click="dismissed=true"
+                            type="button"
+                            class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white"
+                            data-dismiss-target="#toast-warning"
+                            aria-label="Close">
+                        <span class="sr-only">Close</span>
+                        <svg class="h-3 w-3"
+                             aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg"
+                             fill="none"
+                             viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                    </button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
+{% endpartialdef %}
