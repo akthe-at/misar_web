@@ -1,14 +1,34 @@
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 from typing import Any
 
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordResetForm, UserCreationForm
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from guardian.shortcuts import assign_perm, get_objects_for_user
 from localflavor.us.forms import USZipCodeField
 
 from members.models import Event, Location, Member, MemberFile
+
+load_dotenv()
+
+MISAR_REGISTRATION_SECRET = os.getenv("MISAR_REGISTRATION_SECRET")
+
+
+class MemberResetPasswordForm(PasswordResetForm):
+    """MISAR Member Reset Password Form"""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super(MemberResetPasswordForm, self).__init__(*args, **kwargs)
+        self.fields["email"].widget.attrs["class"] = "form-control"
+
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={"autocomplete": "email", "class": "form-control"}
+        ),
+    )
 
 
 class MemberRegistrationForm(UserCreationForm):
@@ -49,7 +69,7 @@ class MemberRegistrationForm(UserCreationForm):
 
         data = self.cleaned_data["member_password"]
         if (
-            data != "bigfishy"
+            data != MISAR_REGISTRATION_SECRET
         ):  # TODO: This needs to be written to an environmental variable before production
             raise ValidationError(
                 "Sorry you must have the secret code to become a MISAR member."
