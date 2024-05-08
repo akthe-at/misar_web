@@ -30,12 +30,14 @@
                 <button type="submit"
                         class="m-3 inline-flex items-center rounded-lg bg-misargreen px-3 py-2 text-center text-sm font-medium text-white hover:bg-white hover:text-black hover:ring-4 hover:ring-misargreen focus:outline-none focus:ring-4 focus:ring-misargreen focus:ring-misargreen dark:bg-misargreen dark:hover:bg-misargreen dark:focus:ring-misargreen"
                         href="{% url 'location_csv' %}">Export to CSV</button>
+                <a class="m-3 inline-flex items-center rounded-lg bg-misargreen px-3 py-2 text-center text-sm font-medium text-white hover:bg-white hover:text-black hover:ring-4 hover:ring-misargreen focus:outline-none focus:ring-4 focus:ring-misargreen focus:ring-misargreen dark:bg-misargreen dark:hover:bg-misargreen dark:focus:ring-misargreen"
+                   href="{% url 'add_location' %}">Add Location</a>
             </div>
-            {% partial locations %}
+            <div class="lg:max-w-2/3 sm:max-w-2/3 relative flex flex-col overflow-x-auto">{% partial locations %}</div>
         </form>
         <div class="m-2 flex justify-center">Page {{ locations.number }} of {{ locations.paginator.num_pages }}</div>
         <div class="flex justify-center">
-            <div class="flex">
+            <div class="mb-4 flex h-full">
                 {% if locations.has_previous %}
                     <a class="ms-3 flex h-8 max-w-xs flex-col items-center justify-center rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                        href="?page=1">&laquo; First</a>
@@ -126,54 +128,82 @@
 <!-- BEGIN EDIT LOCATION PARTIAL -->
 <!-- BEGIN SHOW_LOCATION PARTIAL -->
 {% partialdef locations %}
-<table id="location-table"
-       class="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
-    <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-        <tr>
-            <th scope="col" class="p-4">
-                <div class="flex items-center">
-                    <input id="checkbox-all-search"
-                           type="checkbox"
-                           class="focus:misargreen h-4 w-4 rounded border-gray-300 bg-gray-100 text-misargreen focus:ring-2 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-misargreen dark:focus:ring-offset-gray-800">
-                    <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                </div>
-            </th>
-            <th scope="col" class="px-6 py-3">Location</th>
-            <th scope="col" class="px-6 py-3">Address</th>
-            <th scope="col" class="px-6 py-3">City</th>
-            <th scope="col" class="px-6 py-3">Location Point of Contact</th>
-            <th scope="col" class="px-6 py-3">MISAR Point of Contact</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for location in locations %}
-            <tr class="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
-                <td class="w-4 p-4">
-                    <div class="flex items-center">
-                        <input id="checkbox-table-search-{{ location.id }}"
-                               type="checkbox"
-                               value="{{ location.id }}"
-                               name="location_ids"
-                               class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-misargreen focus:ring-2 focus:ring-misargreen dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-misargreen dark:focus:ring-offset-gray-800">
-                        <label for="checkbox-table-search-{{ location.id }}" class="sr-only">checkbox</label>
-                    </div>
-                </td>
-                <th scope="row"
-                    class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                    <a @click.prevent="showLocationModal = true; openModal({{ location.id }})"
-                       class="text-misargreen"
-                       hx-get="{% url 'show_location' location.id %}"
-                       hx-trigger="click"
-                       hx-target="#inner-popup"
-                       hx-swap="innerHTML"
-                       href="{% url 'show_location' location.id %}">{{ location }}</a>
-                </th>
-                <td class="px-6 py-4">{{ location.address }}</td>
-                <td class="px-6 py-4">{{ location.city }}</td>
-                <td class="px-6 py-4">{{ location.point_of_contact }}</td>
-                <td class="px-6 py-4">{{ location.misar_poc }}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<body class="flex items-center justify-center">
+    <table id="location-table"
+           class="flex-no-wrap my-5 flex w-full min-w-0 flex-row overflow-hidden rounded-lg text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
+        <thead class="rounded-1 flex-1 rounded-b-lg bg-stone-300  text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400 sm:flex-none">
+            {% for location in locations %}
+                <tr class="flex-no-wrap mb-2 flex flex-col rounded-b-lg bg-stone-400 sm:mb-0 sm:table-row sm:rounded-t-lg md:rounded-b-none md:border">
+                    <th class="h-12 border px-3 py-2 ">
+                        <!-- <div class="flex items-center"> -->
+                        <!--     <input id="checkbox-all-search" -->
+                        <!--            type="checkbox" -->
+                        <!--            class="focus:misargreen h-4 w-4 rounded border-gray-300 bg-gray-100 text-misargreen focus:ring-2 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-misargreen dark:focus:ring-offset-gray-800"> -->
+                        <!--     <label for="checkbox-all-search" class="sr-only">checkbox</label> -->
+                        <!-- </div> -->
+                        Select This Location
+                    </th>
+                    <th class="px-3 h-12 border py-2">Location</th>
+                    <th class="px-3 h-12 border py-2">Address</th>
+                    <th class="px-3 h-12 border py-2">City</th>
+                    <th class="px-3 h-12 border py-2">Location Point of Contact</th>
+                    <th class="px-3 rounded-b-lg h-12 border py-2 md:rounded-b-none">MISAR Point of Contact</th>
+                </tr>
+            {% endfor %}
+        </thead>
+        <tbody class="rounded-1 flex-1 rounded-b-lg sm:flex-none sm:rounded-none">
+            {% for location in locations %}
+                <tr class="flex-no-wrap mb-2 flex flex-col rounded-b-lg bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600 sm:mb-0 sm:table-row sm:rounded-t-lg md:border">
+                    <td class="h-12 border px-3 py-2">
+                        <div class="flex items-center">
+                            <input id="checkbox-table-search-{{ location.id }}"
+                                   type="checkbox"
+                                   value="{{ location.id }}"
+                                   name="location_ids"
+                                   class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-misargreen focus:ring-2 focus:ring-misargreen dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-misargreen dark:focus:ring-offset-gray-800">
+                            <label for="checkbox-table-search-{{ location.id }}" class="sr-only">checkbox</label>
+                        </div>
+                    </td>
+                    <td class="h-12 border px-3 py-2 font-medium text-gray-900 dark:text-white">
+                        <a @click.prevent="showLocationModal = true; openModal({{ location.id }})"
+                           class="text-misargreen"
+                           hx-get="{% url 'show_location' location.id %}"
+                           hx-trigger="click"
+                           hx-target="#inner-popup"
+                           hx-swap="innerHTML"
+                           href="{% url 'show_location' location.id %}">{{ location }}</a>
+                    </td>
+                    <td class="h-12 border px-3 py-2">{{ location.address }}</td>
+                    <td class="h-12 border px-3 py-2">{{ location.city }}</td>
+                    <td class="h-12 border px-3 py-2">{{ location.point_of_contact }}</td>
+                    <td class="h-12 border px-3 py-2">{{ location.misar_poc }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <style>
+        html,
+        body {
+          height: 100%;
+        }
+
+        @media (min-width: 640px) {
+          table {
+            display: inline-table !important;
+          }
+
+          thead tr:not(:first-child) {
+            display: none;
+          }
+        }
+
+        td:not(:last-child) {
+          border-bottom: 0;
+        }
+
+        th:not(:last-child) {
+          border-bottom: 2px solid rgba(0, 0, 0, .1);
+        }
+    </style>
+</body>
 {% endpartialdef %}
