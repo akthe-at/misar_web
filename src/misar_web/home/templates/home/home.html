@@ -7,15 +7,15 @@
              style="background-image: url({{ siteinfo.home_page_image.url }})"></div>
         <div class="min-h-96 flex flex-col items-center justify-center bg-stone-400 py-8 lg:py-[72px]">
             <div class="flex w-5/6 flex-col text-center lg:w-3/4">
-                <h2 class="inset-0 pb-2 pt-3 text-5xl font-bold text-stone-700">Our Team</h2>
+                <h2 class="inset-0 pb-2 pt-3 font-serif text-5xl font-bold text-stone-700">Our Team</h2>
                 <p class="inset-0 pb-3 text-xl text-stone-700 md:text-2xl">{{ siteinfo.description }}</p>
                 <hr class="md:40 mx-auto my-4 h-1 w-32 rounded border-0 bg-stone-300 dark:bg-stone-300 md:my-10">
-                <h2 class="inset-0 pb-2 pt-3 text-5xl font-bold text-stone-700">Our Mission</h2>
-                <p class="inset-0 pb-3 font-[Inter] text-xl text-stone-700 md:text-2xl">{{ siteinfo.mission_statement }}</p>
+                <h2 class="inset-0 pb-2 pt-3 font-serif text-5xl font-bold text-stone-700">Our Mission</h2>
+                <p class="inset-0 pb-3 text-xl text-stone-700 md:text-2xl">{{ siteinfo.mission_statement }}</p>
             </div>
         </div>
         <div class="max-h-1/6 align-items-center flex flex-col flex-wrap justify-center bg-stone-700 py-2 text-center lg:py-[72px]">
-            <h2 class="my-4 flex flex-col text-5xl font-semibold text-white">Search Specialties</h2>
+            <h2 class="my-4 flex flex-col font-serif text-5xl font-bold text-white">Search Specialties</h2>
             <div class="align-items-center mx-auto grid grid-cols-2 place-items-center justify-center gap-1 px-2 text-center sm:grid-cols-2 md:grid-cols-3">
                 {% for spec in search_spec %}
                     <!-- Also the Modal Toggle -->
@@ -47,23 +47,25 @@
             </div>
         </div>
         <div class="flex h-80 w-full flex-col items-center justify-center bg-stone-400 text-center">
-            <h2 class="pb-3 text-5xl font-semibold text-stone-700">Emergency Dispatch</h2>
-            <h4 class="mb-3 px-4 text-2xl text-stone-700 sm:mx-auto sm:px-6 md:mx-auto md:px-8 lg:mx-32 lg:px-12 xl:mx-64 xl:px-16">
+            <h2 class="pb-3 font-serif text-5xl font-bold text-stone-700">Emergency Dispatch</h2>
+            <h4 class="font-[Sedan SC] mb-3 px-4 text-2xl text-stone-700 sm:mx-auto sm:px-6 md:mx-auto md:px-8 lg:mx-32 lg:px-12 xl:mx-64 xl:px-16">
                 For Immediate Dispatch of K9 Teams:
             </h4>
-            <a href="tel:18008185645"
-                <button class="flex w-36 rounded bg-misargreen px-4 py-2 font-bold text-white hover:bg-red-700">
-                    {{ siteinfo.dispatch_number }}
-                </a>
+            <div class="flex items-center justify-center text-center">
+                <a href="tel:18008185645">
+                    <button class="flex w-36 items-center justify-center rounded bg-misargreen px-4 py-2 text-center font-bold text-white hover:bg-red-700 lg:w-48">
+                        {{ siteinfo.dispatch_number }}
+                    </a>
+                </div>
             </div>
             <div class="flex h-[36rem] w-full flex-col items-center justify-center bg-stone-900 bg-cover bg-fixed bg-top py-32 text-center lg:flex-row lg:py-[72px]"
                  style="background-image:linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{ siteinfo.home_page_image.url }})">
                 <div class="flex w-1/2 flex-col-reverse items-center justify-center text-center text-white sm:px-3 lg:flex-col">
                     <div class="flex w-full flex-col items-center justify-center text-center">
-                        <h2 class="mb-3 mt-6 text-3xl font-semibold text-white lg:text-6xl">Get Involved</h2>
+                        <h2 class="mb-3 mt-6 font-serif text-3xl font-semibold text-white lg:text-6xl">Get Involved</h2>
                         <div class="flex flex-col justify-center gap-2 text-center lg:flex-row">
                             <a href="#" class="">
-                                <button class="flex w-36 items-center justify-center rounded bg-misargreen px-4 py-2 font-bold text-white hover:bg-white hover:text-black">
+                                <button class="flex w-36 items-center justify-center rounded bg-misargreen px-2 py-2 font-bold text-white hover:bg-white hover:text-black">
                                     Donate
                                 </button>
                             </a>
@@ -75,7 +77,7 @@
                             </button>
                         </div>
                         <hr class="mx-auto my-3 h-1 w-24 rounded border-0 bg-white dark:bg-white md:my-10">
-                        <h2 class="mb-3 flex flex-col text-3xl font-semibold italic text-white hover:text-blue-400 lg:text-5xl">
+                        <h2 class="mb-3 flex flex-col font-serif text-3xl font-semibold italic text-white hover:text-blue-400 lg:text-5xl">
                             <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on
                             Facebook!</a>
                         </h2>
@@ -127,7 +129,7 @@
                         <div class="align-items-right mx-4 flex justify-end">
                             <button type="button"
                                     @click="showVolunteerModal = false"
-                                    class="ms-auto my-4 inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden"
+                                    class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden"
                                     data-modal-hide="volunteer-modal">
                                 <svg class="h-5 w-5"
                                      aria-hidden="true"
@@ -142,7 +144,7 @@
                         <!-- Modal content -->
                         <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
                             <div class="flex flex-row items-center justify-center rounded-t border-b bg-stone-200 p-4 dark:border-gray-600 md:p-5">
-                                <h2 class="my-2 flex-col text-3xl font-black">Interested in Joining or Helping Out?</h2>
+                                <h2 class="my-2 flex-col font-serif text-3xl font-black">Interested in Joining or Helping Out?</h2>
                             </div>
                             <div id="volunteer-modal-body"
                                  class="space-y-2 rounded-lg bg-stone-200 p-4 md:p-5">
@@ -177,7 +179,7 @@
         {% partialdef search_spec_modal %}
         <!-- Modal header -->
         <div class="flex w-full items-center justify-center rounded-t border-b p-4 dark:border-gray-600 md:p-5">
-            <h2 class="my-2 flex-col text-3xl font-black">{{ specialty.specialty }}</h2>
+            <h2 class="my-2 flex-col font-serif text-5xl font-black">{{ specialty.specialty }}</h2>
         </div>
         <div class="align-items-center flex w-full flex-col items-center justify-center">
             <img class="max-w-56 visible my-2 max-h-56 flex-row rounded-lg object-cover"
@@ -185,7 +187,7 @@
                  alt="search specialty icons">
         </div>
         <div class="my-1 flex flex-col items-center justify-center gap-2 text-left">
-            <p class="my-2 flex-col font-[Inter] text-xl text-stone-700">{{ specialty.long_description }}</p>
+            <p class="my-2 flex-col break-normal text-xl text-stone-700">{{ specialty.long_description }}</p>
             <div class="my-2 flex-col">
                 <h2 .
                     <img class="max-h-96 flex-row rounded-lg"
