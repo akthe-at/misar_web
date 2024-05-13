@@ -44,8 +44,7 @@ class LocationAdmin(admin.ModelAdmin):
     ordering = ("name", "city", "state", "zip_code")
 
 
-@admin.register(Event)
-class EventAdmin(admin.ModelAdmin):
+class EventAdmin(GuardedModelAdmin):
     list_display = (
         "event_name",
         "event_type",
@@ -63,3 +62,5 @@ class EventAdmin(admin.ModelAdmin):
     )
     ordering = ("event_name", "event_type", "location", "date")
 
+
+admin.site.register(Event, EventAdmin)
