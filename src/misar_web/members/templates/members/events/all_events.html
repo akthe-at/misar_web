@@ -1,5 +1,6 @@
 {% extends 'members/base.html' %}
 {% load partials %}
+{% load guardian_tags %}
 {% block content %}
     <div class="justify-left flex h-full flex-col items-center bg-stone-500 py-6">
         <div class="flex-row items-center justify-center text-center">
@@ -10,10 +11,11 @@
             <a class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white hover:bg-white hover:text-black  hover:ring-4 hover:ring-misargreen focus:outline-none focus:ring-4 focus:ring-misargreen dark:bg-misargreen dark:hover:bg-white dark:hover:text-black dark:focus:ring-offset-black"
                href="{% url 'add_location' %}">Add Event Location</a>
         </div>
-        <div class="my-4 flex flex-col items-center justify-center">
-            <h1 class="flex flex-col text-4xl font-bold text-white">Events</h1>
+        <div class="my-2 flex flex-col items-center justify-center">
+            <h1 class="mt-2 mb-4 flex flex-col text-4xl font-bold text-white">Upcoming Events</h1>
             <div class="grid gap-x-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {% for event in events %}
+                    {% get_obj_perms request.user for event as "event_perms" %}
                     <div class="max-w-1/2 my-1 rounded-lg border border-gray-200 bg-stone-300 p-6 shadow dark:border-gray-700 dark:bg-gray-800">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ event }}</h5>
                         <ul>
@@ -23,6 +25,16 @@
                             <li>
                                 <b>Date: </b>{{ event.date }}
                             </li>
+                            {% if event.start_time %}
+                                <li>
+                                    <b>Start Time: </b>{{ event.start_time }}
+                                </li>
+                            {% endif %}
+                            {% if event.end_time %}
+                                <li>
+                                    <b>End Time: </b>{{ event.end_time }}
+                                </li>
+                            {% endif %}
                             <li>
                                 <b>Location: </b>
                                 <br>
@@ -41,43 +53,35 @@
                             </br>
                             {{ event.description }}
                         </li>
-                        <!-- <li id="attending"> -->
-                        <!--     {% with event=event %} -->
-                        <!--         {% partial attendeelist %} -->
-                        <!--     </li> -->
+                        {% if event.special_instructions %}
+                            <li>
+                                <b>Special Instructions:</b>
+                                <br />
+                                {{ event.special_instructions }}
+                            </li>
+                        {% endif %}
                     </ul>
                     <div class="flex min-w-0 flex-col items-center justify-center">
-                        <!-- <a hx-post="{% url 'register_for_event' event.id %}"
-    hx-trigger="click"
-    hx-target="#attending"
-    -->
-                        <!--   hx-swap="innerHTML" -->
-                        <!--   class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white ring-misargreen hover:bg-white  hover:text-black hover:ring-4 focus:outline-none focus:ring-2 focus:ring-black dark:bg-misargreen dark:hover:bg-white dark:hover:text-black"> -->
-                        <!--   Register for Event -->
-                        <!-- </a> -->
-                        <a href="{% url 'update_event' event.id %}"
-                           class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white ring-misargreen hover:bg-white  hover:text-black hover:ring-4 focus:outline-none focus:ring-2 focus:ring-black dark:bg-misargreen dark:hover:bg-white dark:hover:text-black">
-                            Edit Event
-                        </a>
-                        <a hx-get="{% url 'delete_event' event.id %}"
-                           hx-trigger="click"
-                           hx-confirm="Are you sure you want to delete this event?"
-                           class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white ring-misargreen hover:bg-white  hover:text-black hover:ring-4 focus:outline-none focus:ring-2 focus:ring-black dark:bg-misargreen dark:hover:bg-white dark:hover:text-black">
-                            Delete Event
-                        </a>
+                        {% if "change_event" in event_perms %}
+                            <a href="{% url 'update_event' event.id %}"
+                               class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white ring-misargreen hover:bg-white  hover:text-black hover:ring-4 focus:outline-none focus:ring-2 focus:ring-black dark:bg-misargreen dark:hover:bg-white dark:hover:text-black">
+                                Edit Event
+                            </a>
+                        {% endif %}
+                        {% if "delete_event" in event_perms %}
+                            <a hx-get="{% url 'delete_event' event.id %}"
+                               hx-trigger="click"
+                               hx-confirm="Are you sure you want to delete this event?"
+                               class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white ring-misargreen hover:bg-white  hover:text-black hover:ring-4 focus:outline-none focus:ring-2 focus:ring-black dark:bg-misargreen dark:hover:bg-white dark:hover:text-black">
+                                Delete Event
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
-            {% endwith %}
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 </div>
-</div>
 {% endblock %}
-{% partialdef attendeelist event %}
-<b>Attending:</b>
-<br>
-{% for attendee in event.attendees.all %}
-    {{ attendee }}
-    {% if not forloop.last %}{% endif %}
-{% endfor %}
+{% partialdef event_details %}
 {% endpartialdef %}
