@@ -15,6 +15,7 @@ from members.models import Event, Location, Member, MemberFile
 load_dotenv()
 
 MISAR_REGISTRATION_SECRET = os.getenv("MISAR_REGISTRATION_SECRET")
+INPUT_CSS_CLASS = "form-control"
 
 
 class MemberResetPasswordForm(PasswordResetForm):
@@ -68,9 +69,7 @@ class MemberRegistrationForm(UserCreationForm):
         """Checks to see if correct member password used to allow for registration"""
 
         data = self.cleaned_data["member_password"]
-        if (
-            data != MISAR_REGISTRATION_SECRET
-        ):  # TODO: This needs to be written to an environmental variable before production
+        if data != MISAR_REGISTRATION_SECRET:
             raise ValidationError(
                 "Sorry you must have the secret code to become a MISAR member."
             )
@@ -89,9 +88,6 @@ class MemberRegistrationForm(UserCreationForm):
             "zip",
             "date_of_birth",
         )
-
-
-input_css_class = "form-control"
 
 
 class FileUploadForm(forms.ModelForm):
@@ -219,11 +215,11 @@ class EventLocationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields["misar_poc"].queryset = Member.objects.filter(is_superuser=False)
         for field in self.fields:
-            self.fields[field].widget.attrs["class"] = "input_css_class"
+            self.fields[field].widget.attrs["class"] = f"{INPUT_CSS_CLASS}"
 
 
 class DateTimePickerInput(forms.DateInput):
-    input_type = "datetime"
+    input_type = "date"
 
 
 class EventForm(forms.ModelForm):
