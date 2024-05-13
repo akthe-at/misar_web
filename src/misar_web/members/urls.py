@@ -71,9 +71,4 @@ urlpatterns = [
     path("events/add_event/", views.create_event, name="add_event"),
     path("events/delete_event/<event_id>/", views.delete_event, name="delete_event"),
     path("location_csv", views.location_csv, name="location_csv"),
-    path(
-        "events/register_for_event/<int:event_id>/",
-        views.register_for_event,
-        name="register_for_event",
-    ),
 ]

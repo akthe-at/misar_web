@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.text import slugify
@@ -23,7 +24,7 @@ class Member(AbstractUser):
     zip_code = USZipCodeField(("zip_code"), null=False, max_length=10)
     date_of_birth = models.DateField(null=True, blank=True)
 
-    class Meta:
+    class Meta:  # type: ignore
         verbose_name = "member"
         verbose_name_plural = "members"
 
@@ -37,38 +38,6 @@ class Member(AbstractUser):
             shared_files = MemberFile.objects.filter(share_with_all=True)
             for file in shared_files:
                 assign_perm("members.view_memberfile", self, file)
-
-
-class MemberFile(models.Model):
-    """A class to represent user-uploaded files"""
-
-    class Meta:
-        permissions = [
-            ("share_memberfile", "Can share member file"),
-        ]
-
-    owner = models.ForeignKey(
-        Member, on_delete=models.CASCADE, related_name="owned_files", null=False
-    )
-    file = models.FileField(upload_to="media/", null=False, blank=False)
-    file_name = models.CharField(("File Name"), max_length=50)
-    file_description = models.CharField(("File Description"), max_length=50)
-    date_created = models.DateTimeField(auto_now_add=True)
-    last_modified = models.DateTimeField(auto_now=True)
-    share_with_all = models.BooleanField(default=False)
-    slug = models.SlugField(unique=True, editable=False, max_length=255)
-
-    def __str__(self):
-        return self.file_name
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(f"{self.file_name}--{uuid4()}")
-        user = kwargs.get("user")
-        if user is not None:
-            self.owner = user
-
-        super().save(*args, **kwargs)
 
 
 class Location(models.Model):
@@ -106,16 +75,51 @@ class Location(models.Model):
         return self.name
 
 
-class Event(models.Model):
-    """A class to represent events"""
+class MemberFile(models.Model):
+    """A class to represent user-uploaded files"""
 
+    class Meta:  # type: ignore
+        permissions = [
+            ("share_memberfile", "Can share member file"),
+        ]
+
+    owner = models.ForeignKey(
+        Member, on_delete=models.CASCADE, related_name="owned_files", null=False
+    )
+    file = models.FileField(upload_to="media/", null=False, blank=False)
+    file_name = models.CharField(("File Name"), max_length=50)
+    file_description = models.CharField(("File Description"), max_length=50)
+    date_created = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
+    share_with_all = models.BooleanField(default=False)
+    slug = models.SlugField(unique=True, editable=False, max_length=255)
+
+    def __str__(self):
+        return self.file_name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(f"{self.file_name}--{uuid4()}")
+        user = kwargs.get("user")
+        if user is not None:
+            self.owner = user
+
+        super().save(*args, **kwargs)
+
+
+class Event(models.Model):
+    """A class to represent events such as trainings, demos, fundraisers, etc."""
+
+    event_poster = models.ForeignKey(Member, on_delete=models.CASCADE, null=True)
+    date_posted = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
     event_organizer = models.ForeignKey(
         Member, on_delete=models.CASCADE, related_name="organized_events", null=True
     )
     event_name = models.CharField(("Event Name"), max_length=50)
     description = models.CharField(("Event Description"), max_length=50)
     event_type = models.CharField(("Event Type"), max_length=50)
-    date = models.DateTimeField(("Event Date"))
+    date = models.DateField(("Event Date"))
     location = models.ForeignKey(
         Location, on_delete=models.SET_NULL, related_name="event_location", null=True
     )
@@ -123,9 +127,6 @@ class Event(models.Model):
     end_time = models.TimeField(("End Time"), null=True, blank=True)
     special_instructions = models.TextField(
         ("Special Instructions"), max_length=500, blank=True
-    )
-    attendees = models.ManyToManyField(
-        Member, related_name="event_attendees", blank=True
     )
 
     def __str__(self):

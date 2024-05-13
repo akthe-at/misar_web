@@ -1,10 +1,8 @@
-import calendar
 import csv
-from calendar import HTMLCalendar
-from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (
     LoginView,
@@ -24,7 +22,7 @@ from django.http import (
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from guardian.shortcuts import assign_perm, get_objects_for_user, get_perms
 from home.models import SiteInfo
 from misar_web.settings import LOGIN_URL
@@ -82,6 +80,7 @@ class CustomLoginView(LoginView):
     def form_invalid(self, form):
         messages.error(self.request, "Incorrect username or password.")
         return super().form_invalid(form)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["siteinfo"] = SiteInfo.objects.get(id=1)
@@ -230,24 +229,20 @@ class ShareFileView(LoginRequiredMixin, View):
         return render(request, "members/share_file.html", context)
 
 
-@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
-def team_calendar(request: HttpRequest):
-    now = datetime.now()
-    year = now.year
-    month = now.strftime("%B")
+class CalendarView(LoginRequiredMixin, ListView):
+    login_url = LOGIN_URL
+    model = Event
+    template_name = "calendar.html"
 
-    month_number = list(calendar.month_name).index(month)
-    cal = HTMLCalendar().formatmonth(int(year), month_number)
-
-    siteinfo = SiteInfo.objects.get(id=1)
-    context = {
-        "siteinfo": siteinfo,
-        "year": year,
-        "month": month,
-        "month_number": month_number,
-        "cal": cal,
-    }
-    return render(request, "members/events/calendar.html", context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        d = get_date(self.request.GET.get("month", None))
+        cal = Calendar(d.year, d.month)
+        html_cal = cal.formatmonth(withyear=True)
+        context["calendar"] = mark_safe(html_cal)
+        context["prev_month"] = prev_month(d)
+        context["next_month"] = next_month(d)
+        return context
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
@@ -260,14 +255,44 @@ def all_events(request: HttpRequest):
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def create_event(request: HttpRequest):
+    DEFAULT_PERMS = [
+        "add_event",
+        "change_event",
+        "delete_event",
+    ]
     siteinfo = SiteInfo.objects.get(id=1)
-    if request.method == "POST":
-        form = EventForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("all_events")
-    else:
-        form = EventForm()
+    form = EventForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        event_organizer = form.cleaned_data["event_organizer"]
+        event_name = form.cleaned_data["event_name"]
+        description = form.cleaned_data["description"]
+        event_type = form.cleaned_data["event_type"]
+        date = form.cleaned_data["date"]
+        location = form.cleaned_data["location"]
+        start_time = form.cleaned_data["start_time"]
+        end_time = form.cleaned_data["end_time"]
+        special_instructions = form.cleaned_data["special_instructions"]
+        event, created = Event.objects.get_or_create(
+            event_poster=request.user,
+            event_organizer=event_organizer,
+            event_name=event_name,
+            description=description,
+            event_type=event_type,
+            date=date,
+            location=location,
+            start_time=start_time,
+            end_time=end_time,
+            special_instructions=special_instructions,
+        )
+        for permission in DEFAULT_PERMS:
+            assign_perm(permission, request.user, event)
+            assign_perm(permission, event_organizer, event)
+        request.user.save()
+        event_organizer.save()
+        # TODO: Fix moderator permission assignments
+        # moderator_group, created = Group.objects.get_or_create(name="moderator")
+        # assign_perm(DEFAULT_PERMS, moderator_group, event)
+        return redirect("all_events")
     context = {"siteinfo": siteinfo, "form": form}
     return render(request, "members/events/add_event.html", context)
 
@@ -291,20 +316,23 @@ def update_event(request: HttpRequest, event_id: int):
 def delete_event(request: HttpRequest, event_id: int):
     event = Event.objects.get(pk=event_id)
     event.delete()
-    return redirect("all_events")
+    siteinfo = SiteInfo.objects.get(id=1)
+    events = Event.objects.all().order_by("date")
+    context = {"siteinfo": siteinfo, "events": events}
+    return render(request, "members/events/all_events.html", context)
 
 
-@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
-def register_for_event(request: HttpRequest, event_id: int):
-    event = Event.objects.get(pk=event_id)
-    if request.method == "POST":
-        if request.user in event.attendees.all():
-            event.attendees.remove(request.user)
-        else:
-            event.attendees.add(request.user)
-    event = Event.objects.get(pk=event_id)
-    context = {"event": event}
-    return render(request, "members/events/all_events.html#attendeelist", context)
+# class EventMemberDeleteView(LoginRequiredMixin, DeleteView):
+#     login_url = LOGIN_URL
+#     model = EventMember
+#     successful_url = reverse_lazy("all_events")
+#
+#     def get(self, request, event_id, member_id):
+#         event = get_object_or_404(Event, pk=event_id)
+#         member = get_object_or_404(Member, pk=member_id)
+#         event_member = get_object_or_404(EventMember, event=event, member=member)
+#         event_member.delete()
+#         return redirect("all_events")
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
@@ -340,6 +368,15 @@ def list_locations(request: HttpRequest):
         "locations": locations,
     }
     return render(request, "members/events/locations.html", context)
+
+
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
+def search_locations(request: HttpRequest):
+    search_text = request.POST.get("search")
+    results = Location.objects.filter(name__icontains=search_text)
+
+    context = {"locations": results}
+    return render(request, "members/events/locations.html#locations", context)
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
