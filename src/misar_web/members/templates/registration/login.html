@@ -6,7 +6,7 @@
 {% block content %}
     <div class="p-8  text-center text-stone-800">
         <div>
-            <h2 class="text-5xl">Member Login</h2>
+            <h2 class="font-serif text-5xl">Member Login</h2>
             <div class="items-center justify-center">
                 <section id="w-full justify-center items-center messages">
                     {% partial messages %}
@@ -82,7 +82,7 @@
                         </svg>
                         <span class="sr-only">Warning icon</span>
                     </div>
-                    <div class="text-md ms-3 p-4 font-[Inter] font-bold">{{ message }}</div>
+                    <div class="text-md ms-3 p-4 font-bold">{{ message }}</div>
                     <button @click="dismissed=true"
                             type="button"
                             class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white"
