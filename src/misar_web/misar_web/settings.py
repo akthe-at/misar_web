@@ -11,21 +11,27 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+print(BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-43+3*qq&o3*b6kz*mqv!fzdftr*22(9y%wsk!x15qv9t22io^n"
+KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = f"{KEY}"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["10.0.0.161", "192.168.86.250", "127.0.0.1", "0.0.0.0"]
+ALLOWED_HOSTS = ["misar-uwwssi.pythonanywhere.com"]
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": lambda r: False,  # disables it
 }
@@ -57,7 +63,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
 TAILWIND_APP_NAME = "theme"
 
-NPM_BIN_PATH = "C:\\Users\\ARK010\\node-v20.8.1-win-x64\\npm.cmd"
+# NPM_BIN_PATH = "C:\\Users\\ARK010\\node-v20.8.1-win-x64\\npm.cmd"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
@@ -65,7 +71,6 @@ INTERNAL_IPS = [
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -146,9 +151,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
-if not DEBUG:
-    STATIC_ROOT = BASE_DIR / "staticfiles"
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_ROOT = BASE_DIR.parent / "local-cdn" / "static"
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR.parent / "local-cdn" / "media"
