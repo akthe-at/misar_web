@@ -43,9 +43,8 @@ module.exports = {
     ],
     theme: {
     fontFamily: {
-    // 'sans': ['Fira Sans',]
-    // 'sans': ['Inter',]
-      'sans':['Maiah'],
+    'sans': ['"Inter"'],
+    'serif': ['"Libre Baskerville"'],
     },
         extend: {
       colors: {
