@@ -11,7 +11,6 @@ dependencies = [
     "python-dotenv>=1.0.1",
     "whitenoise[brotli]>=6.6.0",
     "gunicorn>=22.0.0",
-    "uvicorn>=0.29.0",
 ]
 requires-python = ">=3.10"
 readme = "README.md"
