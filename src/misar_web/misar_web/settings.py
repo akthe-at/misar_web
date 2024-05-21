@@ -155,7 +155,7 @@ if not DEBUG:
     # STATIC_ROOT = BASE_DIR / "staticfiles"
     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_ROOT = BASE_DIR.parent / "local-cdn" / "static"
-MEDIA_URL = "/media/"
+MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR.parent / "local-cdn" / "media"
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "../../members/member_home/"
