@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div x-data="{showLocationModal: false}"
-         class="relative w-full overflow-x-auto shadow-md sm:rounded-lg">
+         class="relative h-full w-full overflow-x-auto shadow-md sm:rounded-lg">
         <section id="messages">
             {% partial messages %}
         </section>
@@ -39,32 +39,34 @@
             <div id="location_list"
                  class="lg:max-w-2/3 sm:max-w-2/3 relative flex flex-col overflow-x-auto">{% partial locations %}</div>
         </form>
-        <div class="m-2 flex justify-center">Page {{ locations.number }} of {{ locations.paginator.num_pages }}</div>
-        <div class="flex justify-center">
-            <div class="mb-4 flex h-full">
-                {% if locations.has_previous %}
-                    <a class="ms-3 flex h-8 max-w-xs flex-col items-center justify-center rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                       href="?page=1">&laquo; First</a>
-                    <a class="ms-3 flex h-8 max-w-xs flex-row items-center justify-center rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                       href="?page={{ locations.previous_page_number }}">Previous</a>
-                {% else %}
-                    <a class="ms-3 flex h-8 max-w-xs flex-col items-center justify-center rounded-lg border border-gray-300 bg-gray-400 px-3 text-sm font-medium text-gray-200  dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
-                       href="?page=1">&laquo; First</a>
-                    <a class="ms-3 flex h-8 max-w-xs flex-col items-center justify-center rounded-lg border border-gray-300 bg-gray-400 px-3 text-sm font-medium text-gray-200  dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
-                       href="">Previous</a>
-                {% endif %}
-                {% if locations.has_next %}
-                    <a class="ms-3 flex h-8 max-w-xs flex-row items-center justify-center rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                       href="?page={{ locations.next_page_number }}">Next</a>
-                    <a class="ms-3 flex h-8 max-w-xs flex-row items-center justify-center rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                       href="?page={{ locations.paginator.num_pages }}">Last &raquo;</a>
-                {% else %}
-                    <a class="ms-3 flex h-8 max-w-xs flex-row items-center justify-center rounded-lg border border-gray-300 bg-gray-400 px-3 text-sm font-medium text-gray-200  dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
-                       href="">Next</a>
-                    <a class="ms-3 flex h-8 max-w-xs flex-row items-center justify-center rounded-lg border border-gray-300 bg-gray-400 px-3 text-sm font-medium text-gray-200  dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
-                       href="?page={{ locations.paginator.num_pages }}">Last &raquo;</a>
-                {% endif %}
-                <br>
+        <div class="mt-4 flex flex-col h-auto items-center justify-center text-center">
+            <div class="m-2 font-medium justify-center">Page {{ locations.number }} of {{ locations.paginator.num_pages }}</div>
+            <div class="flex flex-col justify-center">
+                <div class="mb-4 flex h-full flex-row">
+                    {% if locations.has_previous %}
+                        <a class="ms-3 flex h-8 max-w-xs flex-col items-center justify-center rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                           href="?page=1">&laquo; First</a>
+                        <a class="ms-3 flex h-8 max-w-xs flex-row items-center justify-center rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                           href="?page={{ locations.previous_page_number }}">Previous</a>
+                    {% else %}
+                        <a class="ms-3 flex h-8 max-w-xs flex-col items-center justify-center rounded-lg border border-gray-300 bg-gray-400 px-3 text-sm font-medium text-gray-200  dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
+                           href="?page=1">&laquo; First</a>
+                        <a class="ms-3 flex h-8 max-w-xs flex-col items-center justify-center rounded-lg border border-gray-300 bg-gray-400 px-3 text-sm font-medium text-gray-200  dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
+                           href="">Previous</a>
+                    {% endif %}
+                    {% if locations.has_next %}
+                        <a class="ms-3 flex h-8 max-w-xs flex-row items-center justify-center rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                           href="?page={{ locations.next_page_number }}">Next</a>
+                        <a class="ms-3 flex h-8 max-w-xs flex-row items-center justify-center rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                           href="?page={{ locations.paginator.num_pages }}">Last &raquo;</a>
+                    {% else %}
+                        <a class="ms-3 flex h-8 max-w-xs flex-row items-center justify-center rounded-lg border border-gray-300 bg-gray-400 px-3 text-sm font-medium text-gray-200  dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
+                           href="">Next</a>
+                        <a class="ms-3 flex h-8 max-w-xs flex-row items-center justify-center rounded-lg border border-gray-300 bg-gray-400 px-3 text-sm font-medium text-gray-200  dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
+                           href="?page={{ locations.paginator.num_pages }}">Last &raquo;</a>
+                    {% endif %}
+                    <br>
+                </div>
             </div>
             <div x-show="showLocationModal"
                  id="popup-modal"
@@ -98,7 +100,7 @@
     {% partialdef locations %}
     <body class="flex items-center justify-center">
         <table id="location-table"
-               class="my-5 flex w-full min-w-0 flex-row flex-nowrap overflow-hidden rounded-lg text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400 sm:shadow-lg">
+               class="my-5 flex w-full min-w-0 flex-row flex-nowrap overflow-hidden rounded-lg text-left text-sm text-gray-500 dark:text-gray-400 sm:shadow-lg rtl:text-right">
             <thead class="rounded-1 flex-1 rounded-b-lg bg-stone-300  text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400 sm:flex-none">
                 {% for location in locations %}
                     <tr class="mb-2 flex flex-col flex-nowrap rounded-b-lg bg-stone-400 sm:mb-0 sm:table-row sm:rounded-t-lg md:rounded-b-none md:border">
