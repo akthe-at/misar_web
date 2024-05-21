@@ -7,17 +7,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="{% static 'home/main.css' %}">
         <link rel="shortcut icon" href="{% static 'home/favicon.ico' %}" />
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css"
-              rel="stylesheet" />
         <script src="{% static 'home/htmx.min.js' %}"></script>
         <script defer
                 src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <title>Michigan Search and Rescue</title>
+        <script>
+    // when specialty-modal closes, clear its html
+    document.addEventListener('DOMContentLoaded', function () {
+      var specialtyModal = document.getElementById('specialty-modal');
+      if (specialtyModal) {
+        specialtyModal.addEventListener('htmx:afterSwap', function (event) {
+          specialtyModal.innerHTML = '';
+        });
+      }
+    });
+
+        </script>
     </head>
     <body class="bg-neutral-300 text-[100%]">
         {% tailwind_css %}
         {% include 'home/includes/navbar.html' %}
         {% block content %}{% endblock %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     </body>
 </html>
