@@ -1,8 +1,8 @@
 import csv
 
 from django.contrib import messages
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (
     LoginView,
@@ -17,13 +17,16 @@ from django.http import (
     HttpRequest,
     HttpResponse,
     HttpResponseForbidden,
-    HttpResponseRedirect,
 )
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView, ListView
-from guardian.shortcuts import assign_perm, get_objects_for_user, get_perms
+from guardian.shortcuts import (
+    assign_perm,
+    get_objects_for_user,
+    get_perms,
+)
 from home.models import SiteInfo
 from misar_web.settings import LOGIN_URL
 
@@ -249,9 +252,30 @@ class CalendarView(LoginRequiredMixin, ListView):
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def all_events(request: HttpRequest):
     siteinfo = SiteInfo.objects.get(id=1)
-    events = Event.objects.all().order_by("date")
-    context = {"siteinfo": siteinfo, "events": events}
+    event_types = Event.objects.values_list("event_type", flat=True).distinct()
+    events = Event.objects.filter(date__gte=timezone.now()).order_by("date")
+
+    if request.method == "POST":
+        selected_type = request.POST.get("event_type")
+        if selected_type:
+            events = events.filter(event_type=selected_type)
+
+    context = {"siteinfo": siteinfo, "events": events, "event_types": event_types}
     return render(request, "members/events/all_events.html", context)
+
+
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
+def filter_events(request: HttpRequest):
+    event_type = request.GET.get("event_type")
+    if event_type:
+        events = Event.objects.filter(event_type=event_type).filter(
+            date__gte=timezone.now()
+        )
+    else:
+        events = Event.objects.all().filter(date__gte=timezone.now())
+    return render(
+        request, "members/events/all_events.html#event_list", {"events": events}
+    )
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
@@ -262,44 +286,30 @@ def create_event(request: HttpRequest):
         "delete_event",
     ]
     siteinfo = SiteInfo.objects.get(id=1)
-    form = EventForm(request.POST or None)
-    if request.method == "POST" and form.is_valid():
-        event_organizer = form.cleaned_data["event_organizer"]
-        event_name = form.cleaned_data["event_name"]
-        description = form.cleaned_data["description"]
-        event_type = form.cleaned_data["event_type"]
-        date = form.cleaned_data["date"]
-        location = form.cleaned_data["location"]
-        start_time = form.cleaned_data["start_time"]
-        end_time = form.cleaned_data["end_time"]
-        special_instructions = form.cleaned_data["special_instructions"]
-        event, created = Event.objects.get_or_create(
-            event_poster=request.user,
-            event_organizer=event_organizer,
-            event_name=event_name,
-            description=description,
-            event_type=event_type,
-            date=date,
-            location=location,
-            start_time=start_time,
-            end_time=end_time,
-            special_instructions=special_instructions,
-        )
-        for permission in DEFAULT_PERMS:
-            assign_perm(permission, request.user, event)
-            assign_perm(permission, event_organizer, event)
-        request.user.save()
-        event_organizer.save()
-        # TODO: Fix moderator permission assignments
-        # moderator_group, created = Group.objects.get_or_create(name="moderator")
-        # assign_perm(DEFAULT_PERMS, moderator_group, event)
-        return redirect("all_events")
-    context = {"siteinfo": siteinfo, "form": form}
+    event_form = EventForm(request.POST or None)
+    if request.method == "POST":
+        if event_form.is_valid():
+            event = event_form.save(commit=False)
+            event.event_poster = request.user
+            event.save()
+            for permission in DEFAULT_PERMS:
+                assign_perm(permission, request.user, event)
+                request.user.save()
+                assign_perm(permission, event.event_organizer, event)
+                event.event_organizer.save()
+            # TODO: Fix moderator permission assignments
+            # moderator_group, created = Group.objects.get_or_create(name="moderator")
+            # assign_perm(DEFAULT_PERMS, moderator_group, event)
+            return redirect("all_events")
+    context = {"siteinfo": siteinfo, "event_form": event_form}
     return render(request, "members/events/add_event.html", context)
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def update_event(request: HttpRequest, event_id: int):
+    if not request.user.has_perm("members.change_event"):
+        messages.error(request, "You do not have permission to update this event.")
+        return redirect("all_events")
     siteinfo = SiteInfo.objects.get(id=1)
     event = Event.objects.get(pk=event_id)
     if request.method == "POST":
@@ -315,36 +325,44 @@ def update_event(request: HttpRequest, event_id: int):
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def delete_event(request: HttpRequest, event_id: int):
-    event = Event.objects.get(pk=event_id)
-    event.delete()
+    if request.user.has_perm("members.delete_event"):
+        event = Event.objects.get(pk=event_id)
+        event.delete()
+    else:
+        messages.error(request, "You do not have permission to delete this event.")
     siteinfo = SiteInfo.objects.get(id=1)
-    events = Event.objects.all().order_by("date")
+    events = Event.objects.filter(date__gte=timezone.now()).order_by("date")
     context = {"siteinfo": siteinfo, "events": events}
-    return render(request, "members/events/all_events.html", context)
-
-
-# class EventMemberDeleteView(LoginRequiredMixin, DeleteView):
-#     login_url = LOGIN_URL
-#     model = EventMember
-#     successful_url = reverse_lazy("all_events")
-#
-#     def get(self, request, event_id, member_id):
-#         event = get_object_or_404(Event, pk=event_id)
-#         member = get_object_or_404(Member, pk=member_id)
-#         event_member = get_object_or_404(EventMember, event=event, member=member)
-#         event_member.delete()
-#         return redirect("all_events")
+    return render(request, "members/events/all_events.html#event_list", context)
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def create_location(request: HttpRequest):
+    DEFAULT_PERMS = ("add_location", "change_location", "delete_location")
     submitted = False
     siteinfo = SiteInfo.objects.get(id=1)
     if request.method == "POST":
         form = EventLocationForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect("?submitted=True")
+            location, _ = Location.objects.get_or_create(
+                point_of_contact=form.cleaned_data["point_of_contact"],
+                phone_number=form.cleaned_data["phone_number"],
+                email=form.cleaned_data["email"],
+                name=form.cleaned_data["name"],
+                website=form.cleaned_data["website"],
+                description=form.cleaned_data["description"],
+                address=form.cleaned_data["address"],
+                city=form.cleaned_data["city"],
+                state=form.cleaned_data["state"],
+                zip_code=form.cleaned_data["zip_code"],
+                misar_poc=form.cleaned_data["misar_poc"],
+            )
+            for permission in DEFAULT_PERMS:
+                assign_perm(permission, request.user, location)
+                request.user.save()
+            # redirect to list_locations
+        return redirect("location_list")
     else:
         form = EventLocationForm()
         if "submitted" in request.GET:
@@ -375,7 +393,6 @@ def list_locations(request: HttpRequest):
 def search_locations(request: HttpRequest):
     search_text = request.POST.get("search")
     results = Location.objects.filter(name__icontains=search_text)
-
     context = {"locations": results}
     return render(request, "members/events/locations.html#locations", context)
 
@@ -384,10 +401,12 @@ def search_locations(request: HttpRequest):
 def show_location(request: HttpRequest, location_id: int):
     location = Location.objects.get(pk=location_id)
     siteinfo = SiteInfo.objects.get(id=1)
-    context = {"location": location, "siteinfo": siteinfo}
+    desired_perms = ("change_location", "delete_location")
+    perms = {perm: request.user.has_perm(perm, location) for perm in desired_perms}
+    context = {"location": location, "siteinfo": siteinfo, "perms": perms}
     return render(
         request,
-        template_name="members/events/show_location.html",
+        "members/events/locations.html#show_location",
         context=context,
     )
 
@@ -396,6 +415,9 @@ def show_location(request: HttpRequest, location_id: int):
 def update_location(request: HttpResponse, location_id: int):
     location = Location.objects.get(pk=location_id)
     siteinfo = SiteInfo.objects.get(id=1)
+    if not request.user.has_perm("members.change_location", location):
+        messages.error(request, "You do not have permission to update this location.")
+        return redirect("location_list")
     form = EventLocationForm(request.POST or None, instance=location)
 
     if request.method == "POST":
@@ -413,8 +435,14 @@ def update_location(request: HttpResponse, location_id: int):
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def delete_location(request: HttpRequest, location_id: int):
     location = Location.objects.get(pk=location_id)
-    location.delete()
-    return redirect("location_list")
+    if request.user.has_perm("members.delete_location", location):
+        location.delete()
+    else:
+        messages.error(request, "You do not have permission to delete this location.")
+    siteinfo = SiteInfo.objects.get(id=1)
+    location_list = Location.objects.all().order_by("name")
+    context = {"siteinfo": siteinfo, "locations": location_list}
+    return render(request, "members/events/locations.html#locations", context)
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)

@@ -1,113 +1,113 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% load tailwind_filters %}
-  {% block content %}
-  <div class="flex h-screen  flex-col bg-stone-700">
-    <div class="flex flex-col items-center justify-center bg-stone-800 py-8">
-      <div class="flex w-4/5 flex-col items-center justify-center lg:w-2/3">
-        <h2 class="my-2 text-5xl font-semibold text-white">Team Qualifications</h2><div class="font-[Inter]">
-          <p class="my-2 text-2xl text-white">
-            Deployable field support members undergo rigorous training in all aspects of search and rescue operations. Minimum qualifications along with annual training criteria include:
-          </p>
-          <!-- Make a bullet list -->
-          <div class="md:flex md:flex-row md:gap-20">
-            <ul class="list-inside list-disc flex-row text-white md:flex-col">
-              <li>First Aid/CPR</li>
-              <li>Map and Compass</li>
-              <li>Radio Communications</li>
-              <li>ICS Certifications: IS-100, IS-200, IS-700 & IS-800</li>
-              <li>Bloodborne Pathogen Training - OSHA Approved</li>
-              <li>Crime Scene Preservation</li>
-              <li>Lost Person Behavior</li>
-              <li>Land Naviation - MRA105 Operations Level or SARTECH II Certification</li>
-              <li>Hazardous Materials Awareness - OSHA Approved</li>
-              <li>K9 First Aid</li>
-            </ul>
-            <img class="mx-auto my-3 max-h-64 flex-row rounded-lg md:flex-col"
-              src="{{ siteinfo.mipsarc_logo.url }}"
-              alt="mipsarc Logos">
-          </div>
+{% block content %}
+    <div class="flex h-screen  flex-col bg-stone-700">
+        <div class="flex flex-col items-center justify-center bg-stone-800 py-8">
+            <div class="flex w-4/5 flex-col items-center justify-center lg:w-2/3">
+                <h2 class="my-2 text-5xl font-bold text-white font-serif">Team Qualifications</h2>
+                <div>
+                    <p class="my-2 text-2xl text-white">
+                        Deployable field support members undergo rigorous training in all aspects of search and rescue operations. Minimum qualifications along with annual training criteria include:
+                    </p>
+                    <!-- Make a bullet list -->
+                    <div class="md:flex md:flex-row md:gap-20">
+                        <ul class="list-inside list-disc flex-row text-white md:flex-col">
+                            <li>First Aid/CPR</li>
+                            <li>Map and Compass</li>
+                            <li>Radio Communications</li>
+                            <li>ICS Certifications: IS-100, IS-200, IS-700 & IS-800</li>
+                            <li>Bloodborne Pathogen Training - OSHA Approved</li>
+                            <li>Crime Scene Preservation</li>
+                            <li>Lost Person Behavior</li>
+                            <li>Land Naviation - MRA105 Operations Level or SARTECH II Certification</li>
+                            <li>Hazardous Materials Awareness - OSHA Approved</li>
+                            <li>K9 First Aid</li>
+                        </ul>
+                        <img class="mx-auto my-3 max-h-64 flex-row rounded-lg md:flex-col"
+                             src="{{ siteinfo.mipsarc_logo.url }}"
+                             alt="mipsarc Logos">
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="flex flex-col items-center justify-center bg-stone-500 py-8">
-      <div class="flex w-4/5 flex-col items-center justify-center lg:w-2/3">
-        <h2 class="my-2 text-5xl font-semibold text-stone-800">Why Dogs?</h2>
-        <p class="my-2 font-[Inter] text-2xl text-stone-800">
-          Dogs, with their incredible sense of smell, can detect the scent of a missing person from afar, even if that person is hidden by bushes or other obstacles.
-          This allows them to excel in finding individuals during search and rescue missions.
-        </p>
-        <h2 class="my-2 text-5xl font-semibold text-stone-800">Why do they do it?</h2>
-        <p class="my-B2 font-[Inter] text-2xl text-stone-800">
-          Search dogs see their job not as work but instead as a game that they love more than anything else.
-          When the dog finds what they are looking for they are rewarded with a prized toy or invaluable treat.
-        </p>
-        <img class="mx-auto my-3 max-h-96 rounded-lg"
-          src="{{ siteinfo.about_photo_1.url }}"
-          alt="dog">
-      </div>
-    </div>
-    <div class="flex flex-col items-center justify-center bg-stone-800 py-8">
-      <div class="flex w-4/5 flex-col items-center justify-center bg-stone-800 lg:w-2/3">
-        <h2 class="my-2 text-5xl font-semibold text-white">It Takes a Village.</h2>
-        <p class="my-2 text-2xl text-white">
-          Training a dog is not a solo endeavor. It requires the collective effort of numerous individuals investing countless hours in diverse training activities.
-          This collaborative commitment is essential to attaining the proficiency necessary for a qualified team capable of aiding in the search for a missing person.
-        </p>
-        <img class="mx-auto my-3 max-h-96 rounded-lg"
-          src="{{ siteinfo.about_photo_2.url }}"
-          alt="Zander">
-      </div>
-    </div>
-    <div class="flex flex-col items-center justify-center bg-stone-600 py-8">
-      <div class="flex w-4/5 flex-col items-center justify-center bg-stone-600 lg:w-2/3">
-        <h2 class="my-2 text-5xl font-semibold italic text-stone-800 underline">Just a Dog</h2>
-        <h3 class="my-4 text-3xl font-thin italic text-stone-800">By Richard Biby</h3>
-        <blockquote class="text-wrap rounded-lg border-s-4 border-stone-300 bg-stone-50  p-4 indent-8 font-[Inter] dark:border-stone-500 dark:bg-stone-800">
-          <img class="mx-auto my-3 max-h-96 rounded-lg"
-            src="{{ siteinfo.about_photo_3.url }}"
-            alt="kage">
-          <p class="my-1 text-lg text-stone-800">
-            People have said to me from time to time things like “lighten up, it’s just a dog” or “that’s a lot of money for just a dog”.  They say to me they don’t understand the distance traveled, the time spent, or the costs involved for <em>“just a dog”</em>.  Some of my proudest moments have come about with <em>“just a dog”</em>.  Many hours have passed and the only company I had was <em>“just a dog”</em> but I did not once feel slighted.  Some of my saddest moments have been brought about by <em>“just a dog”</em>, and in those days of darkness, the gentle touch of <em>“just a dog”</em> gave me comfort and reason to overcome the day. 
-          </p><br>
-          <p class="my-1 text-lg text-stone-800">
-            For those of you who do not understand the whys and wherefores of <em>“just a dog”</em>, then you will probably understand phases like “just a friend”, “just a sunrise”, or “just a promise”.  <em>“Just a dog”</em> brings into my life the very essence of friendship, trust, and pure unbridled joy.  <em>“Just a dog”</em> brings out in me the compassion and patience that make me a better person.  Because of <em>“just a dog”</em> I will rise early, take long walks and look longingly to the future.  So for me and folks like me, it’s not <em>“just a dog”</em> but an embodiment of all the hopes and dreams of the future, the fond memories of the past, and the pure joy of the moment.  <em>“Just a dog”</em> brings out what’s good in me and diverts my thoughts away from myself and the worries of the day. 
-          </p><br>
-          <p class="my-1 text-lg text-stone-800">
-            I hope that someday they can understand that it’s not <em>“just a dog”</em> but the thing that gives me humanity and keeps me from being just a man.  So the next time you hear the phrase <em>“just a dog”</em>, just smile, because they <em class="underline underline-offset-4">“just don’t understand”</em>.
-          </p><br>
-          <p class="my-1 text-lg text-stone-800">
-            Just a thought,
-          </p><br>
-          <p class="my-1 text-lg text-stone-800">
-            -Richard Biby
-          </p>
-          *This article was reprinted with permission of the author
-        </blockquote>
-
-      </div>
-    </div>
-    <div class="flex h-[20rem] w-full flex-row items-center justify-center bg-stone-900 bg-cover bg-fixed bg-top text-center">
-      <div class="flex w-1/2 flex-col items-center justify-center text-center text-white sm:px-3">
-        <h2 class="flex-cols flex text-lg font-semibold italic text-white hover:text-blue-400 lg:text-5xl">
-          <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a>
-        </h2>
-        <hr class="mx-auto my-4 h-1 w-24 rounded border-0 bg-white dark:bg-white md:my-10">
-        <div class="flex w-full flex-col items-center justify-center text-center">
-          <h2 class="pb-3 font-semibold text-white sm:text-xl lg:text-5xl">Contact Us</h2>
-          <div class="flex flex-col justify-center gap-2 text-center lg:flex-row">
-            <a href="tel:18008185645"
-              <button class="flex w-36 rounded bg-misargreen px-4 py-2 font-bold text-white hover:bg-red-700">
-                {{ siteinfo.dispatch_number }}
-            </a>
-          </div>
+        <div class="flex flex-col items-center justify-center bg-stone-500 py-8">
+            <div class="flex w-4/5 flex-col items-center justify-center lg:w-2/3">
+                <h2 class="font-serif my-2 text-5xl font-bold text-stone-800">Why Dogs?</h2>
+                <p class="my-2 text-xl md:text-2xl text-stone-800">
+                    Dogs, with their incredible sense of smell, can detect the scent of a missing person from afar, even if that person is hidden by bushes or other obstacles.
+                    This allows them to excel in finding individuals during search and rescue missions.
+                </p>
+                <h2 class="font-serif my-2 text-5xl font-bold text-stone-800">Why do they do it?</h2>
+                <p class="my-2 text-xl md:text-2xl text-stone-800">
+                    Search dogs see their job not as work but instead as a game that they love more than anything else.
+                    When the dog finds what they are looking for they are rewarded with a prized toy or invaluable treat.
+                </p>
+                <img class="mx-auto my-3 max-h-96 rounded-lg"
+                     src="{{ siteinfo.about_photo_1.url }}"
+                     alt="dog">
+            </div>
         </div>
-      </div>
-      <div class="align-items-center flex h-full w-1/2 flex-col items-center justify-center">
-        <img src="{{ siteinfo.alternate_logo.url }}"
-          alt="MISAR LOGO"
-          class="flex h-full w-full flex-col object-scale-down py-8">
-      </div>
-    </div>
-  </div>
-  {% endblock %}
+        <div class="flex flex-col items-center justify-center bg-stone-800 py-8">
+            <div class="flex w-4/5 flex-col items-center justify-center bg-stone-800 lg:w-2/3">
+                <h2 class="my-2 font-serif text-5xl font-bold text-white">It Takes a Village.</h2>
+                <p class="my-2 text-xl md:text-2xl text-white">
+                    Training a dog is not a solo endeavor. It requires the collective effort of numerous individuals investing countless hours in diverse training activities.
+                    This collaborative commitment is essential to attaining the proficiency necessary for a qualified team capable of aiding in the search for a missing person.
+                </p>
+                <img class="mx-auto my-3 max-h-96 rounded-lg"
+                     src="{{ siteinfo.about_photo_2.url }}"
+                     alt="Zander">
+            </div>
+        </div>
+        <div class="flex flex-col items-center justify-center bg-stone-600 py-8">
+            <div class="flex w-4/5 flex-col items-center justify-center bg-stone-600 lg:w-2/3">
+                <h2 class="font-serif my-2 text-5xl font-bold text-stone-200 underline">Just a Dog</h2>
+                <h3 class="my-4 text-3xl font-thin italic text-white">By Richard Biby</h3>
+                <blockquote class="text-wrap rounded-lg border-s-4 border-stone-300 bg-stone-300  p-4 indent-8 dark:border-stone-500 dark:bg-stone-800">
+                    <img class="mx-auto my-3 max-h-96 rounded-lg"
+                         src="{{ siteinfo.about_photo_3.url }}"
+                         alt="kage">
+                    <p class="my-1 text-lg text-stone-800">
+                        People have said to me from time to time things like “lighten up, it’s just a dog” or “that’s a lot of money for just a dog”.  They say to me they don’t understand the distance traveled, the time spent, or the costs involved for <em class="underline">just a dog</em>.  Some of my proudest moments have come about with <em class="underline">just a dog</em>.  Many hours have passed and the only company I had was <em class="underline">just a dog</em> but I did not once feel slighted.  Some of my saddest moments have been brought about by <em class="underline">just a dog</em>, and in those days of darkness, the gentle touch of <em class="underline">just a dog</em> gave me comfort and reason to overcome the day.
+                    </p>
+                    <br>
+                    <p class="my-1 text-lg text-stone-800">
+                        For those of you who do not understand the whys and wherefores of <em class="underline">just a dog</em>, then you will probably understand phases like “just a friend”, “just a sunrise”, or “just a promise”.  <em class="underline">Just a dog</em> brings into my life the very essence of friendship, trust, and pure unbridled joy.  <em class="underline">Just a dog</em> brings out in me the compassion and patience that make me a better person.  Because of <em class="underline">just a dog</em> I will rise early, take long walks and look longingly to the future.  So for me and folks like me, it’s not <em class="underline">just a dog</em> but an embodiment of all the hopes and dreams of the future, the fond memories of the past, and the pure joy of the moment.  <em class="underline">Just a dog</em> brings out what’s good in me and diverts my thoughts away from myself and the worries of the day.
+                    </p>
+                    <br>
+                    <p class="my-1 text-lg text-stone-800">
+                        I hope that someday they can understand that it’s not <em class="underline">just a dog</em> but the thing that gives me humanity and keeps me from being just a man.  So the next time you hear the phrase <em class="underline">just a dog</em>, just smile, because they <em class="underline underline-offset-4">just don’t understand</em>.
+                    </p>
+                    <br>
+                    <p class="my-1 text-lg text-stone-800">Just a thought,</p>
+                    <br>
+                    <p class="my-1 text-lg text-stone-800">-Richard Biby</p>
+                    *This article was reprinted with permission of the author
+                </blockquote>
+            </div>
+        </div>
+        <div class="flex h-[20rem] w-full flex-row items-center justify-center bg-stone-900 bg-cover bg-fixed bg-top text-center">
+            <div class="flex w-1/2 flex-col items-center justify-center text-center text-white sm:px-3">
+                <h2 class="font-serif flex-cols flex text-lg font-bold italic text-white hover:text-blue-400 lg:text-5xl">
+                    <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a>
+                </h2>
+                <hr class="mx-auto my-4 h-1 w-24 rounded border-0 bg-white dark:bg-white md:my-10">
+                <div class="flex w-full flex-col items-center justify-center text-center">
+                    <h2 class="font-serif pb-3 font-bold text-white sm:text-xl lg:text-5xl">Contact Us</h2>
+                    <div class="flex flex-col justify-center gap-2 text-center lg:flex-row">
+                        <a href="tel:18008185645"
+                            <button class="flex w-36 rounded bg-misargreen px-4 py-2 font-bold text-white hover:bg-red-700">
+                                {{ siteinfo.dispatch_number }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="align-items-center flex h-full w-1/2 flex-col items-center justify-center">
+                    <img src="{{ siteinfo.alternate_logo.url }}"
+                         alt="MISAR LOGO"
+                         class="flex h-full w-full flex-col object-scale-down py-8">
+                </div>
+            </div>
+        </div>
+    {% endblock %}

@@ -1,139 +1,143 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block content %}
-<div class="min-w-0 bg-stone-900">
-  <div class="flex w-full flex-col items-center justify-center bg-black py-5 text-center text-misargreen">
-    <h1
-      class="mb-1 flex text-4xl font-extrabold leading-none tracking-tight text-white dark:text-white md:text-5xl lg:text-6xl"">Support Our Mission:
+    <div class="min-w-0 bg-stone-900">
+        <div class="flex w-full flex-col items-center justify-center bg-black py-5 text-center text-misargreen">
+            <h1 class="font-serif mb-1 flex text-4xl font-extrabold leading-none tracking-tight text-white dark:text-white md:text-5xl lg:text-6xl"">Support Our Mission:
             </h1>
             <br>
-            <h2 class=" flex mb-4 text-4xl font-extrabold leading-none tracking-tight text-stone-400 md:text-4xl
-      lg:text-5xl dark:text-white">
-      Save Lives with MISAR
-      </h2>
-  </div>
-  <div
-    class="mx-auto my-8 flex h-full w-full flex-col items-center justify-center bg-stone-900 px-4 py-2  md:my-32 md:flex-row">
-    <img class="mx-auto flex-col rounded-full md:w-1/3" src="{{ siteinfo.donate_photo_1.url }}" alt="Toby">
-    <div class="mx-auto h-auto flex-col px-4 sm:my-2 md:w-1/2">
-      <h3 class="mt-2 text-3xl text-white dark:text-white">
-        Michigan Search and Rescue is a team of dedicated volunteers.
-        <br>
-        We operate solely on donations and your support allows us to:
-      </h3>
-      <p class="mb-6 mt-1 flex flex-col font-normal text-stone-400 dark:text-white">
-        Equip our volunteers with essential gear.
-        <br>
-        Provide our teams with expanded training opportunities.
-        <br>
-        Care for our incredible canine search partners.
-      </p>
-      <h4 class="mt-2 text-2xl text-white">Donate Your Time:</h4>
-      <p class="mb-6 mt-1 flex flex-col font-normal text-stone-400 dark:text-white">
-        Volunteer as a "lost" person for canine training exercises.
-        <br>
-        Join the team: Train to become a search and rescue volunteer.
-      </p>
-      <h4 class="mt-2 text-2xl text-white">Donate Training Space:</h4>
-      <p class="mb-6 mt-1 flex flex-col font-normal text-stone-400 dark:text-white">
-        Do you have unused land or buildings? Offer it for MISAR training exercises.
-      </p>
-      <h4 class="mt-2 text-2xl text-white">Make a Financial Donation:</h4>
-      <p class="mb-6 mt-1 flex flex-col font-normal text-stone-400 dark:text-white">
-        Every dollar helps. Click "Donate" or contact us at Michigansar@gmail.com.
-      </p>
-      <a href="#" class="flex w-full min-w-0 items-center justify-center self-center">
-        <button
-          class="flex w-36 items-center justify-center rounded bg-misargreen px-4 py-2 font-bold text-white hover:bg-white hover:text-black">
-          Donate
-        </button>
-      </a>
-    </div>
-  </div>
-  <div class="flex w-full items-center justify-center bg-stone-600 py-5">
-    <div id="donate_gallery" class="relative h-5/6 w-5/6" data-carousel="slide">
-      <!-- Carousel wrapper -->
-      <div class="relative min-h-[70vh] overflow-hidden rounded-lg object-top md:h-96">
-        <!-- Item 1 -->
-        <div class="duration-800 hidden ease-in-out" data-carousel-item>
-          <img src="{{ siteinfo.donate_photo_3.url }}"
-            class="absolute left-1/2 top-1/2 block h-auto -translate-x-1/2 -translate-y-1/2" alt="">
+            <h2 class="font-serif mb-4 flex text-4xl font-extrabold leading-none tracking-tight text-stone-400 dark:text-white md:text-4xl lg:text-5xl">
+                Save Lives with MISAR
+            </h2>
         </div>
-        <!-- Item 2 -->
-        <div class="duration-800 hidden ease-in-out" data-carousel-item="active">
-          <img src="{{ siteinfo.donate_photo_2.url }}"
-            class="absolute left-1/2 top-1/2 block h-auto -translate-x-1/2 -translate-y-1/2" alt="">
+        <div class="mx-auto my-8 flex h-full w-full flex-col items-center justify-center bg-stone-900 px-4 py-2  md:my-24 md:flex-row">
+            <img class="mx-auto flex-col rounded-full md:w-1/3"
+                 src="{{ siteinfo.donate_photo_1.url }}"
+                 alt="Toby">
+            <div class="mx-auto h-auto flex-col px-4 sm:my-2 md:w-1/2">
+                <h3 class="mt-2 text-3xl text-white dark:text-white">Michigan Search and Rescue is a team of dedicated volunteers.</h3>
+                <br>
+                <h4 class="text-2xl text-white dark:text-white">We operate solely on donations and your support allows us to:</h4>
+                <p class="mb-6 mt-1 flex flex-col text-xl font-normal text-stone-400 dark:text-white">
+                    Equip our volunteers with essential gear.
+                    <br>
+                    Provide our teams with expanded training opportunities.
+                    <br>
+                    Care for our incredible canine search partners.
+                </p>
+                <h4 class="mt-2 text-2xl text-white">Donate Your Time:</h4>
+                <p class="mb-6 mt-1 flex flex-col text-xl font-normal text-stone-400 dark:text-white">
+                    Volunteer as a "lost" person for canine training exercises.
+                    <br>
+                    Join the team: Train to become a search and rescue volunteer.
+                </p>
+                <h4 class="mt-2 text-2xl text-white">Donate Training Space:</h4>
+                <p class="mb-6 mt-1 flex flex-col text-xl font-normal text-stone-400 dark:text-white">
+                    Do you have unused land or buildings? Offer it for MISAR training exercises.
+                </p>
+                <h4 class="mt-2 text-2xl text-white">Make a Financial Donation:</h4>
+                <p class="mb-8 mt-1 flex flex-col text-xl font-normal text-stone-400 dark:text-white">
+                    Every dollar helps. Click "Donate" or contact us at Michigansar@gmail.com.
+                </p>
+                <a href="#"
+                   class="flex w-full min-w-0 items-center justify-center self-center">
+                    <button class="flex w-1/3 items-center justify-center rounded bg-misargreen px-4 py-2 font-bold text-white hover:bg-white hover:text-black">
+                        Donate
+                    </button>
+                </a>
+            </div>
         </div>
-        <!-- Item 3 -->
-        <div class="duration-800 hidden ease-in-out" data-carousel-item>
-          <img src="{{ siteinfo.donate_photo_1.url }}"
-            class="absolute left-1/2 top-1/2 block h-auto -translate-x-1/2 -translate-y-1/2" alt="">
-        </div>
-        <!-- Item 4 -->
-        <!-- <div class="hidden duration-700 ease-in-out" data-carousel-item> -->
-        <!--     <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg"
+        <div class="flex h-full w-full items-center justify-center bg-stone-600">
+            <div id="donate_gallery"
+                 class="relative flex h-auto w-auto min-w-full flex-col"
+                 data-carousel="slide">
+                <!-- Carousel wrapper -->
+                <div class="sm:min-h-32 relative h-64 overflow-hidden rounded-lg object-top lg:h-96 lg:min-h-[70vh]">
+                    <!-- Item 1 -->
+                    <div class="duration-800 hidden ease-in-out" data-carousel-item>
+                        <img src="{{ siteinfo.donate_photo_3.url }}"
+                             class="absolute left-1/2 top-1/2 block h-auto -translate-x-1/2 -translate-y-1/2"
+                             alt="">
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="duration-800 hidden ease-in-out" data-carousel-item="active">
+                        <img src="{{ siteinfo.donate_photo_2.url }}"
+                             class="absolute left-1/2 top-1/2 block h-auto -translate-x-1/2 -translate-y-1/2"
+                             alt="">
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="duration-800 hidden ease-in-out" data-carousel-item>
+                        <img src="{{ siteinfo.donate_photo_1.url }}"
+                             class="absolute left-1/2 top-1/2 block h-auto -translate-x-1/2 -translate-y-1/2"
+                             alt="">
+                    </div>
+                    <!-- Item 4 -->
+                    <!-- <div class="hidden duration-700 ease-in-out" data-carousel-item> -->
+                    <!--     <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg"
           -->
-        <!--          class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" -->
-        <!--          alt=""> -->
-        <!-- </div> -->
-        <!-- Item 5 -->
-        <!-- <div class="hidden duration-700 ease-in-out" data-carousel-item> -->
-        <!--     <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg"
+                    <!--          class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" -->
+                    <!--          alt=""> -->
+                    <!-- </div> -->
+                    <!-- Item 5 -->
+                    <!-- <div class="hidden duration-700 ease-in-out" data-carousel-item> -->
+                    <!--     <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg"
           -->
-        <!--          class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" -->
-        <!--          alt=""> -->
-        <!-- </div> -->
-      </div>
-      <!-- Slider controls -->
-      <button type="button"
-        class="group absolute start-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none"
-        data-carousel-prev>
-        <span
-          class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white dark:bg-gray-800/30 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70">
-          <svg class="h-4 w-4 text-white rtl:rotate-180 dark:text-gray-800" aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M5 1 1 5l4 4" />
-          </svg>
-          <span class="sr-only">Previous</span>
-        </span>
-      </button>
-      <button type="button"
-        class="group absolute end-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none"
-        data-carousel-next>
-        <span
-          class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white dark:bg-gray-800/30 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70">
-          <svg class="h-4 w-4 text-white rtl:rotate-180 dark:text-gray-800" aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="m1 9 4-4-4-4" />
-          </svg>
-          <span class="sr-only">Next</span>
-        </span>
-      </button>
-    </div>
-  </div>
-  <div
-    class="flex h-[20rem] w-full flex-row items-center justify-center bg-stone-900 bg-cover bg-fixed bg-top text-center">
-    <div class="flex w-1/2 flex-col items-center justify-center text-center text-white sm:px-3">
-      <h2 class="flex-cols flex text-lg font-semibold italic text-white hover:text-blue-400 lg:text-5xl">
-        <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a>
-      </h2>
-      <hr class="mx-auto my-4 h-1 w-24 rounded border-0 bg-white dark:bg-white md:my-10">
-      <div class="flex w-full flex-col items-center justify-center text-center">
-        <h2 class="pb-3 font-semibold text-white sm:text-xl lg:text-5xl">Contact Us</h2>
-        <div class="flex flex-col justify-center gap-2 text-center lg:flex-row">
-          <a href="tel:18008185645" <button
-            class="flex w-36 rounded bg-misargreen px-4 py-2 font-bold text-white hover:bg-red-700">
-            {{ siteinfo.dispatch_number }}
-          </a>
+                    <!--          class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" -->
+                    <!--          alt=""> -->
+                    <!-- </div> -->
+                </div>
+                <!-- Slider controls -->
+                <button type="button"
+                        class="group absolute start-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none"
+                        data-carousel-prev>
+                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white dark:bg-gray-800/30 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70">
+                        <svg class="h-4 w-4 text-white rtl:rotate-180 dark:text-gray-800"
+                             aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg"
+                             fill="none"
+                             viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
+                        </svg>
+                        <span class="sr-only">Previous</span>
+                    </span>
+                </button>
+                <button type="button"
+                        class="group absolute end-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none"
+                        data-carousel-next>
+                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white dark:bg-gray-800/30 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70">
+                        <svg class="h-4 w-4 text-white rtl:rotate-180 dark:text-gray-800"
+                             aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg"
+                             fill="none"
+                             viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
+                        </svg>
+                        <span class="sr-only">Next</span>
+                    </span>
+                </button>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="align-items-center flex h-full w-1/2 flex-col items-center justify-center">
-      <img src="{{ siteinfo.alternate_logo.url }}" alt="MISAR LOGO"
-        class="flex h-full w-full flex-col object-scale-down py-8">
-    </div>
-  </div>
-</div>
-{% endblock %}
+        <div class="flex h-[20rem] w-full flex-row items-center justify-center bg-stone-900 bg-cover bg-fixed bg-top text-center">
+            <div class="flex w-1/2 flex-col items-center justify-center text-center text-white sm:px-3">
+                <h2 class="font-serif flex-cols flex text-lg font-semibold italic text-white hover:text-blue-400 lg:text-5xl">
+                    <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on Facebook!</a>
+                </h2>
+                <hr class="mx-auto my-4 h-1 w-24 rounded border-0 bg-white dark:bg-white md:my-10">
+                <div class="flex w-full flex-col items-center justify-center text-center">
+                    <h2 class="font-serif pb-3 font-semibold text-white sm:text-xl lg:text-5xl">Contact Us</h2>
+                    <div class="flex flex-col justify-center gap-2 text-center lg:flex-row">
+                        <a href="tel:18008185645"
+                            <button class="flex w-36 rounded bg-misargreen px-4 py-2 font-bold text-white hover:bg-red-700">
+                                {{ siteinfo.dispatch_number }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="align-items-center flex h-full w-1/2 flex-col items-center justify-center">
+                    <img src="{{ siteinfo.alternate_logo.url }}"
+                         alt="MISAR LOGO"
+                         class="flex h-full w-full flex-col object-scale-down py-8">
+                </div>
+            </div>
+        </div>
+    {% endblock %}

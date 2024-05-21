@@ -70,5 +70,6 @@ urlpatterns = [
     ),
     path("events/add_event/", views.create_event, name="add_event"),
     path("events/delete_event/<event_id>/", views.delete_event, name="delete_event"),
+    path("events/filter_events/", views.filter_events, name="filter_events"),
     path("location_csv", views.location_csv, name="location_csv"),
 ]

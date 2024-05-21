@@ -2,19 +2,19 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
-    <h1 class="my-4 items-center text-center justify-center font-bold text-4xl">Create New Event</h1>
+    <h1 class="my-4 items-center justify-center text-center text-4xl font-bold">Create New Event</h1>
     <div class="flex items-center justify-center"
-        <div class="items-center justify-center flex-col">
+        <div class="flex-col items-center justify-center">
             {% if submitted %}
                 Your Event was created succesfully!
             {% else %}
                 <form action="" method=POST>
                     {% csrf_token %}
-                    {{ form|crispy }}
-                    <div class="text-center justify-center items-center">
+                    {{ event_form|crispy }}
+                    <div class="items-center justify-center text-center">
                         <input type="submit"
                                value="Submit"
-                               class="w-1/2 items-center justify-center text-center px-2 text-white mb-3 bg-misargreen hover:bg-neutral-500 focus:ring-4 focus:outline-none focus:ring-misargreen font-bold rounded-lg text-sm  py-2.5 inline-flex my-2 me-2 ms-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                               class="m-3 inline-flex w-1/2 items-center justify-center rounded-lg bg-misargreen px-3 py-2 text-center text-center text-sm font-medium text-white hover:bg-white hover:text-black hover:ring-4 hover:ring-misargreen focus:outline-none focus:ring-4 focus:ring-misargreen focus:ring-misargreen dark:bg-misargreen dark:hover:bg-misargreen dark:focus:ring-misargreen">
                     </div>
                 </form>
             {% endif %}
