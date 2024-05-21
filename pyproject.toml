@@ -1,17 +1,18 @@
 [project]
-name = "misar_web"
-version = "0.0.1"
 description = ""
 authors = [{ name = "Adam K.", email = "arkelly111@gmail.com" }]
 dependencies = [
-  "django>=4.2.7",
-  "pillow>=10.1.0",
-  "django-allauth>=0.58.2",
-  "django-localflavor>=4.0",
-  "crispy-tailwind>=0.5.0",
-  "django-guardian>=2.4.0",
-  "django-template-partials>=23.4",
-  "python-dotenv>=1.0.1",
+    "django>=4.2.7",
+    "pillow>=10.1.0",
+    "django-allauth>=0.58.2",
+    "django-localflavor>=4.0",
+    "crispy-tailwind>=0.5.0",
+    "django-guardian>=2.4.0",
+    "django-template-partials>=23.4",
+    "python-dotenv>=1.0.1",
+    "whitenoise[brotli]>=6.6.0",
+    "gunicorn>=22.0.0",
+    "uvicorn>=0.29.0",
 ]
 requires-python = ">=3.10"
 readme = "README.md"
