@@ -131,3 +131,18 @@ class Event(models.Model):
 
     def __str__(self):
         return self.event_name
+
+
+class ExternalReference(models.Model):
+    """A class to represent external references for the organization"""
+
+    class Meta:  # type: ignore
+        verbose_name = "External Reference"
+        verbose_name_plural = "External References"
+
+    name = models.CharField(("Name"), max_length=50)
+    description = models.CharField(("Description"), max_length=50)
+    url = models.URLField(("URL"), max_length=75)
+
+    def __str__(self):
+        return self.name

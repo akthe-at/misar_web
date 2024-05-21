@@ -1,10 +1,31 @@
 {% extends "members/base.html" %}
 {% load static %}
 {% block content %}
-<div class="items-center p-8 text-center">
-  <h1 class="text-4xl text-black">This is the landing page for members after they login</h1>
-  <h2 class="text-3xl text-black">Welcome! You are currently logged in as:</h2>
-  <h2 class="text-3xl italic text-black">{{ request.user.username }}</h2>
-  <a class="font-semibold underline hover:text-red-900" href="{% url 'files' %}">Member Files Page</a>
-  <div>
-    {% endblock %}
+    <div class="items-center p-8 text-center">
+        <h1 class="my-2 font-serif text-5xl font-bold text-black">
+            Welcome {{ request.user.username }}!
+        </h2>
+        <h2 class="my-2 mt-8 text-3xl font-semibold text-black">Important Links:</h2>
+        <a class="font-semibold underline hover:text-red-900"
+           href="{% url 'files' %}">Member Files Page</a>
+        <br>
+        <a class="font-semibold underline hover:text-red-900"
+           href="{% url 'all_events' %}">Events Page</a>
+        <br>
+        <a class="font-semibold underline hover:text-red-900"
+           href="{% url 'location_list' %}">Locations Page</a>
+        <h2 class="my-2 mt-8 text-3xl font-semibold text-black">Important Files:</h2>
+        Insert Whatever Files here...Standards, SOP, Search documents, etc.
+        <h2 class="my-2 mt-8 text-3xl font-semibold text-black">External Resources:</h2>
+        <ul class="flex flex-col items-center list-disc justify-center">
+            <div class="text-left">
+                {% for reference in external_references %}
+                    <li>
+                        <a class="font-semibold underline hover:text-red-900"
+                           href="{{ reference.url }}">{{ reference.name }}</a>
+                    </li>
+                {% endfor %}
+            </div>
+        </ul>
+    </div>
+{% endblock %}

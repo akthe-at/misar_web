@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from guardian.admin import GuardedModelAdmin
-from .models import Member, MemberFile, Location, Event
+from .models import ExternalReference, Member, MemberFile, Location, Event
 # Register your models here.
 
 
@@ -64,3 +64,14 @@ class EventAdmin(GuardedModelAdmin):
 
 
 admin.site.register(Event, EventAdmin)
+
+
+@admin.register(ExternalReference)
+class ExternalRefAdmin(admin.ModelAdmin):
+    list_display = ("name", "url")
+    list_filter = ("name", "url")
+    search_fields = (
+        "name",
+        "url",
+    )
+    ordering = ("name", "url")
