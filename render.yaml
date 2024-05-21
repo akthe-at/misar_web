@@ -5,6 +5,10 @@ services:
     runtime: python
     buildCommand: "./build.sh"
     startCommand: "python -m gunicorn misar_web.asgi:application -k uvicorn.workers.UvicornWorker"
+    disk:
+    name: db.sqlite3
+    mountPath: /src/misar_web/db.sqlite3
+    sizeGB: 1
     envVars:
       - key: DATABASE_URL
         fromDatabase:
