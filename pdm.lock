@@ -5,13 +5,16 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform"]
 lock_version = "4.4.1"
-content_hash = "sha256:f8f0b89b56642d3a3c3e6bce4e68214ca1547d132b68d77da895ce1a60abaae9"
+content_hash = "sha256:de65c6aacf0e8dc34c5478b9d8784a1bbb986c055b852ecb01a4b4d0d7c25d76"
 
 [[package]]
 name = "asgiref"
 version = "3.7.2"
 requires_python = ">=3.7"
 summary = "ASGI specs, helper code, and adapters"
+dependencies = [
+    "typing-extensions>=4; python_version < \"3.11\"",
+]
 files = [
     {file = "asgiref-3.7.2-py3-none-any.whl", hash = "sha256:89b2ef2247e3b562a16eef663bc0e2e703ec6468e2fa8a5cd61cd449786d4f6e"},
     {file = "asgiref-3.7.2.tar.gz", hash = "sha256:9e0ce3aa93a819ba5b45120216b23878cf6e8525eb3848653452b4192b92afed"},
@@ -268,6 +271,7 @@ summary = "Mypy stubs for Django"
 dependencies = [
     "django",
     "django-stubs-ext>=4.2.7",
+    "tomli; python_version < \"3.11\"",
     "types-PyYAML",
     "types-pytz",
     "typing-extensions",
@@ -314,6 +318,16 @@ dependencies = [
 files = [
     {file = "django-template-partials-24.2.tar.gz", hash = "sha256:e594063faec6d012df3a4170edf3c5dcc07c82b1c311aa42a1a5838493fd3a72"},
     {file = "django_template_partials-24.2-py2.py3-none-any.whl", hash = "sha256:b859072e6b3cd780743399bf5e9cee8be1c56c88844425a4e669a65c136205b2"},
+]
+
+[[package]]
+name = "exceptiongroup"
+version = "1.2.1"
+requires_python = ">=3.7"
+summary = "Backport of PEP 654 (exception groups)"
+files = [
+    {file = "exceptiongroup-1.2.1-py3-none-any.whl", hash = "sha256:5258b9ed329c5bbdd31a309f53cbfb0b155341807f6ff7606a1e801a891b29ad"},
+    {file = "exceptiongroup-1.2.1.tar.gz", hash = "sha256:a4785e48b045528f5bfe627b6ad554ff32def154f42372786903b7abcfe1aa16"},
 ]
 
 [[package]]
@@ -477,9 +491,11 @@ requires_python = ">=3.7"
 summary = "pytest: simple powerful testing with Python"
 dependencies = [
     "colorama; sys_platform == \"win32\"",
+    "exceptiongroup>=1.0.0rc8; python_version < \"3.11\"",
     "iniconfig",
     "packaging",
     "pluggy<2.0,>=0.12",
+    "tomli>=1.0.0; python_version < \"3.11\"",
 ]
 files = [
     {file = "pytest-7.4.4-py3-none-any.whl", hash = "sha256:b090cdf5ed60bf4c45261be03239c2c1c22df034fbffe691abe93cd80cea01d8"},
@@ -607,6 +623,16 @@ summary = "A non-validating SQL parser."
 files = [
     {file = "sqlparse-0.4.4-py3-none-any.whl", hash = "sha256:5430a4fe2ac7d0f93e66f1efc6e1338a41884b7ddf2a350cedd20ccc4d9d28f3"},
     {file = "sqlparse-0.4.4.tar.gz", hash = "sha256:d446183e84b8349fa3061f0fe7f06ca94ba65b426946ffebe6e3e8295332420c"},
+]
+
+[[package]]
+name = "tomli"
+version = "2.0.1"
+requires_python = ">=3.7"
+summary = "A lil' TOML parser"
+files = [
+    {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
+    {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
 ]
 
 [[package]]
