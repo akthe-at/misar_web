@@ -107,7 +107,7 @@
             {% partial shared-files-table %}
         </div>
     </div>
-<style>
+    <style>
   html,
   body {
     height: 100%;
@@ -135,7 +135,7 @@
 <!-- BEGINNING OF THE PARTIALS -->
 <!-- PERSONAL TABLE PARTIAL HTML -->
 {% partialdef personal-table %}
-    <div class="container flex items-center justify-center">
+<div class="flex items-center justify-center">
     <table id="personal-table"
            class="flex-nowrap my-5 flex w-full min-w-0 flex-row overflow-hidden rounded-lg  sm:bg-white sm:shadow-lg">
         <thead class="rounded-1 flex-1 rounded-b-lg text-white sm:flex-none">
@@ -161,7 +161,7 @@
                     <td class="h-12 border px-3 py-2">{{ file.file_description }}</td>
                     <td class="h-12 border px-3 py-2">{{ file.file.name|extension }}</td>
                     <td class="h-12 border px-3 py-2">{{ file.file.size|filesize }}</td>
-                    <td class="h-12 border px-3 py-2">{{ file.date_created|date:"m/d/y" }}</td>files.html
+                    <td class="h-12 border px-3 py-2">{{ file.date_created|date:"m/d/y" }}</td>
                     <td class="h-12 border px-3 py-2" x-data="{ showShareModal: false }">
                         <a @click="showShareModal = true"
                            data-modal-target="share-modal"
@@ -177,7 +177,8 @@
                               class="text-red-600 hover:cursor-pointer hover:underline dark:text-red-500">Delete</span>
                     </td>
                     <td class="h-12 rounded-b-lg border px-3 py-2 md:rounded-b-none">
-                        <a download href="{% url 'download' file.id %}"
+                        <a download
+                           href="{% url 'download' file.id %}"
                            class="text-misargreen hover:underline dark:text-misargreen">Download</a>
                     </td>
                 </tr>
@@ -230,7 +231,7 @@
 {% endpartialdef %}
 <!-- SHARED FILES TABLE PARTIAL HTML -->
 {% partialdef shared-files-table %}
-    <div class="container flex items-center justify-center">
+<div class="flex items-center justify-center">
     <table id="shared-table"
            class="flex-nowrap my-5 flex w-full min-w-0 flex-row overflow-hidden rounded-lg  sm:bg-white sm:shadow-lg">
         <thead class="rounded-1 flex-1 rounded-b-lg text-white sm:flex-none">
@@ -279,5 +280,5 @@
     {% partial messages %}
     <section id="messages" hx-swap-oob="true" hx-swap="innerHTML">
     </section>
-    </div>
+</div>
 {% endpartialdef %}
