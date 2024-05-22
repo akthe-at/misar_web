@@ -9,7 +9,10 @@
         <link rel="shortcut icon" href="{% static 'home/favicon.ico' %}" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
               rel="stylesheet" />
-        <script src="{% static 'home/htmx.min.js' %}"></script>
+        <script src="{% static 'home/htmx.min.js' %}" defer></script>
+        <!-- <script src="https://unpkg.com/htmx.org@1.9.12" -->
+        <!--         integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" -->
+        <!--         crossorigin="anonymous"></script> -->
         <script defer
                 src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <title>Michigan Search and Rescue</title>
@@ -18,6 +21,7 @@
         {% tailwind_css %}
         {% include 'home/includes/navbar.html' %}
         {% block content %}{% endblock %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+        <script defer
+                src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     </body>
 </html>
