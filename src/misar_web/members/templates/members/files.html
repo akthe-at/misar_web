@@ -138,7 +138,7 @@
                     <td class="h-12 border px-3 py-2">{{ file.file_description }}</td>
                     <td class="h-12 border px-3 py-2">{{ file.file.name|extension }}</td>
                     <td class="h-12 border px-3 py-2">{{ file.file.size|filesize }}</td>
-                    <td class="h-12 border px-3 py-2">{{ file.date_created|date:"m/d/y" }}</td>
+                    <td class="h-12 border px-3 py-2">{{ file.date_created|date:"m/d/y" }}</td>files.html
                     <td class="h-12 border px-3 py-2" x-data="{ showShareModal: false }">
                         <a @click="showShareModal = true"
                            data-modal-target="share-modal"
@@ -154,7 +154,7 @@
                               class="text-red-600 hover:cursor-pointer hover:underline dark:text-red-500">Delete</span>
                     </td>
                     <td class="h-12 rounded-b-lg border px-3 py-2 md:rounded-b-none">
-                        <a download href="{% url 'download' file.file.url %}"
+                        <a download href="{% url 'download' file.id %}"
                            class="text-misargreen hover:underline dark:text-misargreen">Download</a>
                     </td>
                 </tr>

@@ -13,11 +13,7 @@ from django.contrib.auth.views import (
     PasswordResetView,
 )
 from django.core.paginator import Paginator
-from django.http import (
-    HttpRequest,
-    HttpResponse,
-    HttpResponseForbidden,
-)
+from django.http import HttpRequest, HttpResponse, HttpResponseForbidden, FileResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import View
@@ -183,9 +179,7 @@ def download_file(request, file_id):
             "You do not have permission to download this file."
         )
 
-    response = HttpResponse(file.file, content_type="application/force-download")
-    response["Content-Disposition"] = f"attachment; filename={file.file_name}"
-    return response
+    return FileResponse(open(file.file.path, "rb"), as_attachment=True)
 
 
 class ShareFileView(LoginRequiredMixin, View):
