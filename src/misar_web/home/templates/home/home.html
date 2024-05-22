@@ -26,7 +26,7 @@
                             @click="showModal = true"
                             data-modal-target="specialty-modal"
                             data-modal-toggle="specialty-modal"
-                            class="transition-delay-400 group relative m-2 cursor-pointer items-center justify-center rounded-lg px-2 text-center grayscale-0 filter transition-all duration-500 hover:scale-105 hover:duration-500">
+                            class="transition-delay-400 group relative m-2 cursor-pointer items-center justify-center rounded-lg px-2 text-center grayscale-0 filter transition-all hover:scale-105 duration-500 hover:duration-500">
                         <a href="#">
                             <div class="bg-[url('{{ spec.icon.url }}')] hover:bg-[url('{{ siteinfo.blank_icon.url }}')] max-h-48 max-w-48 rounded-lg bg-cover group-hover:hidden">
                                 <img class="visible max-h-48 max-w-48 rounded-lg object-cover transition-all hover:collapse"
@@ -123,7 +123,7 @@
                 <div x-show="showVolunteerModal"
                      id="volunteer-modal"
                      tabindex="-1"
-                     class="fixed left-0 right-0 top-0 z-50 flex hidden h-[calc(100%-1rem)] max-h-full w-full flex-wrap justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
+                     class="fixed flex-wrap left-0 right-0 top-0 z-50 flex hidden h-[calc(100%-1rem)] max-h-full w-full justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
                     <div @click.outside="showVolunteerModal = false"
                          class="relative max-h-full w-full max-w-4xl rounded-lg bg-stone-200 shadow dark:bg-gray-700">
                         <div class="align-items-right mx-4 flex justify-end">
@@ -178,8 +178,10 @@
         <!-- Modal body -->
         {% partialdef search_spec_modal %}
         <!-- Modal header -->
-        <div class="flex w-full items-center justify-center rounded-t border-b p-4 dark:border-gray-600 md:p-5">
-            <h2 class="my-2 flex-col font-serif text-5xl font-black">{{ specialty.specialty }}</h2>
+        <div class="flex px-6 w-full items-center justify-center rounded-t border-b p-4 dark:border-gray-600 md:p-5">
+            <h2 class="m-2 mx-8 flex-col font-serif text-5xl font-black overflow-wrap break-word word-wrap break-word hyphens auto">
+                {{ specialty.specialty }}
+            </h2>
         </div>
         <div class="align-items-center flex w-full flex-col items-center justify-center">
             <img class="visible my-2 max-h-56 max-w-56 flex-row rounded-lg object-cover"
