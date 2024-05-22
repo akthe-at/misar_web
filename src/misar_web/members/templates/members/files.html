@@ -107,12 +107,35 @@
             {% partial shared-files-table %}
         </div>
     </div>
+<style>
+  html,
+  body {
+    height: 100%;
+  }
+
+  @media (min-width: 640px) {
+    table {
+      display: inline-table !important;
+    }
+
+    thead tr:not(:first-child) {
+      display: none;
+    }
+  }
+
+  td:not(:last-child) {
+    border-bottom: 0;
+  }
+
+  th:not(:last-child) {
+    border-bottom: 2px solid rgba(0, 0, 0, .1);
+  }
+    </style>
 {% endblock %}
 <!-- BEGINNING OF THE PARTIALS -->
 <!-- PERSONAL TABLE PARTIAL HTML -->
 {% partialdef personal-table %}
-<body class="flex items-center justify-center">
-    <!-- <div class="container w-full"> -->
+    <div class="container flex items-center justify-center">
     <table id="personal-table"
            class="flex-nowrap my-5 flex w-full min-w-0 flex-row overflow-hidden rounded-lg  sm:bg-white sm:shadow-lg">
         <thead class="rounded-1 flex-1 rounded-b-lg text-white sm:flex-none">
@@ -161,31 +184,7 @@
             {% endfor %}
         </tbody>
     </table>
-    <style>
-  html,
-  body {
-    height: 100%;
-  }
-
-  @media (min-width: 640px) {
-    table {
-      display: inline-table !important;
-    }
-
-    thead tr:not(:first-child) {
-      display: none;
-    }
-  }
-
-  td:not(:last-child) {
-    border-bottom: 0;
-  }
-
-  th:not(:last-child) {
-    border-bottom: 2px solid rgba(0, 0, 0, .1);
-  }
-    </style>
-</body>
+</div>
 {% endpartialdef %}
 <!-- MESSAGES - TOAST - PARTIAL HTML -->
 {% partialdef messages %}
@@ -231,7 +230,7 @@
 {% endpartialdef %}
 <!-- SHARED FILES TABLE PARTIAL HTML -->
 {% partialdef shared-files-table %}
-<body class="flex items-center justify-center">
+    <div class="container flex items-center justify-center">
     <table id="shared-table"
            class="flex-nowrap my-5 flex w-full min-w-0 flex-row overflow-hidden rounded-lg  sm:bg-white sm:shadow-lg">
         <thead class="rounded-1 flex-1 rounded-b-lg text-white sm:flex-none">
@@ -280,29 +279,5 @@
     {% partial messages %}
     <section id="messages" hx-swap-oob="true" hx-swap="innerHTML">
     </section>
-    <style>
-  html,
-  body {
-    height: 100%;
-  }
-
-  @media (min-width: 640px) {
-    table {
-      display: inline-table !important;
-    }
-
-    thead tr:not(:first-child) {
-      display: none;
-    }
-  }
-
-  td:not(:last-child) {
-    border-bottom: 0;
-  }
-
-  th:not(:last-child) {
-    border-bottom: 2px solid rgba(0, 0, 0, .1);
-  }
-    </style>
-</body>
+    </div>
 {% endpartialdef %}
