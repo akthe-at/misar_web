@@ -33,7 +33,7 @@ LOCAL_DEV_ENV = str(os.getenv("LOCAL_DEV_ENV"))
 if LOCAL_DEV_CHECK == LOCAL_DEV_ENV:
     DEBUG = True
 else:
-    DEBUG = True
+    DEBUG = False
 if DEBUG:
     ALLOWED_HOSTS = ["127.0.0.1"]
 else:
