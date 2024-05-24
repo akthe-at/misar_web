@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 import os
 from dotenv import load_dotenv
 
@@ -29,7 +29,6 @@ SECRET_KEY = str(os.getenv("SECRET_KEY"))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 LOCAL_DEV_CHECK = str(os.getenv("HOME"))
-print(f"Local Dev Check: {LOCAL_DEV_CHECK}")
 LOCAL_DEV_ENV = str(os.getenv("LOCAL_DEV_ENV"))
 if LOCAL_DEV_CHECK == LOCAL_DEV_ENV:
     DEBUG = True
@@ -70,8 +69,9 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
 TAILWIND_APP_NAME = "theme"
 
-if not DEBUG:
-    NPM_BIN_PATH = "~/node-v20.8.1-win-x64/npm.cmd"
+if DEBUG:
+    NPM_BIN_PATH = Path(f"{LOCAL_DEV_CHECK}/node-v20.8.1-win-x64/npm.cmd")
+
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
