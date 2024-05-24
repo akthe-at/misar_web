@@ -16,7 +16,7 @@
         </div>
         <div class="max-h-1/6 align-items-center flex flex-col flex-wrap justify-center bg-stone-700 py-2 text-center lg:py-[72px]">
             <h2 class="my-4 flex flex-col font-serif text-5xl font-bold text-white">Search Specialties</h2>
-            <div class="align-items-center mx-auto grid grid-cols-2 place-items-center justify-center gap-1 px-2 text-center transition-all duration-700 sm:grid-cols-2 md:grid-cols-3">
+            <div class="align-items-center mx-auto grid grid-cols-2 place-items-center justify-center gap-1 px-2 text-center sm:grid-cols-2 md:grid-cols-3">
                 {% for spec in search_spec %}
                     <!-- Also the Modal Toggle -->
                     <figure hx-get="{% url 'icon_modal' spec.id %}"
@@ -26,14 +26,14 @@
                             @click="showModal = true"
                             data-modal-target="specialty-modal"
                             data-modal-toggle="specialty-modal"
-                            class="transition-delay-400 group relative m-2 cursor-pointer items-center justify-center rounded-lg px-2 text-center grayscale-0 filter transition-all hover:scale-105 duration-500 hover:duration-500">
+                            class="group relative m-2 cursor-pointer items-center justify-center rounded-lg px-2 text-center grayscale-0 filter transition-all duration-500 ">
                         <a href="#">
-                            <div class="bg-[url('{{ spec.icon.url }}')] hover:bg-[url('{{ siteinfo.blank_icon.url }}')] max-h-48 max-w-48 rounded-lg bg-cover group-hover:hidden">
-                                <img class="visible max-h-48 max-w-48 rounded-lg object-cover transition-all hover:collapse"
+                            <div class="bg-[url('{{ spec.icon.url }}')] hover:bg-[url('{{ siteinfo.blank_icon.url }}')] max-h-48 max-w-48 rounded-lg bg-cover hover:scale-105 hover:transform-[5%] hover:duration-700 group-hover:hidden">
+                                <img class="visible max-h-48 max-w-48 rounded-lg object-cover transition-all "
                                      src="{{ spec.icon.url }}"
                                      alt="image description">
                             </div>
-                            <div class="hidden group-hover:block ">
+                            <div class="hidden group-hover:block">
                                 <img class="max-h-56 max-w-56 rounded-lg object-cover transition-all"
                                      src="{{ siteinfo.blank_icon.url }}"
                                      alt="image description">
@@ -123,7 +123,7 @@
                 <div x-show="showVolunteerModal"
                      id="volunteer-modal"
                      tabindex="-1"
-                     class="fixed flex-wrap left-0 right-0 top-0 z-50 flex hidden h-[calc(100%-1rem)] max-h-full w-full justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
+                     class="fixed left-0 right-0 top-0 z-50 flex hidden h-[calc(100%-1rem)] max-h-full w-full flex-wrap justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
                     <div @click.outside="showVolunteerModal = false"
                          class="relative max-h-full w-full max-w-4xl rounded-lg bg-stone-200 shadow dark:bg-gray-700">
                         <div class="align-items-right mx-4 flex justify-end">
@@ -178,8 +178,8 @@
         <!-- Modal body -->
         {% partialdef search_spec_modal %}
         <!-- Modal header -->
-        <div class="flex px-6 w-full items-center justify-center rounded-t border-b p-4 dark:border-gray-600 md:p-5">
-            <h2 class="m-2 mx-8 flex-col font-serif text-5xl font-black overflow-wrap break-word word-wrap break-word hyphens auto">
+        <div class="flex w-full items-center justify-center rounded-t border-b p-4 px-6 dark:border-gray-600 md:p-5">
+            <h2 class="overflow-wrap break-word word-wrap break-word hyphens auto m-2 mx-8 flex-col font-serif text-5xl font-black">
                 {{ specialty.specialty }}
             </h2>
         </div>
