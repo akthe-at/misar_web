@@ -19,7 +19,6 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-print(BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -29,9 +28,17 @@ print(BASE_DIR)
 SECRET_KEY = str(os.getenv("SECRET_KEY"))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ["misar-uwwssi.pythonanywhere.com"]
+LOCAL_DEV_CHECK = str(os.getenv("HOME"))
+print(f"Local Dev Check: {LOCAL_DEV_CHECK}")
+LOCAL_DEV_ENV = str(os.getenv("LOCAL_DEV_ENV"))
+if LOCAL_DEV_CHECK == LOCAL_DEV_ENV:
+    DEBUG = True
+else:
+    DEBUG = True
+if DEBUG:
+    ALLOWED_HOSTS = ["127.0.0.1"]
+else:
+    ALLOWED_HOSTS = ["misar-uwwssi.pythonanywhere.com"]
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": lambda r: False,  # disables it
 }
@@ -63,7 +70,8 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
 TAILWIND_APP_NAME = "theme"
 
-# NPM_BIN_PATH = "C:\\Users\\ARK010\\node-v20.8.1-win-x64\\npm.cmd"
+if not DEBUG:
+    NPM_BIN_PATH = "~/node-v20.8.1-win-x64/npm.cmd"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
