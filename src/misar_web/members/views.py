@@ -142,6 +142,16 @@ def files(request: HttpRequest):
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
+def update_shared_files(request: HttpRequest) -> HttpResponse:
+    files = get_objects_for_user(
+        request.user, "view_memberfile", klass=MemberFile
+    ).exclude(owner=request.user)
+    return render(
+        request, "members/files.html#shared-files-table", {"sharedfiles": files}
+    )
+
+
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def delete_file(request: HttpRequest, file_id: int) -> HttpResponse | None:
     file = MemberFile.objects.get(pk=file_id)
     if request.user == file.owner or request.user.has_perm(
