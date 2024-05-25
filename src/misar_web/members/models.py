@@ -106,6 +106,10 @@ class MemberFile(models.Model):
 
         super().save(*args, **kwargs)
 
+    def delete(self, *args, **kwargs) -> None:
+        self.file.delete()
+        super().delete(*args, **kwargs)
+
 
 class Event(models.Model):
     """A class to represent events such as trainings, demos, fundraisers, etc."""

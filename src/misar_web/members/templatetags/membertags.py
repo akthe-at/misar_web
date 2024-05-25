@@ -36,4 +36,3 @@ def get_file_name(filepath: str) -> str:
 
 
 register.filter("file_name", get_file_name)
-
