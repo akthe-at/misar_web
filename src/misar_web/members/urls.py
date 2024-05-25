@@ -44,6 +44,7 @@ urlpatterns = [
         name="password_reset_complete",
     ),
     path("delete_file/<int:file_id>/", views.delete_file, name="delete_file"),
+    path("update_shared_files/", views.update_shared_files, name="update_shared_files"),
     path("share/<int:file_id>/", ShareFileView.as_view(), name="share"),
     path("download/<int:file_id>/", views.download_file, name="download"),
     path(

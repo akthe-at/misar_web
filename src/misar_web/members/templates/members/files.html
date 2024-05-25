@@ -103,6 +103,8 @@
             <p class="md:mb-3">Here is a list of files that others have shared with you:</p>
         </div>
         <div id="shared-files-table"
+             hx-get="{% url 'update_shared_files' %}"
+             hx-trigger="every 15s"
              class="lg:max-w-2/3 sm:max-w-2/3 relative flex flex-col overflow-x-auto rounded-lg">
             {% partial shared-files-table %}
         </div>
