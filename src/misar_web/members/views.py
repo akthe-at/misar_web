@@ -147,7 +147,6 @@ def delete_file(request: HttpRequest, file_id: int) -> HttpResponse | None:
     if request.user == file.owner or request.user.has_perm(
         "members.delete_memberfile", file
     ):
-        file.file.delete()
         file.delete()
     else:
         messages.error(request, "You do not have permission to delete this file.")
