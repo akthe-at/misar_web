@@ -93,13 +93,13 @@
                      id="specialty-modal"
                      tabindex="-1"
                      class="fixed left-0 right-0 top-0 z-50 flex hidden h-[calc(100%-1rem)] max-h-full w-full justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
-                    <div @click.outside="showmodal = false"
+                    <div @click.outside="showmodal = false; document.getElementById('modal-body').innerHTML = '';"
                          class="relative max-h-full w-full max-w-4xl">
                         <!-- modal content -->
                         <div class="relative rounded-lg bg-stone-200 shadow dark:bg-gray-700">
                             <div class="align-items-right mx-4 flex justify-end">
                                 <button type="button"
-                                        @click="showModal = false"
+                                        @click="showmodal = false; document.getElementById('modal-body').innerHTML = '';"
                                         class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden"
                                         data-modal-hide="specialty-modal">
                                     <svg class="h-5 w-5"
