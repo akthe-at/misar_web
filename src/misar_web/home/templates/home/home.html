@@ -21,10 +21,8 @@
                     <!-- Also the Modal Toggle -->
                     <figure hx-get="{% url 'icon_modal' spec.id %}"
                             hx-trigger="click"
-                            hx-swap="innerHTML"
+                            hx-swap="innerHTML swap:10ms"
                             hx-target="#modal-body"
-                            hx-no-cache="true"
-                            @click="showModal = true"
                             data-modal-target="specialty-modal"
                             data-modal-toggle="specialty-modal"
                             class="group relative m-2 cursor-pointer items-center justify-center rounded-lg px-2 text-center grayscale-0 filter transition-all duration-500 ">
@@ -94,13 +92,12 @@
                      id="specialty-modal"
                      tabindex="-1"
                      class="fixed left-0 right-0 top-0 z-50 flex hidden h-[calc(100%-1rem)] max-h-full w-full justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
-                    <div @click.outside="showmodal = false; document.getElementById('modal-body').innerHTML = '';"
+                    <div @click.outside="showmodal = false;"
                          class="relative max-h-full w-full max-w-4xl">
                         <!-- modal content -->
                         <div class="relative rounded-lg bg-stone-200 shadow dark:bg-gray-700">
                             <div class="align-items-right mx-4 flex justify-end">
                                 <button type="button"
-                                        @click="showmodal = false; document.getElementById('modal-body').innerHTML = '';"
                                         class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden"
                                         data-modal-hide="specialty-modal">
                                     <svg class="h-5 w-5"
