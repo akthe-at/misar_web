@@ -50,7 +50,8 @@ class SearchSpecialty(models.Model):
 
     specialty = models.CharField(max_length=50)
     brief_synopsis = models.CharField(max_length=200)
-    long_description = models.TextField(max_length=800)
+    long_description_part1 = models.TextField(max_length=400)
+    long_descript_part2 = models.TextField(max_length=400)
     icon = models.ImageField(upload_to="home/files/images")
     transparent_icon = models.ImageField(upload_to="home/files/images")
     specialty_photo = models.ImageField(upload_to="home/files/images")
