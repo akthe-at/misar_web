@@ -19,14 +19,14 @@
             <div class="align-items-center mx-auto grid grid-cols-2 place-items-center justify-center gap-1 px-2 text-center sm:grid-cols-2 md:grid-cols-3">
                 {% for spec in search_spec %}
                     <!-- Also the Modal Toggle -->
-                    <figure hx-get="{% url 'icon_modal' spec.id %}"
-                            hx-trigger="click"
-                            hx-swap="innerHTML swap:10ms"
-                            hx-target="#modal-body"
-                            data-modal-target="specialty-modal"
-                            data-modal-toggle="specialty-modal"
-                            class="group relative m-2 cursor-pointer items-center justify-center rounded-lg px-2 text-center grayscale-0 filter transition-all duration-500 ">
-                        <a href="#">
+                    <a hx-get="{% url 'icon_modal' spec.id %}"
+                       hx-trigger="click"
+                       @click.prevent="showModal = true; openModal({{ spec.id }})"
+                       hx-swap="innerHTML"
+                       hx-target="#modal-body">
+                        <figure data-modal-target="specialty-modal"
+                                data-modal-toggle="specialty-modal"
+                                class="group relative m-2 cursor-pointer items-center justify-center rounded-lg px-2 text-center grayscale-0 filter transition-all duration-500 ">
                             <div class="bg-[url('{{ spec.icon.url }}')] hover:bg-[url('{{ siteinfo.blank_icon.url }}')] max-h-48 max-w-48 rounded-lg bg-cover hover:scale-105 hover:transform-[5%] hover:duration-700 group-hover:hidden">
                                 <img class="visible max-h-48 max-w-48 rounded-lg object-cover transition-all "
                                      src="{{ spec.icon.url }}"
@@ -36,11 +36,11 @@
                                 <img class="max-h-56 max-w-56 rounded-lg object-cover transition-all"
                                      src="{{ siteinfo.blank_icon.url }}"
                                      alt="image description">
-                            </a>
-                            <figcaption class="hover:mix-blend-burn absolute inset-0 mx-auto flex w-full place-items-center items-center justify-center p-2 text-center text-xs text-transparent hover:font-black hover:text-misargreen sm:text-sm md:text-base lg:text-3xl">
-                                <div class="z-1 shrink text-center">{{ spec.brief_synopsis }}</div>
-                            </figcaption>
-                        </figure>
+                                <figcaption class="hover:mix-blend-burn absolute inset-0 mx-auto flex w-full place-items-center items-center justify-center p-2 text-center text-xs text-transparent hover:font-black hover:text-misargreen sm:text-sm md:text-base lg:text-3xl">
+                                    <div class="z-1 shrink text-center">{{ spec.brief_synopsis }}</div>
+                                </figcaption>
+                            </figure>
+                        </a>
                     {% endfor %}
                 </div>
             </div>
@@ -92,7 +92,7 @@
                      id="specialty-modal"
                      tabindex="-1"
                      class="fixed left-0 right-0 top-0 z-50 flex hidden h-[calc(100%-1rem)] max-h-full w-full justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
-                    <div @click.outside="showmodal = false;"
+                    <div @click.outside="showModal = false;"
                          class="relative max-h-full w-full max-w-4xl">
                         <!-- modal content -->
                         <div class="relative rounded-lg bg-stone-200 shadow dark:bg-gray-700">

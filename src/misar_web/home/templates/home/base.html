@@ -21,14 +21,6 @@
         {% tailwind_css %}
         {% include 'home/includes/navbar.html' %}
         {% block content %}{% endblock %}
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js">
-htmx.on("htmx:afterSwap", (e) => {
-  // Response targeting #model-body => show the modal
-  if (e.detail.target.id == "modal-body") {
-    window.showModal('specialty-modal');
-  }
-});
-
-        </script>
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     </body>
 </html>
