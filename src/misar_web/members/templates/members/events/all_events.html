@@ -31,7 +31,7 @@
                                id="all"
                                hx-get="{% url 'filter_events' %}?event_type="
                                hx-target="#event-list"
-                               hx-swap="innerHTML"
+                               hx-swap="innerHTML transition:true"
                                class="peer hidden"
                                checked>
                         <label for="all"

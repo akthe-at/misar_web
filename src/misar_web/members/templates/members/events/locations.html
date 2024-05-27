@@ -132,7 +132,7 @@
                                hx-get="{% url 'show_location' location.id %}"
                                hx-trigger="click"
                                hx-target="#inner-popup"
-                               hx-swap="innerHTML"
+                               hx-swap="innerHTML transition:true"
                                href="{% url 'show_location' location.id %}">{{ location }}</a>
                         </td>
                         <td class="h-12 border px-3 py-2">{{ location.address }}</td>
