@@ -23,7 +23,7 @@
                             hx-get="{% url 'icon_modal' spec.id %}"
                             hx-trigger="click"
                             hx-target="#modal-body"
-                            hx-swap="innerHTML"
+                            hx-swap="innerHTML transition:true"
                             class="group relative m-2 cursor-pointer items-center justify-center rounded-lg px-2 text-center grayscale-0 filter transition-all duration-500 ">
                         <div class="bg-[url('{{ spec.icon.url }}')] hover:bg-[url('{{ siteinfo.blank_icon.url }}')] hover:transform-[5%] max-h-48 max-w-48 rounded-lg bg-cover hover:scale-105 hover:duration-700 group-hover:hidden">
                             <a href="{% url 'icon_modal' spec.id %}">
@@ -97,7 +97,7 @@
                         <div class="relative rounded-lg bg-stone-200 shadow dark:bg-gray-700">
                             <div class="align-items-right mx-4 flex justify-end">
                                 <button type="button"
-                                        @click="showSpecialtyModal = false"
+                                        @click="showSpecialtyModal = false;document.getElementById('modal-body').innerHTML = ''"
                                         class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden">
                                     <svg class="h-5 w-5"
                                          aria-hidden="true"
