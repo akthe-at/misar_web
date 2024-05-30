@@ -19,18 +19,15 @@
             <div class="align-items-center mx-auto grid grid-cols-2 place-items-center justify-center gap-1 px-2 text-center sm:grid-cols-2 md:grid-cols-3">
                 {% for spec in search_spec %}
                     <!-- Also the Modal Toggle -->
-                    <figure @click.prevent="showSpecialtyModal = true"
-                            hx-get="{% url 'icon_modal' spec.id %}"
+                    <figure hx-get="{% url 'icon_modal' spec.id %}"
                             hx-trigger="click"
                             hx-target="#modal-body"
                             hx-swap="innerHTML transition:true"
                             class="group relative m-2 cursor-pointer items-center justify-center rounded-lg px-2 text-center grayscale-0 filter transition-all duration-500 ">
                         <div class="bg-[url('{{ spec.icon.url }}')] hover:bg-[url('{{ siteinfo.blank_icon.url }}')] hover:transform-[5%] max-h-48 max-w-48 rounded-lg bg-cover hover:scale-105 hover:duration-700 group-hover:hidden">
-                            <a href="{% url 'icon_modal' spec.id %}">
-                                <img class="visible max-h-48 max-w-48 rounded-lg object-cover transition-all "
-                                     src="{{ spec.icon.url }}"
-                                     alt="image description">
-                            </a>
+                            <img class="visible max-h-48 max-w-48 rounded-lg object-cover transition-all "
+                                 src="{{ spec.icon.url }}"
+                                 alt="image description">
                         </div>
                         <div class="hidden group-hover:block">
                             <img class="max-h-56 max-w-56 rounded-lg object-cover transition-all"
@@ -110,6 +107,7 @@
                                 </button>
                             </div>
                             <div id="modal-body"
+                                 x-on:htmx:after-swap.window="showSpecialtyModal = true"
                                  class="items-center justify-center space-y-2  rounded-2xl bg-stone-200 p-4 md:p-5">
                                 {% partial search_spec_modal %}
                             </div>
