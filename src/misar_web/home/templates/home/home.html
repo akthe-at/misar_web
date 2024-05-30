@@ -2,7 +2,7 @@
 {% load static %}
 {% load partials %}
 {% block content %}
-    <div x-data="{ showModal: false, showVolunteerModal: false }">
+    <div x-data="{ showVolunteerModal: false }">
         <div class="align-items-center flex h-80 min-w-0 flex-col flex-wrap justify-center bg-cover bg-[top_right_-8rem] py-2 text-center md:bg-fixed lg:h-96 lg:bg-bottom"
              style="background-image: url({{ siteinfo.home_page_image.url }})"></div>
         <div class="flex min-h-96 flex-col items-center justify-center bg-stone-400 py-8 lg:py-[72px]">
@@ -19,28 +19,27 @@
             <div class="align-items-center mx-auto grid grid-cols-2 place-items-center justify-center gap-1 px-2 text-center sm:grid-cols-2 md:grid-cols-3">
                 {% for spec in search_spec %}
                     <!-- Also the Modal Toggle -->
-                    <a hx-get="{% url 'icon_modal' spec.id %}"
-                       hx-trigger="click"
-                       @click.prevent="showModal = true; openModal({{ spec.id }})"
-                       hx-swap="innerHTML"
-                       hx-target="#modal-body">
-                        <figure data-modal-target="specialty-modal"
-                                data-modal-toggle="specialty-modal"
-                                class="group relative m-2 cursor-pointer items-center justify-center rounded-lg px-2 text-center grayscale-0 filter transition-all duration-500 ">
-                            <div class="bg-[url('{{ spec.icon.url }}')] hover:bg-[url('{{ siteinfo.blank_icon.url }}')] max-h-48 max-w-48 rounded-lg bg-cover hover:scale-105 hover:transform-[5%] hover:duration-700 group-hover:hidden">
+                    <figure @click.prevent="showSpecialtyModal = true"
+                            hx-get="{% url 'icon_modal' spec.id %}"
+                            hx-trigger="click"
+                            hx-target="#modal-body"
+                            hx-swap="innerHTML"
+                            class="group relative m-2 cursor-pointer items-center justify-center rounded-lg px-2 text-center grayscale-0 filter transition-all duration-500 ">
+                        <div class="bg-[url('{{ spec.icon.url }}')] hover:bg-[url('{{ siteinfo.blank_icon.url }}')] hover:transform-[5%] max-h-48 max-w-48 rounded-lg bg-cover hover:scale-105 hover:duration-700 group-hover:hidden">
+                            <a href="{% url 'icon_modal' spec.id %}">
                                 <img class="visible max-h-48 max-w-48 rounded-lg object-cover transition-all "
                                      src="{{ spec.icon.url }}"
                                      alt="image description">
-                            </div>
-                            <div class="hidden group-hover:block">
-                                <img class="max-h-56 max-w-56 rounded-lg object-cover transition-all"
-                                     src="{{ siteinfo.blank_icon.url }}"
-                                     alt="image description">
-                                <figcaption class="hover:mix-blend-burn absolute inset-0 mx-auto flex w-full place-items-center items-center justify-center p-2 text-center text-xs text-transparent hover:font-black hover:text-misargreen sm:text-sm md:text-base lg:text-3xl">
-                                    <div class="z-1 shrink text-center">{{ spec.brief_synopsis }}</div>
-                                </figcaption>
-                            </figure>
-                        </a>
+                            </a>
+                        </div>
+                        <div class="hidden group-hover:block">
+                            <img class="max-h-56 max-w-56 rounded-lg object-cover transition-all"
+                                 src="{{ siteinfo.blank_icon.url }}"
+                                 alt="image description">
+                            <figcaption class="hover:mix-blend-burn absolute inset-0 mx-auto flex w-full place-items-center items-center justify-center p-2 text-center text-xs text-transparent hover:font-black hover:text-misargreen sm:text-sm md:text-base lg:text-3xl">
+                                <div class="z-1 shrink text-center">{{ spec.brief_synopsis }}</div>
+                            </figcaption>
+                        </figure>
                     {% endfor %}
                 </div>
             </div>
@@ -88,18 +87,18 @@
                          class="flex h-full w-full flex-col object-scale-down py-4 lg:py-8">
                 </div>
                 <!-- large icon modal -->
-                <div x-show="showModal"
+                <div x-show="showSpecialtyModal"
                      id="specialty-modal"
                      tabindex="-1"
-                     class="fixed left-0 right-0 top-0 z-50 flex hidden h-[calc(100%-1rem)] max-h-full w-full justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
-                    <div @click.outside="showModal = false;"
+                     class="fixed flex left-0 right-0 top-0 z-50 h-[calc(100%-1rem)] max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
+                    <div @click.outside="showSpecialtyModal = false;document.getElementById('modal-body').innerHTML = ''"
                          class="relative max-h-full w-full max-w-4xl">
                         <!-- modal content -->
                         <div class="relative rounded-lg bg-stone-200 shadow dark:bg-gray-700">
                             <div class="align-items-right mx-4 flex justify-end">
                                 <button type="button"
-                                        class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden"
-                                        data-modal-hide="specialty-modal">
+                                        @click="showSpecialtyModal = false"
+                                        class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden">
                                     <svg class="h-5 w-5"
                                          aria-hidden="true"
                                          xmlns="http://www.w3.org/2000/svg"
@@ -111,8 +110,7 @@
                                 </button>
                             </div>
                             <div id="modal-body"
-                                 class="space-y-2  rounded-2xl bg-stone-200 p-4 md:p-5">
-                                {% partial search_spec_modal %}
+                                 class="items-center justify-center space-y-2  rounded-2xl bg-stone-200 p-4 md:p-5">
                             </div>
                         </div>
                     </div>
@@ -121,7 +119,7 @@
                 <div x-show="showVolunteerModal"
                      id="volunteer-modal"
                      tabindex="-1"
-                     class="fixed left-0 right-0 top-0 z-50 flex hidden h-[calc(100%-1rem)] max-h-full w-full flex-wrap justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
+                     class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full flex-wrap justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
                     <div @click.outside="showVolunteerModal = false"
                          class="relative max-h-full w-full max-w-4xl rounded-lg bg-stone-200 shadow dark:bg-gray-700">
                         <div class="align-items-right mx-4 flex justify-end">
@@ -175,25 +173,27 @@
         {% endblock %}
         <!-- Modal body -->
         {% partialdef search_spec_modal %}
-        <!-- Modal header -->
-        <div class="flex w-full items-center justify-center rounded-t border-b p-4 px-6 dark:border-gray-600 md:p-5">
-            <h2 class="overflow-wrap break-word word-wrap break-word hyphens auto m-2 mx-8 flex-col font-serif text-5xl font-black">
-                {{ specialty.specialty }}
-            </h2>
-        </div>
-        <div class="align-items-center flex w-full flex-col items-center justify-center">
-            <img class="visible my-2 max-h-56 max-w-56 flex-row rounded-lg object-cover"
-                 src="{{ specialty.transparent_icon.url }}"
-                 alt="search specialty icons">
-        </div>
-        <div class="indent-8 my-1 flex flex-col items-center justify-center gap-2 text-left">
-            <p class="my-2 flex-col break-normal text-xl text-stone-700">{{ specialty.long_description_part1 }}</p>
-            <p class="my-2 flex-col break-normal text-xl text-stone-700">{{ specialty.long_descript_part2 }}</p>
-            <div class="my-2 flex-col">
-                <h2 .
-                    <img class="max-h-96 flex-row rounded-lg"
-                         src="{{ specialty.specialty_photo.url }}"
-                         alt="search specialty icons">
-                </div>
+        {% block show_search_spec %}
+            <!-- Modal header -->
+            <div class="flex w-full items-center justify-center rounded-t border-b p-4 px-6 dark:border-gray-600 md:p-5">
+                <h2 class="overflow-wrap break-word word-wrap break-word hyphens auto m-2 mx-8 flex-col font-serif text-5xl font-black">
+                    {{ specialty.specialty }}
+                </h2>
             </div>
+            <div class="align-items-center flex w-full flex-col items-center justify-center">
+                <img class="visible my-2 max-h-56 max-w-56 flex-row rounded-lg object-cover"
+                     src="{{ specialty.transparent_icon.url }}"
+                     alt="search specialty icons">
+            </div>
+            <div class="my-1 flex flex-col items-center justify-center gap-2 text-left indent-8">
+                <p class="my-2 flex-col break-normal text-xl text-stone-700">{{ specialty.long_description_part1 }}</p>
+                <p class="my-2 flex-col break-normal text-xl text-stone-700">{{ specialty.long_descript_part2 }}</p>
+                <div class="my-2 flex-col">
+                    <h2 .
+                        <img class="max-h-96 flex-row rounded-lg"
+                             src="{{ specialty.specialty_photo.url }}"
+                             alt="search specialty icons">
+                    </div>
+                </div>
+            {% endblock %}
         {% endpartialdef %}

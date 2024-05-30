@@ -31,7 +31,8 @@ module.exports = {
          * patterns match your project structure.
          */
         /* JS 1: Ignore any JavaScript in node_modules folder. */
-        // '!../../**/node_modules/flowbite/**/*.js',
+        './node_modules/flowbite/**/*.js',
+        './node_modules/alpinejs/**/*.js',
         /* JS 2: Process all JavaScript files in the project. */
         // '../../**/*.js',
 
@@ -39,7 +40,7 @@ module.exports = {
          * Python: If you use Tailwind CSS classes in Python, uncomment the following line
          * and make sure the pattern below matches your project structure.
          */
-        '../../**/forms.py'
+        '../../**/forms.py',
     ],
     theme: {
     fontFamily: {

@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path, PureWindowsPath
+from pathlib import Path
 import os
 from dotenv import load_dotenv
 
@@ -38,7 +38,7 @@ if DEBUG:
 else:
     ALLOWED_HOSTS = ["misar-uwwssi.pythonanywhere.com"]
 DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": lambda r: False,  # disables it
+    "SHOW_TOOLBAR_CALLBACK": lambda x: True,
 }
 
 # Application definition
@@ -157,8 +157,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 STATIC_URL = "/static/"
-if not DEBUG:
-    STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR.parent / "local-cdn" / "static"
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR.parent / "local-cdn" / "media"

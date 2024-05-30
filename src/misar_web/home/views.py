@@ -5,7 +5,20 @@ from .models import SearchSpecialty, SiteInfo
 
 
 def home(request: HttpRequest):
-    siteinfo = SiteInfo.objects.get(id=1)
+    siteinfo = SiteInfo.objects.only(
+        "id",
+        "site_name",
+        "tagline",
+        "description",
+        "dispatch_number",
+        "mission_statement",
+        "logo",
+        "alternate_logo",
+        "home_page_image",
+        "donation_link",
+        "team_email",
+        "blank_icon",
+    ).get(id=1)
     search_spec = SearchSpecialty.objects.all()
     context = {"siteinfo": siteinfo, "search_spec": search_spec}
     return render(request=request, template_name="home/home.html", context=context)
