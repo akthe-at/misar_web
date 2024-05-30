@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path, PureWindowsPath
+from pathlib import Path
 import os
 from dotenv import load_dotenv
 
@@ -39,7 +39,7 @@ if DEBUG:
 else:
     ALLOWED_HOSTS = ["misar-uwwssi.pythonanywhere.com"]
 DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": lambda r: False,  # disables it
+    "SHOW_TOOLBAR_CALLBACK": lambda x: True,
 }
 
 # Application definition

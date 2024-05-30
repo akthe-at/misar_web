@@ -403,10 +403,9 @@ def search_locations(request: HttpRequest):
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def show_location(request: HttpRequest, location_id: int):
     location = Location.objects.get(pk=location_id)
-    siteinfo = SiteInfo.objects.get(id=1)
     desired_perms = ("change_location", "delete_location")
     perms = {perm: request.user.has_perm(perm, location) for perm in desired_perms}
-    context = {"location": location, "siteinfo": siteinfo, "perms": perms}
+    context = {"location": location, "perms": perms}
     return render(
         request,
         "members/events/locations.html#show_location",
