@@ -3,7 +3,7 @@
 {% load partials %}
 {% block content %}
     <div>
-        <div class="align-items-center flex h-80 min-w-0 flex-col flex-wrap justify-center bg-cover bg-[top_right_-8rem] py-2 text-center md:bg-fixed lg:h-96 lg:bg-bottom"
+        <div class="align-items-center flex h-80 min-w-0 flex-col flex-wrap justify-center bg-cover bg-[top_right_-7rem] py-2 text-center md:bg-fixed lg:h-96 lg:bg-bottom"
              style="background-image: url({{ siteinfo.home_page_image.url }})"></div>
         <div class="flex min-h-96 flex-col items-center justify-center bg-stone-400 py-8 lg:py-[72px]">
             <div class="flex w-5/6 flex-col text-center lg:w-3/4">
@@ -14,26 +14,26 @@
                 <p class="inset-0 pb-3 text-xl text-stone-700 md:text-2xl">{{ siteinfo.mission_statement }}</p>
             </div>
         </div>
-        <div class="max-h-1/6 align-items-center flex flex-col flex-wrap justify-center bg-stone-700 py-2 text-center lg:py-[72px]">
+        <div class="max-h-1/6 align-items-center flex flex-col flex-wrap justify-center bg-stone-700 px-8 py-2 text-center lg:py-[72px]">
             <h2 class="my-4 flex flex-col font-serif text-5xl font-bold text-white">Search Specialties</h2>
-            <div class="align-items-center mx-auto grid grid-cols-2 place-items-center justify-center gap-1 px-2 text-center sm:grid-cols-2 md:grid-cols-3">
+            <div class="align-items-center  px-auto mx-auto grid grid-cols-2 place-items-center justify-center gap-16 text-center sm:grid-cols-2 md:grid-cols-3">
                 {% for spec in search_spec %}
                     <!-- Also the Modal Toggle -->
                     <figure hx-get="{% url 'icon_modal' spec.id %}"
                             hx-trigger="click"
                             hx-target="#modal-body"
                             hx-swap="innerHTML transition:true"
-                            class="group relative m-2 cursor-pointer items-center justify-center rounded-lg px-2 text-center grayscale-0 filter transition-all duration-500 ">
+                            class="group relative m-2 cursor-pointer items-center justify-center rounded-lg text-center grayscale-0 filter transition-all duration-500 hover:shadow-2xl hover:shadow-stone-900 sm:shadow-2xl sm:shadow-stone-900 ">
                         <div class="bg-[url('{{ spec.icon.url }}')] hover:bg-[url('{{ siteinfo.blank_icon.url }}')] hover:transform-[5%] max-h-48 max-w-48 rounded-lg bg-cover hover:scale-105 hover:duration-700 group-hover:hidden">
-                            <img class="visible max-h-48 max-w-48 rounded-lg object-cover transition-all "
+                            <img class="visible max-h-48 max-w-48 rounded-lg object-cover transition-all hover:shadow-2xl hover:shadow-stone-900 sm:shadow-2xl sm:shadow-stone-900 "
                                  src="{{ spec.icon.url }}"
                                  alt="image description">
                         </div>
-                        <div class="hidden group-hover:block">
-                            <img class="max-h-56 max-w-56 rounded-lg object-cover transition-all"
+                        <div class="hidden hover:shadow-2xl hover:shadow-stone-900 group-hover:block sm:shadow-2xl sm:shadow-stone-900">
+                            <img class="max-h-48 max-w-48 rounded-lg object-cover transition-all hover:shadow-2xl hover:shadow-stone-900 sm:shadow-2xl sm:shadow-stone-900"
                                  src="{{ siteinfo.blank_icon.url }}"
                                  alt="image description">
-                            <figcaption class="hover:mix-blend-burn absolute inset-0 mx-auto flex w-full place-items-center items-center justify-center p-2 text-center text-xs text-transparent hover:font-black hover:text-misargreen sm:text-sm md:text-base lg:text-3xl">
+                            <figcaption class="hover:mix-blend-burn absolute inset-0 mx-auto flex w-full place-items-center items-center justify-center p-2 text-center text-xs text-transparent hover:font-black hover:text-misargreen hover:shadow-2xl hover:shadow-stone-900 sm:text-sm md:text-base lg:text-3xl">
                                 <div class="z-1 shrink text-center">{{ spec.brief_synopsis }}</div>
                             </figcaption>
                         </figure>
@@ -41,22 +41,22 @@
                 </div>
             </div>
         </div>
-        <div class="flex h-80 w-full flex-col items-center justify-center bg-stone-400 text-center">
+        <div class="flex h-80 w-full flex-col items-center justify-center bg-stone-400 px-4 text-center">
             <h2 class="pb-3 font-serif text-5xl font-bold text-stone-700">Emergency Dispatch</h2>
             <h4 class="font-[Sedan SC] mb-3 px-4 text-2xl text-stone-700 sm:mx-auto sm:px-6 md:mx-auto md:px-8 lg:mx-32 lg:px-12 xl:mx-64 xl:px-16">
                 For Immediate Dispatch of K9 Teams:
             </h4>
             <div class="flex items-center justify-center text-center">
                 <a href="tel:18008185645">
-                    <button class="flex w-36 items-center justify-center rounded bg-misargreen px-4 py-2 text-center font-bold text-white hover:bg-red-700 lg:w-48">
+                    <button class="flex w-auto items-center justify-center rounded bg-misargreen px-4 py-2 text-center font-bold text-white hover:bg-red-700 lg:w-48">
                         {{ siteinfo.dispatch_number }}
                     </a>
                 </div>
             </div>
-            <div class="flex h-[36rem] w-full flex-col items-center justify-center bg-stone-900 bg-cover bg-fixed bg-top py-32 text-center lg:flex-row lg:py-[72px]"
+            <div class="flex  h-[36rem] w-full flex-col items-center justify-center bg-stone-900 bg-cover bg-fixed bg-top py-32 text-center lg:flex-row lg:py-[72px]"
                  style="background-image:linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{ siteinfo.home_page_image.url }})">
                 <div class="flex w-1/2 flex-col-reverse items-center justify-center text-center text-white sm:px-3 lg:flex-col">
-                    <div class="flex w-full flex-col items-center justify-center text-center">
+                    <div class="mt-6 flex w-full flex-col items-center justify-center text-center">
                         <h2 class="mb-3 mt-6 font-serif text-3xl font-semibold text-white lg:text-6xl">Get Involved</h2>
                         <div class="flex flex-col justify-center gap-2 text-center lg:flex-row">
                             <a href="#" class="">
@@ -85,7 +85,7 @@
                 <div x-show="showSpecialtyModal"
                      id="specialty-modal"
                      tabindex="-1"
-                     class="fixed flex left-0 right-0 top-0 z-50 h-[calc(100%-1rem)] max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
+                     class="fixed left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
                     <div @click.outside="showSpecialtyModal = false"
                          class="relative max-h-full w-full max-w-4xl">
                         <!-- modal content -->
