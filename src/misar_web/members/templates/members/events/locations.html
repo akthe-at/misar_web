@@ -72,10 +72,10 @@
                  id="popup-modal"
                  tabindex="-1"
                  class="fixed left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden backdrop-blur-md md:inset-0">
-                <div @click.outside="showLocationModal = false;document.getElementById('inner-popup').innerHTML = ''"
+                <div @click.outside="showLocationModal = false"
                      class="relative w-3/4 rounded-lg shadow-xl dark:bg-gray-700 md:h-1/2 md:w-1/4">
                     <button type="button"
-                            @click="showLocationModal = false; document.getElementById('inner-popup').innerHTML = ''"
+                            @click="showLocationModal = false"
                             class="absolute end-2.5 top-2.5 ms-auto inline-flex h-6 w-6 items-center justify-center rounded-lg bg-transparent text-sm text-gray-600 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white">
                         <svg class="h-3 w-3"
                              aria-hidden="true"
@@ -87,6 +87,7 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                     <div id="inner-popup"
+                         x-on:htmx:after-swap.window="showLocationModal = true"
                          class="flex h-full w-full items-center justify-between rounded bg-stone-100 p-2 md:p-2 ">
                     </div>
                 </div>
@@ -125,8 +126,7 @@
                             </div>
                         </td>
                         <td class="h-12 border px-3 py-2 font-medium text-gray-900 dark:text-white">
-                            <a @click.prevent="showLocationModal = true"
-                               class="text-misargreen"
+                            <a class="text-misargreen"
                                hx-get="{% url 'show_location' location.id %}"
                                hx-trigger="click"
                                hx-target="#inner-popup"
