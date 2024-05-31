@@ -1,7 +1,17 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from guardian.admin import GuardedModelAdmin
-from .models import ExternalReference, Member, MemberFile, Location, Event
+
+from .models import (
+    Event,
+    ExternalReference,
+    Location,
+    Member,
+    MemberFile,
+    TeamFile,
+    TeamFileCategory,
+)
+
 # Register your models here.
 
 
@@ -20,6 +30,26 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
     )
+
+
+@admin.register(TeamFileCategory)
+class TeamFileCategoryAdmin(admin.ModelAdmin):
+    search_fields = ("category_name", "category_description")
+    list_display = ("category_name", "category_description")
+    ordering = ("category_name", "date_created")
+
+
+@admin.register(TeamFile)
+class TeamFileAdmin(admin.ModelAdmin):
+    search_fields = ("file_name", "file_description", "date_created")
+    list_display = (
+        "file_name",
+        "file",
+        "file_description",
+        "date_created",
+        "last_modified",
+    )
+    ordering = ("-date_created",)
 
 
 class MemberFileAdmin(GuardedModelAdmin):
