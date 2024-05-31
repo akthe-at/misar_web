@@ -33,7 +33,7 @@ from .forms import (
     FileUploadForm,
     MemberRegistrationForm,
 )
-from .models import Event, ExternalReference, Location, Member, MemberFile
+from .models import Event, ExternalReference, Location, Member, MemberFile, TeamFile
 
 
 class MemberRegisterView(CreateView):
@@ -95,9 +95,16 @@ class CustomLogoutView(LogoutView):
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def member_home(request: HttpRequest):
-    siteinfo = SiteInfo.objects.get(id=1)
-    external_references = ExternalReference.objects.all().order_by("name")
-    context = {"siteinfo": siteinfo, "external_references": external_references}
+    siteinfo: SiteInfo = SiteInfo.objects.get(id=1)
+    external_references: list[ExternalReference] = (
+        ExternalReference.objects.all().order_by("name")
+    )
+    team_files: list[TeamFile] = TeamFile.objects.all().order_by("file_name")
+    context = {
+        "siteinfo": siteinfo,
+        "external_references": external_references,
+        "team_files": team_files,
+    }
     return render(request, "members/member_landing.html", context)
 
 

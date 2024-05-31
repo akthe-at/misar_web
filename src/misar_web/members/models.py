@@ -75,6 +75,46 @@ class Location(models.Model):
         return self.name
 
 
+class TeamFileCategory(models.Model):
+    """A class for categorizing team files"""
+
+    category_name = models.CharField(("Category Name"), max_length=50)
+    category_description = models.CharField(("Category Description"), max_length=50)
+    date_created = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.category_name
+
+    class Meta:  # type: ignore
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
+
+class TeamFile(models.Model):
+    """A class for important team level files"""
+
+    file = models.FileField(upload_to="static/team_files/", null=False, blank=False)
+    file_name = models.CharField(("File Name"), max_length=50)
+    file_description = models.CharField(("File Description"), max_length=50)
+    category: str = models.ForeignKey(
+        "TeamFileCategory", on_delete=models.SET_NULL, null=True
+    )
+    date_created = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name: str = "Team File"
+        verbose_name_plural: str = "Team Files"
+
+    def __str__(self) -> str:
+        return self.file_name
+
+    def delete(self, *args, **kwargs) -> None:
+        self.file.delete()
+        super().delete(*args, **kwargs)
+
+
 class MemberFile(models.Model):
     """A class to represent user-uploaded files"""
 
