@@ -33,7 +33,8 @@
     });
         </script>
     </head>
-    <body hx-headers='{X-CSRFToken": "{{ csrf_token }}"}'
+    <body x-data='{ showEditEventModal: false}'
+          hx-headers='{X-CSRFToken": "{{ csrf_token }}"}'
           class="flex flex-shrink flex-col bg-stone-300 dark:bg-stone-800">
         {% tailwind_css %}
         {% include 'members/includes/navbar_members.html' %}
