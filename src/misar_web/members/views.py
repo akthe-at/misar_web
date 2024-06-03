@@ -322,6 +322,7 @@ def update_event(request: HttpRequest, event_id: int):
         return redirect("all_events")
     siteinfo = SiteInfo.objects.get(id=1)
     event = Event.objects.get(pk=event_id)
+    event_id = event_id
     if request.method == "POST":
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
@@ -329,8 +330,8 @@ def update_event(request: HttpRequest, event_id: int):
             return redirect("all_events")
     else:
         form = EventForm(instance=event)
-    context = {"siteinfo": siteinfo, "form": form}
-    return render(request, "members/events/update_event.html", context)
+    context = {"siteinfo": siteinfo, "form": form, "event_id": event_id}
+    return render(request, "members/events/all_events.html#editEvent", context)
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
