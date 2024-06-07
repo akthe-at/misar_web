@@ -31,7 +31,7 @@
                                value=""
                                id="all"
                                hx-get="{% url 'filter_events' %}?event_type="
-                               hx-target="#event-list"
+                               hx-target="#information"
                                hx-swap="innerHTML transition:true"
                                class="peer hidden"
                                checked>
@@ -47,8 +47,8 @@
                                    value="{{ type }}"
                                    id="{{ type }}"
                                    hx-get="{% url 'filter_events' %}?event_type={{ type }}"
-                                   hx-target="#event-list"
-                                   hx-swap="innerHTML"
+                                   hx-target="#information"
+                                   hx-swap="innerHTML transition:true"
                                    class="peer hidden">
                             <label for="{{ type }}"
                                    class="inline-flex cursor-pointer items-center justify-center rounded-lg border border-white bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-50 peer-checked:bg-misargreen peer-checked:text-white peer-checked:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:peer-checked:bg-misargreen dark:peer-checked:text-white">
@@ -107,139 +107,120 @@
 {% partialdef event_list %}
 <div class="flex-grow justify-center text-center">
     <h1 class="mb-4 mt-2 flex flex-col text-4xl font-bold text-white">Upcoming Events</h1>
-    {% if events %}
-        <div class="grid min-h-full flex-grow gap-x-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {% for event in events %}
-                {% get_obj_perms request.user for event as "event_perms" %}
-                <div class="max-w-1/2 hover:transform[5%] my-2 rounded-lg border border-gray-200 bg-stone-400 p-6  hover:scale-105 hover:shadow-2xl hover:shadow-stone-900 dark:border-gray-700 dark:bg-gray-800">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ event }}</h5>
-                    <ul>
-                        <li>
-                            <b>Event Type: </b> {{ event.event_type }}
-                        </li>
-                        <li>
-                            <b>Date: </b>{{ event.date }}
-                        </li>
-                        {% if event.start_time %}
-                            <li>
-                                <b>Start Time: </b>{{ event.start_time }}
-                            </li>
-                        {% endif %}
-                        {% if event.end_time %}
-                            <li>
-                                <b>End Time: </b>{{ event.end_time }}
-                            </li>
-                        {% endif %}
-                        <li>
-                            <b>Location: </b>
-                            <br>
-                            {{ event.location }}
-                        </li>
-                        <li>
-                            <b>Location Address: </b>
-                            <br />
-                            {{ event.location.address }},
-                            {{ event.location.city }},
-                            {{ event.location.state }}
-                            {{ event.location.zip_code }}
-                        </li>
-                        <li>
-                            <b>Description:</b>
-                        </br>
-                        {{ event.description }}
-                    </li>
-                    {% if event.special_instructions %}
-                        <li>
-                            <b>Special Instructions:</b>
-                            <br />
-                            {{ event.special_instructions }}
-                        </li>
-                    {% endif %}
-                </ul>
-                <div class="flex min-w-0 flex-col items-center justify-center">
-                    {% if "change_event" in event_perms %}
-                        <a id="test"
-                           x-on:click="showEditEventModal = true"
-                           hx-swap="innerHTML"
-                           hx-target="#edit-event-modal"
-                           hx-get="{% url 'update_event' event.id %}"
-                           hx-trigger="click"
-                           class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white ring-misargreen hover:bg-white  hover:text-black hover:ring-4 focus:outline-none focus:ring-2 focus:ring-black dark:bg-misargreen dark:hover:bg-white dark:hover:text-black">
-                            Edit Event
-                        </a>
-                    {% endif %}
-                    {% if "delete_event" in event_perms %}
-                        <a hx-get="{% url 'delete_event' event.id %}"
-                           hx-trigger="click"
-                           hx-target="#event-list"
-                           hx-swap="outerHTML"
-                           hx-confirm="Are you sure you want to delete this event?"
-                           class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white ring-misargreen hover:bg-white  hover:text-black hover:ring-4 focus:outline-none focus:ring-2 focus:ring-black dark:bg-misargreen dark:hover:bg-white dark:hover:text-black">
-                            Delete Event
-                        </a>
-                    {% endif %}
+    <div id="information" class="">
+        {% partial information %}
+        <div x-show="showEditEventModal"
+             id="edit-event-modal"
+             tabindex="-1"
+             class="fixed left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
+            <div @click.outside="showEditEventModal = false"
+                 class="relative max-h-full w-full max-w-4xl">
+                <div class="align-items-right mx-4 flex justify-end">
+                    <button type="button"
+                            @click="showEditEventModal = false"
+                            class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden">
+                        <svg class="h-5 w-5"
+                             aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg"
+                             fill="none"
+                             viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
                 </div>
+                <!-- Modal content -->
+                <div id="edit-event-modal-body"
+                     class="items-center justify-center space-y-2 rounded-2xl  bg-none  p-4 md:p-5">TEST HERE</div>
             </div>
-        {% endfor %}
-    </div>
-{% else %}
-    <div class="flex min-h-full flex-grow justify-center text-center">
-        <p class="mt-6 text-center text-xl font-bold text-gray-900 dark:text-white">No events found.</p>
-    </div>
-{% endif %}
-<div x-show="showEditEventModal"
-     id="edit-event-modal"
-     tabindex="-1"
-     class="fixed left-0 right-0 top-0 z-50 h-1/2 max-h-1/2 w-1/2 flex-wrap justify-center overflow-y-hidden overflow-x-hidden p-4 md:inset-0">
-    <div @click.outside="showEditEventModal = false"
-         class="relative max-h-1/2 w-full max-w-4xl rounded-lg bg-stone-200 shadow dark:bg-gray-700">
-        <div class="align-items-right mx-4 flex justify-end">
-            <button type="button"
-                    @click="showEditEventModal = false"
-                    class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden">
-                <svg class="h-5 w-5"
-                     aria-hidden="true"
-                     xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                </svg>
-                <span class="sr-only">Close modal</span>
-            </button>
-        </div>
-        <!-- Modal content -->
-        <div id="edit0event-modal-body"
-             class="flex flex-row items-center justify-center rounded-t border-b bg-stone-200 p-4 dark:border-gray-600 md:p-5">
-            {% partial editEvent %}
         </div>
     </div>
-</div>
 {% endpartialdef %}
-{% partialdef test %}
-<h1>TEST</h1>
+{% partialdef success %}
+<div class="inline bg-green-200 p-2 border border-green-400 text-green-700 px-4 py-2">Event Updated Successfully!</div>
 {% endpartialdef %}
-{% partialdef editEvent %}
-{% block show_event_modal %}
-    <!-- Modal header -->
-    <div class="flex h-3/4 w-full items-center  justify-center bg-stone-300 text-center shadow-lg shadow-stone-900 ring-8 ring-stone-50">
-        <div class="flex items-center justify-center px-4 pt-4">
-            <div class="mt-3 flex flex-col pb-10">
-                <h1 class="text-xl font-bold">Update Location</h1>
-                {% if submitted %}
-                    Your location was updated succesfully!
-                {% else %}
-                    <form action="">
-                        {{ form|crispy }}
-                        <div class="justify-center w-1/2 items-center flex">
-                            <input type="submit"
-                                   value="Submit"
-                                   class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white  hover:bg-white hover:text-black focus:outline-none focus:ring-4 focus:ring-misargreen dark:bg-misargreen dark:hover:bg-white dark:hover:text-black dark:focus:ring-offset-black">
-                        </div>
-                    </form>
+{% partialdef failure %}
+<div class="inline bg-red-200 p-2 border border-red-400 text-red-700 px-4 py-2">Event Not Successfully Updated!</div>
+{% endpartialdef %}
+{% partialdef information %}
+{% if events %}
+    <div class="grid min-h-full flex-grow gap-x-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {% for event in events %}
+            {% get_obj_perms request.user for event as "event_perms" %}
+            <div class="max-w-1/2 hover:transform[5%] my-2 rounded-lg border border-gray-200 bg-stone-400 p-6  hover:scale-105 hover:shadow-2xl hover:shadow-stone-900 dark:border-gray-700 dark:bg-gray-800">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ event }}</h5>
+                <ul>
+                    <li>
+                        <b>Event Type: </b> {{ event.event_type }}
+                    </li>
+                    <li>
+                        <b>Date: </b>{{ event.date }}
+                    </li>
+                    {% if event.start_time %}
+                        <li>
+                            <b>Start Time: </b>{{ event.start_time }}
+                        </li>
+                    {% endif %}
+                    {% if event.end_time %}
+                        <li>
+                            <b>End Time: </b>{{ event.end_time }}
+                        </li>
+                    {% endif %}
+                    <li>
+                        <b>Location: </b>
+                        <br>
+                        {{ event.location }}
+                    </li>
+                    <li>
+                        <b>Location Address: </b>
+                        <br />
+                        {{ event.location.address }},
+                        {{ event.location.city }},
+                        {{ event.location.state }}
+                        {{ event.location.zip_code }}
+                    </li>
+                    <li>
+                        <b>Description:</b>
+                    </br>
+                    {{ event.description }}
+                </li>
+                {% if event.special_instructions %}
+                    <li>
+                        <b>Special Instructions:</b>
+                        <br />
+                        {{ event.special_instructions }}
+                    </li>
+                {% endif %}
+            </ul>
+            <div class="flex min-w-0 flex-col items-center justify-center">
+                {% if "change_event" in event_perms %}
+                    <a id="test"
+                       @click="showEditEventModal = true"
+                       hx-swap="innerHTML transition:true"
+                       hx-target="#edit-event-modal-body"
+                       hx-get="{% url 'update_event' event.id %}"
+                       hx-trigger="click"
+                       class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white ring-misargreen hover:bg-white  hover:text-black hover:ring-4 focus:outline-none focus:ring-2 focus:ring-black dark:bg-misargreen dark:hover:bg-white dark:hover:text-black">
+                        Edit Event
+                    </a>
+                {% endif %}
+                {% if "delete_event" in event_perms %}
+                    <a hx-get="{% url 'delete_event' event.id %}"
+                       hx-trigger="click"
+                       hx-target="#information"
+                       hx-swap="innerHTML"
+                       hx-confirm="Are you sure you want to delete this event?"
+                       class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white ring-misargreen hover:bg-white  hover:text-black hover:ring-4 focus:outline-none focus:ring-2 focus:ring-black dark:bg-misargreen dark:hover:bg-white dark:hover:text-black">
+                        Delete Event
+                    </a>
                 {% endif %}
             </div>
         </div>
-    </div>
-{% endblock %}
+    {% endfor %}
+</div>
+{% else %}
+<div class="flex min-h-full flex-grow justify-center text-center">
+    <p class="mt-6 text-center text-xl font-bold text-gray-900 dark:text-white">No events found.</p>
+</div>
+{% endif %}
 {% endpartialdef %}
-<!---->
