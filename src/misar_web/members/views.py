@@ -243,22 +243,6 @@ class ShareFileView(LoginRequiredMixin, View):
         return render(request, "members/share_file.html", context)
 
 
-class CalendarView(LoginRequiredMixin, ListView):
-    login_url = LOGIN_URL
-    model = Event
-    template_name = "calendar.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        d = get_date(self.request.GET.get("month", None))
-        cal = Calendar(d.year, d.month)
-        html_cal = cal.formatmonth(withyear=True)
-        context["calendar"] = mark_safe(html_cal)
-        context["prev_month"] = prev_month(d)
-        context["next_month"] = next_month(d)
-        return context
-
-
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def all_events(request: HttpRequest):
     siteinfo = SiteInfo.objects.get(id=1)
@@ -284,7 +268,7 @@ def filter_events(request: HttpRequest):
     else:
         events = Event.objects.all().filter(date__gte=timezone.now())
     return render(
-        request, "members/events/all_events.html#event_list", {"events": events}
+        request, "members/events/all_events.html#information", {"events": events}
     )
 
 
@@ -322,15 +306,15 @@ def update_event(request: HttpRequest, event_id: int):
         return redirect("all_events")
     siteinfo = SiteInfo.objects.get(id=1)
     event = Event.objects.get(pk=event_id)
-    event_id = event_id
     if request.method == "POST":
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
             form.save()
-            return redirect("all_events")
-    else:
-        form = EventForm(instance=event)
-    context = {"siteinfo": siteinfo, "form": form, "event_id": event_id}
+            return render(request, "members/events/all_events.html#success")
+        return render(request, "members/events/all_events.html#failure")
+
+    form = EventForm(instance=event)
+    context = {"siteinfo": siteinfo, "form": form, "event": event}
     return render(request, "members/events/all_events.html#editEvent", context)
 
 
