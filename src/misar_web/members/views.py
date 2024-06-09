@@ -268,7 +268,7 @@ def filter_events(request: HttpRequest):
     else:
         events = Event.objects.all().filter(date__gte=timezone.now())
     return render(
-        request, "members/events/all_events.html#information", {"events": events}
+        request, "members/events/all_events.html#event_list", {"events": events}
     )
 
 
@@ -310,12 +310,18 @@ def update_event(request: HttpRequest, event_id: int):
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
             form.save()
-            return render(request, "members/events/all_events.html#success")
+            events = Event.objects.filter(date__gte=timezone.now()).order_by("date")
+            context = {"siteinfo": siteinfo, "events": events}
+            return render(request, "members/events/all_events.html#event_list", context)
         return render(request, "members/events/all_events.html#failure")
 
+
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
+def update_event_modal(request: HttpRequest, event_id):
+    event = Event.objects.get(pk=event_id)
     form = EventForm(instance=event)
-    context = {"siteinfo": siteinfo, "form": form, "event": event}
-    return render(request, "members/events/all_events.html#editEvent", context)
+    context = {"form": form, "event": event}
+    return render(request, "members/events/all_events.html#edit_event_modal", context)
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
