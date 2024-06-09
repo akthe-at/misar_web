@@ -54,7 +54,7 @@ urlpatterns = [
     ),
     path("events/add_location/", views.create_location, name="add_location"),
     path("events/locations/", views.list_locations, name="location_list"),
-    path("events/locations/search", views.search_locations, name="location_search"),
+    path("events/locations/search/", views.search_locations, name="location_search"),
     path(
         "events/show_location/<location_id>/", views.show_location, name="show_location"
     ),
@@ -62,6 +62,11 @@ urlpatterns = [
         "events/update_location/<location_id>/",
         views.update_location,
         name="update_location",
+    ),
+    path(
+        "events/update_event_modal/<int:event_id>/",
+        views.update_event_modal,
+        name="update_event_modal",
     ),
     path("events/<int:event_id>/", views.update_event, name="update_event"),
     path(
