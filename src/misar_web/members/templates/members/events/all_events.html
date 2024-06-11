@@ -67,10 +67,10 @@
         <div x-show="showEditEventModal"
              id="edit-event-modal"
              tabindex="-1"
-             class="fixed left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
+             class="fixed black backdrop-blur-md left-0 right-0 top-0 z-50 flex h-full max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
             <div @click.outside="showEditEventModal = false"
-                 class="relative max-h-full w-full max-w-4xl">
-                <div class="align-items-right mx-4 flex justify-end">
+                 class="relative  h-3/4 w-full max-w-4xl ">
+                <div class="align-items-right  rounded mx-4 flex justify-end">
                     <button type="button"
                             @click="showEditEventModal = false"
                             class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden">
@@ -86,7 +86,9 @@
                 </div>
                 <!-- Modal content -->
                 <div id="edit-event-modal-body"
-                     class="items-center justify-center space-y-2  rounded-2xl  bg-stone-300  p-4 md:p-5"></div>
+                     hx-on:htmx:after-swap.window="showEditEventModal = true"
+                     class="items-center shadow-lg shadow-stone-900 justify-center space-y-2  rounded-2xl  bg-stone-300  p-4 md:p-5">
+                </div>
             </div>
         </div>
     {% endblock %}
