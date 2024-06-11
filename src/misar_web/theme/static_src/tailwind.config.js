@@ -6,6 +6,9 @@
  */
 
 module.exports = {
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
     content: [
         /**
          * HTML. Paths to Django template files that will contain Tailwind CSS classes.
