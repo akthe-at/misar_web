@@ -301,9 +301,6 @@ def create_event(request: HttpRequest):
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def update_event(request: HttpRequest, event_id: int):
-    if not request.user.has_perm("members.change_event"):
-        messages.error(request, "You do not have permission to update this event.")
-        return redirect("all_events")
     siteinfo = SiteInfo.objects.get(id=1)
     event = Event.objects.get(pk=event_id)
     if request.method == "POST":
@@ -314,8 +311,6 @@ def update_event(request: HttpRequest, event_id: int):
             context = {"siteinfo": siteinfo, "events": events}
             return render(request, "members/events/all_events.html#event_list", context)
         return render(request, "members/events/all_events.html#failure")
-
-
     form = EventForm(instance=event)
     context = {"siteinfo": siteinfo, "form": form, "event": event}
     return render(request, "members/events/all_events.html#edit_event_modal", context)
