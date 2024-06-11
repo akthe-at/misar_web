@@ -316,11 +316,8 @@ def update_event(request: HttpRequest, event_id: int):
         return render(request, "members/events/all_events.html#failure")
 
 
-@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
-def update_event_modal(request: HttpRequest, event_id):
-    event = Event.objects.get(pk=event_id)
     form = EventForm(instance=event)
-    context = {"form": form, "event": event}
+    context = {"siteinfo": siteinfo, "form": form, "event": event}
     return render(request, "members/events/all_events.html#edit_event_modal", context)
 
 

@@ -86,9 +86,7 @@
                 </div>
                 <!-- Modal content -->
                 <div id="edit-event-modal-body"
-                     class="items-center justify-center space-y-2  rounded-2xl  bg-stone-300  p-4 md:p-5">
-                    {% partial edit_event_modal %}
-                </div>
+                     class="items-center justify-center space-y-2  rounded-2xl  bg-stone-300  p-4 md:p-5"></div>
             </div>
         </div>
     {% endblock %}
@@ -186,7 +184,7 @@
             <div class="flex min-w-0 flex-col items-center justify-center">
                 {% if "change_event" in event_perms %}
                     <a @click="showEditEventModal = true"
-                       hx-get="{% url 'update_event_modal' event.id %}"
+                       hx-get="{% url 'update_event' event.id %}"
                        hx-swap="innerHTML transition:true"
                        hx-target="#edit-event-modal-body"
                        hx-trigger="click"
@@ -224,25 +222,25 @@
 {% partialdef edit_event_modal %}
 <div class="flex items-center justify-center mb-6">
     <div class="flex flex-col items-center justify-center">
-        <h1 class="text-xl font-bold">Update Location {{ event.id }}</h1>
+        <h1 class="text-xl font-bold">Update Location</h1>
         {% if submitted %}
             Your location was updated succesfully!
         {% else %}
-            <form hx-trigger="click:#event-edit-submit"
+            {% get_obj_perms request.user for event as "event_perms" %}
+            <form id="edit-event-form"
+                  action="."
+                  method="POST"
+                  onsubmit="return validateForm()"
+                  @submit.debounce.200ms="showEditEventModal = false"
+                  hx-trigger="submit"
                   hx-post="{% url 'update_event' event.id %}"
-                  hx-target="#event-list"
-                  hx-vars="event_id={{ event.id }}"
-                  hx-swap="innerHTML">
-                {% csrf_token %}
-                {{ form|crispy }}
+                  hx-target="#event-list">
+                {{ form|crispy }} {% csrf_token %}
                 <div class="justify-center items-center flex">
-                    <button id="event-edit-submit"
-                            type="submit"
-                            @click="showEditEventModal = false"
-                            value="Submit"
-                            class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white  hover:bg-white hover:text-black focus:outline-none focus:ring-4 focus:ring-misargreen dark:bg-misargreen dark:hover:bg-white dark:hover:text-black dark:focus:ring-offset-black">
-                        Submit
-                    </button>
+                    <input id="event-edit-submit"
+                           type="submit"
+                           value="Submit"
+                           class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white  hover:bg-white hover:text-black focus:outline-none focus:ring-4 focus:ring-misargreen dark:bg-misargreen dark:hover:bg-white dark:hover:text-black dark:focus:ring-offset-black">
                 </div>
             </form>
         {% endif %}
