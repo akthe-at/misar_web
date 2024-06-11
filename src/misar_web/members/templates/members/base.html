@@ -14,6 +14,7 @@
     document.addEventListener('DOMContentLoaded', function () {
       var personalTable = document.getElementById('personal-table');
       var uploadForm = document.getElementById('upload-form');
+      var editEventForm = document.getElementById('edit-event-form');
 
       if (personalTable) {
         personalTable.addEventListener('htmx:afterSwap', function (event) {
@@ -28,6 +29,9 @@
         if (uploadForm) {
           return uploadForm.checkValidity();  // Allow the form to be submitted if it's valid
         }
+        if (editEventForm) {
+          return editEventForm.checkValidity();  // Allow the form to be submitted if it's valid
+                  }
         return false;
       }
     });

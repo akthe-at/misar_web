@@ -63,11 +63,6 @@ urlpatterns = [
         views.update_location,
         name="update_location",
     ),
-    path(
-        "events/update_event_modal/<int:event_id>/",
-        views.update_event_modal,
-        name="update_event_modal",
-    ),
     path("events/<int:event_id>/", views.update_event, name="update_event"),
     path(
         "events/delete_location/<int:location_id>/",
