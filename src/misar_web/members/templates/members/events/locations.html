@@ -71,9 +71,9 @@
             <div x-show="showLocationModal"
                  id="popup-modal"
                  tabindex="-1"
-                 class="fixed left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden backdrop-blur-md md:inset-0">
+                 class="fixed bg-none left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden backdrop-blur-sm md:inset-0">
                 <div @click.outside="showLocationModal = false"
-                     class="relative w-3/4 rounded-lg shadow-xl dark:bg-gray-700 md:h-1/2 md:w-1/4">
+                     class="relative bg-none w-3/4 shadow-xl rounded-lg dark:bg-none md:h-1/2 md:w-1/4">
                     <button type="button"
                             @click="showLocationModal = false"
                             class="absolute end-2.5 top-2.5 ms-auto inline-flex h-6 w-6 items-center justify-center rounded-lg bg-transparent text-sm text-gray-600 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white">
@@ -87,8 +87,7 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                     <div id="inner-popup"
-                         class="flex h-full w-full items-center justify-between rounded bg-stone-100 p-2 md:p-2 ">
-                    </div>
+                         class="flex h-full w-full items-center justify-between rounded-lg bg-none"></div>
                 </div>
             </div>
         </div>
@@ -126,11 +125,12 @@
                         </td>
                         <td class="h-12 border px-3 py-2 font-medium text-gray-900 dark:text-white">
                             <a class="text-misargreen"
-                               hx-get="{% url 'show_location' location.id %}"
+                               href="{{ location.id }}"
+                               hx-get='{% url "show_location" location.id %}'
                                hx-trigger="click"
+                               @click="showLocationModal = true"
                                hx-target="#inner-popup"
-                               hx-swap="innerHTML transition:true"
-                               href="{% url 'show_location' location.id %}">{{ location }}</a>
+                               hx-swap="innerHTML transition:true">{{ location }}</a>
                         </td>
                         <td class="h-12 border px-3 py-2">{{ location.address }}</td>
                         <td class="h-12 border px-3 py-2">{{ location.city }}</td>
@@ -169,9 +169,9 @@
 <!-- BEGIN SHOW_LOCATION PARTIAL -->
 {% partialdef show_location %}
 {% block show_location_content %}
-    <div class="flex h-full w-full items-center  justify-center bg-stone-300 text-center shadow-lg shadow-stone-900 ring-8 ring-stone-50">
+    <div class="flex h-full w-full rounded-lg items-center  justify-center bg-stone-200 text-center shadow-lg shadow-stone-900">
         <div class="flex items-center justify-center px-4 pt-4">
-            <div class="mt-3 flex flex-col pb-10">
+            <div class="m-3 flex flex-col">
                 <h5 class="mb-1 text-xl font-medium text-black dark:text-white md:text-2xl">Location: {{ location }}</h5>
                 <span class="text-sm text-black dark:text-black md:text-lg">
                     <ul class="">
