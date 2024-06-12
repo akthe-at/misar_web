@@ -86,7 +86,6 @@
                 </div>
                 <!-- Modal content -->
                 <div id="edit-event-modal-body"
-                     x-on:htmx:after-settle.window="showEditEventModal = true"
                      class="items-center shadow-lg shadow-stone-900 justify-center space-y-2  rounded-2xl  bg-stone-300  p-4 md:p-5">
                 </div>
             </div>
@@ -185,7 +184,7 @@
             </ul>
             <div class="flex min-w-0 flex-col items-center justify-center">
                 {% if "change_event" in event_perms %}
-                    <a @click="showEditEventModal = true"
+                    <a @click.prevent="showEditEventModal = true"
                        hx-get="{% url 'update_event' event.id %}"
                        hx-swap="innerHTML transition:true"
                        hx-target="#edit-event-modal-body"
