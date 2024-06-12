@@ -12,7 +12,8 @@
         <script src="{% static 'home/flowbite.min.js' %}" defer></script>
         <title>Michigan Search and Rescue</title>
     </head>
-    <body x-data="{ showSpecialtyModal: false, showVolunteerModal: false }"
+    <body @keydown.escape="showVolunteerModal = false; showSpecialtyModal = false"
+          x-data="{ showSpecialtyModal: false, showVolunteerModal: false }"
           class="bg-neutral-300 text-[100%]">
         {% tailwind_css %}
         {% include 'home/includes/navbar.html' %}

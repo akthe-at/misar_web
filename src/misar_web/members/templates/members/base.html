@@ -42,6 +42,7 @@
         </script>
     </head>
     <body x-data='{ showEditEventModal: false}'
+          @keydown.escape="showEditEventModal = false; showModal = false"
           hx-boost="false"
           hx-headers='{X-CSRFToken": "{{ csrf_token }}"}'
           class="flex flex-shrink flex-col bg-stone-300 dark:bg-stone-800">
