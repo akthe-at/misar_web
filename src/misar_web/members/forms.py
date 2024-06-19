@@ -255,6 +255,10 @@ class EventForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["event_organizer"].queryset = Member.objects.filter(is_superuser=False)
+        for field in self.fields:
+            self.fields[field].widget.attrs["class"] = f"{INPUT_CSS_CLASS}"
+
 
 
 class LocationCSVForm(forms.Form):
