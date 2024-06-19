@@ -1,4 +1,5 @@
 import csv
+from typing import Literal
 
 from django.contrib import messages
 from django.utils import timezone
@@ -17,7 +18,7 @@ from django.http import HttpRequest, HttpResponse, HttpResponseForbidden, FileRe
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView
 from guardian.shortcuts import (
     assign_perm,
     get_objects_for_user,
@@ -294,9 +295,11 @@ def create_event(request: HttpRequest):
             # TODO: Fix moderator permission assignments
             # moderator_group, created = Group.objects.get_or_create(name="moderator")
             # assign_perm(DEFAULT_PERMS, moderator_group, event)
-            return redirect("all_events")
+            events = Event.objects.filter(date__gte=timezone.now()).order_by("date")
+            context = {"siteinfo": siteinfo, "events": events}
+            return render(request, "members/events/all_events.html#event_list", context)
     context = {"siteinfo": siteinfo, "event_form": event_form}
-    return render(request, "members/events/add_event.html", context)
+    return render(request, "members/events/all_events.html#add_event_modal", context)
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
@@ -355,14 +358,18 @@ def create_location(request: HttpRequest):
                 assign_perm(permission, request.user, location)
                 request.user.save()
             # redirect to list_locations
-        return redirect("location_list")
+        events = Event.objects.filter(date__gte=timezone.now()).order_by("date")
+        context = {"siteinfo": siteinfo, "events": events}
+        return render(request, "members/events/all_events.html#event_list", context)
     else:
         form = EventLocationForm()
         if "submitted" in request.GET:
             submitted = True
 
     context = {"siteinfo": siteinfo, "form": form, "submitted": submitted}
-    return render(request, "members/events/add_location.html", context)
+    if str(request.headers.get("Referer")).endswith("/members/events/locations/"):
+        return render(request, "members/events/add_location.html", context)
+    return render(request, "members/events/all_events.html#add_event_location_modal", context)
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
@@ -391,14 +398,22 @@ def search_locations(request: HttpRequest):
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
-def show_location(request: HttpRequest, location_id: int):
-    location = Location.objects.get(pk=location_id)
-    desired_perms = ("change_location", "delete_location")
-    perms = {perm: request.user.has_perm(perm, location) for perm in desired_perms}
-    context = {"location": location, "perms": perms}
+def show_location(request: HttpRequest, location_id: int) -> HttpResponse:
+    location: Location = Location.objects.get(pk=location_id)
+    desired_perms: tuple[Literal["change_location"], ["delete_location"]] = (
+        "change_location",
+        "delete_location",
+    )
+    perms: dict[str, bool] = {
+        perm: request.user.has_perm(perm, location) for perm in desired_perms
+    }
+    context: dict[str, Location | dict[str, bool]] = {
+        "location": location,
+        "perms": perms,
+    }
     return render(
-        request,
-        "members/events/locations.html#show_location",
+        request=request,
+        template_name="members/events/locations.html#show_location",
         context=context,
     )
 
