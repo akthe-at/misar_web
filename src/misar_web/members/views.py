@@ -309,6 +309,7 @@ def create_event(request: HttpRequest):
     return render(request, "members/events/all_events.html#add_event_modal", context)
 
 
+
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def update_event(request: HttpRequest, event_id: int):
     siteinfo = SiteInfo.objects.get(id=1)
@@ -337,6 +338,7 @@ def delete_event(request: HttpRequest, event_id: int):
     events = Event.objects.filter(date__gte=timezone.now()).order_by("date")
     context = {"siteinfo": siteinfo, "events": events}
     return render(request, "members/events/all_events.html#event_list", context)
+
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
