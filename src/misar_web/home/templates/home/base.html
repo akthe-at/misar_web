@@ -1,3 +1,4 @@
+{% load django_htmx %}
 {% load static tailwind_tags %}
 {% load static %}
 <!DOCTYPE html>
@@ -8,12 +9,14 @@
         <link rel="stylesheet" type="text/css" href="{% static 'home/main.css' %}">
         <link rel="shortcut icon" href="{% static 'home/favicon.ico' %}" />
         <script src="{% static 'home/htmx.min.js' %}" defer></script>
+        {% django_htmx_script %}
         <script src="{% static 'home/cdn.min.js' %}" defer></script>
         <script src="{% static 'home/flowbite.min.js' %}" defer></script>
         <title>Michigan Search and Rescue</title>
     </head>
     <body @keydown.escape="showVolunteerModal = false; showSpecialtyModal = false"
-          x-data="{ showSpecialtyModal: false, showVolunteerModal: false }"
+          x-data="{ showSpecialtyModal: false, showVolunteerModal: false, showStoryModal: false}"
+          hx-headers='{X-CSRFToken": "{{ csrf_token }}"}'
           class="bg-neutral-300 text-[100%]">
         {% tailwind_css %}
         {% include 'home/includes/navbar.html' %}
