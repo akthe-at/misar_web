@@ -4,6 +4,7 @@ from typing import Literal
 from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (
     LoginView,
@@ -132,7 +133,7 @@ def files(request: HttpRequest):
         if request.headers.get("HX-Request"):
             files = MemberFile.objects.filter(owner=request.user).order_by("id")
             return render(
-                request, "members/files.html#personal-table", {"memberfiles": files}
+                request, "members/files.html#personal_table", {"memberfiles": files}
             )
         else:
             return redirect("files")
@@ -158,7 +159,12 @@ def update_shared_files(request: HttpRequest) -> HttpResponse:
         request, "members/files.html#shared-files-table", {"sharedfiles": files}
     )
 
+@login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
+def update_files(request: HttpRequest) -> HttpResponse:
+    files = MemberFile.objects.filter(owner=request.user).order_by("id")
+    return render(request, "members/files.html#personal_table", {"memberfiles": files})
 
+@require_http_methods(['DELETE'])
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def delete_file(request: HttpRequest, file_id: int) -> HttpResponse | None:
     file = MemberFile.objects.get(pk=file_id)
@@ -181,7 +187,7 @@ def delete_file(request: HttpRequest, file_id: int) -> HttpResponse | None:
         else:
             files = MemberFile.objects.filter(owner=request.user).order_by("id")
         return render(
-            request, "members/files.html#personal-table", {"memberfiles": files}
+            request, "members/files.html#personal_table", {"memberfiles": files}
         )
 
 
@@ -281,6 +287,7 @@ def create_event(request: HttpRequest):
         "delete_event",
     ]
     siteinfo = SiteInfo.objects.get(id=1)
+    
     event_form = EventForm(request.POST or None)
     if request.method == "POST":
         if event_form.is_valid():
