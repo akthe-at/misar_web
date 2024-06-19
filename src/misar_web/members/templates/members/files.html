@@ -10,8 +10,8 @@
         <section id="messages">
             {% partial messages %}
         </section>
-        <h2 class="font-serif text-4xl font-bold text-misargreen">Member File Storage</h2>
-        <h2 class="text 3xl m-3 font-serif font-semibold text-black dark:text-white">Your Files</h2>
+        <h2 class="font-serif my-2 p-1 text-4xl font-bold text-misargreen">Member File Storage</h2>
+        <h2 class="text-3xl m-3 font-serif font-semibold text-black dark:text-white">Your Files</h2>
         <div x-data="{ showModal: false }"
              class="m-3 flex flex-row place-content-around">
             <a href="javascript:void(0);">
@@ -38,7 +38,7 @@
                  tabindex="-1"
                  aria-hidden="true"
                  class="fixed  left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full w-full items-center  justify-center overflow-y-auto overflow-x-hidden backdrop-blur-md md:inset-0">
-                <div @click.outside="showModal=false"
+                <div @click.outside="showModal = false"
                      class="relative max-h-full w-full max-w-md p-4">
                     <!-- File Upload Modal content -->
                     <div class="relative rounded-lg bg-neutral-300 shadow-2xl shadow-slate-900 dark:text-stone-800">
@@ -63,8 +63,8 @@
                         <div class="flex items-center justify-center">
                             <form hx-post="{% url 'files' %}"
                                   hx-trigger="submit"
-                                  hx-swap="outerHTML"
-                                  hx-target="#personal-table"
+                                  hx-swap="innerHTML"
+                                  hx-target="#personal-files-table"
                                   action="."
                                   id="upload-form"
                                   class="mx-auto max-w-md items-center justify-center text-black"
@@ -86,19 +86,19 @@
             </div>
         </div>
         <!-- End of File Upload Modal body -->
-        <div hx-get="{% url 'files' %}"
+        <div hx-get="{% url 'update_files_table' %}"
              hx-trigger="load"
-             hx-swap="outerHTML"
-             hx-target="personal-table"
+             hx-swap="innerHTML"
+             hx-target="#personal-files-table"
              hx-select="table"
              class="items-center justify-between">
             <div class="lg:max-w-2/3 sm:max-w-2/3 relative flex flex-col overflow-x-auto"
-                 id="personal-files-table">{% partial personal-table %}</div>
+                 id="personal-files-table">{% partial personal_table %}</div>
         </div>
     </div>
     <!-- The Beginning of the Share files Table -->
     <div class="mx-auto my-2 min-w-0 items-center justify-center text-center text-stone-800 sm:w-full  lg:p-6">
-        <h2 class="text 3xl mt-3 font-serif font-semibold text-black dark:text-white md:m-3">Shared Files</h2>
+        <h2 class="text-3xl mt-3 font-serif font-semibold text-black dark:text-white md:m-3">Shared Files</h2>
         <div class="flex flex-col justify-between dark:text-white md:m-3">
             <p class="md:mb-3">Here is a list of files that others have shared with you:</p>
         </div>
@@ -136,7 +136,7 @@
 {% endblock %}
 <!-- BEGINNING OF THE PARTIALS -->
 <!-- PERSONAL TABLE PARTIAL HTML -->
-{% partialdef personal-table %}
+{% partialdef personal_table %}
 <div class="flex items-center justify-center">
     <table id="personal-table"
            class="flex-nowrap my-5 flex w-full min-w-0 flex-row overflow-hidden rounded-lg  sm:bg-white sm:shadow-lg">

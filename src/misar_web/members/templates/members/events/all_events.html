@@ -8,12 +8,12 @@
             {% partial messages %}
         </section>
         <div class="flex-row items-center justify-center text-center">
-            <a href="{% url 'add_event' %}"
+            <a @click.prevent="showAddEventModal = true" hx-get="{% url 'add_event' %}" hx-swap="innerHTML transition:true" hx-target="#add-event-modal-body" hx-trigger="click" href="#"
                class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white hover:bg-white  hover:text-black hover:ring-4 hover:ring-misargreen focus:outline-none focus:ring-4 focus:ring-misargreen dark:bg-misargreen dark:hover:bg-white dark:hover:text-black dark:focus:ring-offset-black">
                 Add New Event
             </a>
-            <a class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white hover:bg-white hover:text-black  hover:ring-4 hover:ring-misargreen focus:outline-none focus:ring-4 focus:ring-misargreen dark:bg-misargreen dark:hover:bg-white dark:hover:text-black dark:focus:ring-offset-black"
-               href="{% url 'add_location' %}">Add Event Location</a>
+        <a @click.prevent="showAddEventLocationModal = true" hx-get="{% url 'add_location' %}" hx-swap="innerHTML transition:true" hx-target="#add-event-location-modal-body" hx-trigger="click" class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white hover:bg-white hover:text-black  hover:ring-4 hover:ring-misargreen focus:outline-none focus:ring-4 focus:ring-misargreen dark:bg-misargreen dark:hover:bg-white dark:hover:text-black dark:focus:ring-offset-black"
+               href="#">Add Event Location</a>
         </div>
         <div>
             <div class="mt-4 text-center">
@@ -62,15 +62,17 @@
         <div class="flex-grow justify-center text-center">
             <h1 class="mb-4 mt-2 flex flex-col text-4xl font-bold text-white">Upcoming Events</h1>
             <div id="event-list"
-                 class="my-2 flex flex-col items-center justify-center bg-stone-300">{% partial event_list %}</div>
+                 class="rounded-lg shadow-md p-4 shadow-stone-800 border  my-2 flex flex-col items-center justify-center bg-stone-300">{% partial event_list %}</div>
         </div>
+
+        <!--Edit Event Modal-->
         <div x-show="showEditEventModal"
              id="edit-event-modal"
              tabindex="-1"
-             class="fixed black backdrop-blur-md left-0 right-0 top-0 z-50 flex h-full max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
+             class="black fixed left-0 right-0 top-0 z-50 flex h-full max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 backdrop-blur-md md:inset-0">
             <div @click.outside="showEditEventModal = false"
                  class="relative  h-3/4 w-full max-w-4xl ">
-                <div class="align-items-right  rounded mx-4 flex justify-end">
+                <div class="align-items-right  mx-4 flex justify-end rounded">
                     <button type="button"
                             @click="showEditEventModal = false"
                             class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden">
@@ -86,7 +88,61 @@
                 </div>
                 <!-- Modal content -->
                 <div id="edit-event-modal-body"
-                     class="items-center shadow-lg shadow-stone-900 justify-center space-y-2  rounded-2xl  bg-stone-300  p-4 md:p-5">
+                     class="items-center justify-center space-y-2 rounded-2xl bg-stone-300  p-4  shadow-lg  shadow-stone-900 md:p-5">
+                </div>
+            </div>
+        </div>
+        <!--Add Event Modal-->
+        <div x-show="showAddEventModal"
+             id="add-event-modal"
+             tabindex="-1"
+             class="black fixed left-0 right-0 top-0 z-50 flex h-full max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 backdrop-blur-md md:inset-0">
+            <div @click.outside="showAddEventModal = false"
+                 class="relative  h-3/4 w-full max-w-4xl ">
+                <div class="align-items-right  mx-4 flex justify-end rounded">
+                    <button type="button"
+                            @click="showAddEventModal = false"
+                            class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden">
+                        <svg class="h-5 w-5"
+                             aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg"
+                             fill="none"
+                             viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal content -->
+                <div id="add-event-modal-body"
+                     class="items-center justify-center space-y-2 rounded-2xl bg-stone-300  p-4  shadow-lg  shadow-stone-900 md:p-5">
+                </div>
+            </div>
+        </div>
+        <!--Add Location Modal-->
+        <div x-show="showAddEventLocationModal"
+             id="add-event-location-modal"
+             tabindex="-1"
+             class="black fixed left-0 right-0 top-0 z-50 flex h-full max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 backdrop-blur-md md:inset-0">
+            <div @click.outside="showAddEventLocationModal = false"
+                 class="relative  h-3/4 w-full max-w-4xl ">
+                <div class="align-items-right  mx-4 flex justify-end rounded">
+                    <button type="button"
+                            @click="showAddEventLocationModal = false"
+                            class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden">
+                        <svg class="h-5 w-5"
+                             aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg"
+                             fill="none"
+                             viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal content -->
+                <div id="add-event-location-modal-body"
+                     class="items-center justify-center space-y-2 rounded-2xl bg-stone-300  p-4  shadow-lg  shadow-stone-900 md:p-5">
                 </div>
             </div>
         </div>
@@ -134,10 +190,10 @@
 {% endpartialdef %}
 {% partialdef event_list %}
 {% if events %}
-    <div class="grid min-h-full flex-grow gap-x-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div class="grid min-h-full flex-grow  gap-x-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {% for event in events %}
             {% get_obj_perms request.user for event as "event_perms" %}
-            <div class="max-w-1/2 hover:transform[5%] my-2 rounded-lg border border-gray-200 bg-stone-400 p-6  hover:scale-105 hover:shadow-2xl hover:shadow-stone-900 dark:border-gray-700 dark:bg-gray-800">
+            <div class="max-w-1/2 hover:transform[5%] my-2 rounded-lg shadow-md shadow-stone-900 border border-gray-200 bg-stone-400 p-6  hover:scale-105 hover:shadow-2xl hover:shadow-stone-900 dark:border-gray-700 dark:bg-gray-800">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ event }}</h5>
                 <ul>
                     <li>
@@ -184,7 +240,7 @@
             </ul>
             <div class="flex min-w-0 flex-col items-center justify-center">
                 {% if "change_event" in event_perms %}
-                    <a @click.prevent="showEditEventModal = true"
+                    <a @click="showEditEventModal = true"
                        hx-get="{% url 'update_event' event.id %}"
                        hx-swap="innerHTML transition:true"
                        hx-target="#edit-event-modal-body"
@@ -194,14 +250,14 @@
                     </a>
                 {% endif %}
                 {% if "delete_event" in event_perms %}
-                    <a hx-get="{% url 'delete_event' event.id %}"
+                    <button hx-delete="{% url 'delete_event' event.id %}"
                        hx-trigger="click"
-                       hx-target="#information"
+                       hx-target="#event-list"
                        hx-swap="innerHTML"
                        hx-confirm="Are you sure you want to delete this event?"
                        class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white ring-misargreen hover:bg-white  hover:text-black hover:ring-4 focus:outline-none focus:ring-2 focus:ring-black dark:bg-misargreen dark:hover:bg-white dark:hover:text-black">
                         Delete Event
-                    </a>
+                    </button>
                 {% endif %}
             </div>
         </div>
@@ -215,13 +271,13 @@
 </div>
 {% endpartialdef %}
 {% partialdef success %}
-<div class="inline bg-green-200 p-2 border border-green-400 text-green-700 px-4 py-2">Event Updated Successfully!</div>
+<div class="inline border border-green-400 bg-green-200 p-2 px-4 py-2 text-green-700">Event Updated Successfully!</div>
 {% endpartialdef %}
 {% partialdef failure %}
-<div class="inline bg-red-200 p-2 border border-red-400 text-red-700 px-4 py-2">Event Not Successfully Updated!</div>
+<div class="inline border border-red-400 bg-red-200 p-2 px-4 py-2 text-red-700">Event Not Successfully Updated!</div>
 {% endpartialdef %}
 {% partialdef edit_event_modal %}
-<div class="flex items-center justify-center mb-6">
+<div class="mb-6 flex items-center justify-center">
     <div class="flex flex-col items-center justify-center">
         <h1 class="text-xl font-bold">Update Location</h1>
         {% if submitted %}
@@ -237,11 +293,66 @@
                   hx-post="{% url 'update_event' event.id %}"
                   hx-target="#event-list">
                 {{ form|crispy }} {% csrf_token %}
-                <div class="justify-center items-center flex">
+                <div class="flex items-center justify-center">
                     <input id="event-edit-submit"
                            type="submit"
                            value="Submit"
                            class="my-2 mb-3 me-2 ms-2 inline-flex w-1/2 flex-row items-center justify-center rounded-lg bg-misargreen px-2 py-2.5 text-center text-sm font-bold text-white  hover:bg-white hover:text-black focus:outline-none focus:ring-4 focus:ring-misargreen dark:bg-misargreen dark:hover:bg-white dark:hover:text-black dark:focus:ring-offset-black">
+                </div>
+            </form>
+        {% endif %}
+    </div>
+</div>
+{% endpartialdef %}
+
+{% partialdef add_event_modal %}
+<div class="mb-6 flex items-center justify-center">
+    <div class="flex flex-col items-center justify-center">
+        <h1 class="my-4 items-center justify-center text-center text-4xl font-bold">Create New Event</h1>
+    <div class="flex items-center justify-center"
+        <div class="flex-col items-center justify-center">
+            {% if submitted %}
+                Your Event was created succesfully!
+            {% else %}
+            <form id="add-event-form"
+              action="." 
+              method="POST" 
+              onsubmit="return validateForm()" 
+              @submit.debounce.200ms="showAddEventModal = false" 
+              hx-trigger="submit" 
+              hx-post="{% url 'add_event' %}" 
+              hx-target="#event-list">
+                    {% csrf_token %}
+                    {{ event_form|crispy }}
+                    <div class="items-center justify-center text-center">
+                        <input type="submit"
+                               value="Submit"
+                               class="m-3 inline-flex w-1/2 items-center justify-center rounded-lg bg-misargreen px-3 py-2 text-center text-sm font-medium text-white hover:bg-white hover:text-black hover:ring-4 hover:ring-misargreen focus:outline-none focus:ring-4 focus:ring-misargreen focus:ring-misargreen dark:bg-misargreen dark:hover:bg-misargreen dark:focus:ring-misargreen">
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+</div>
+{% endpartialdef %}
+
+
+{% partialdef add_event_location_modal %}
+<div class="mb-6 flex items-center justify-center">
+     <div class="flex flex-col items-center justify-center">
+        <h2 class="inset-0 pb-2 pt-3 font-serif text-4xl font-bold text-stone-700">Create New Location</h2>
+        <br>
+        {% if submitted %}
+            Your location was created succesfully!
+        {% else %}
+            <form class="w-2/3" action="" method=POST>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="flex-col items-center justify-center text-center">
+                    <input type="submit"
+                           value="Submit"
+                           class="m-3 inline-flex w-2/3 items-center justify-center rounded-lg bg-misargreen px-3 py-2 text-center text-sm font-medium text-white hover:bg-white hover:text-black hover:ring-4 hover:ring-misargreen focus:outline-none focus:ring-4  focus:ring-misargreen dark:bg-misargreen dark:hover:bg-misargreen dark:focus:ring-misargreen">
                 </div>
             </form>
         {% endif %}

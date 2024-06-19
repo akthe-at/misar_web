@@ -1,3 +1,4 @@
+{% load django_htmx %}
 {% load static tailwind_tags %}
 {% load static %}
 <!DOCTYPE html>
@@ -8,46 +9,76 @@
         <link rel="stylesheet" type="text/css" href="{% static 'home/main.css' %}">
         <link rel="shortcut icon" href="{% static 'home/favicon.ico' %}" />
         <script src="{% static 'home/htmx.min.js' %}" defer></script>
+        {% django_htmx_script %}
         <script src="{% static 'home/cdn.min.js' %}" defer></script>
         <title>Michigan Search and Rescue</title>
         <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var personalTable = document.getElementById('personal-table');
-      var uploadForm = document.getElementById('upload-form');
-      var editEventForm = document.getElementById('edit-event-form');
+    //if (showLocationTable) {
+    //showLocationTable.addEventListener('htmx:afterSwap', function (event) {
+    //  showLocationModal = true;
+    //});
+    //      }
+document.addEventListener('DOMContentLoaded', function () {
+  var personalTable = document.getElementById('personal-table');
+  var uploadForm = document.getElementById('upload-form');
+  var editEventForm = document.getElementById('edit-event-form');
+  var showLocationTable = document.getElementById('modal-popup');
+  var addEventForm = document.getElementById('add-event-form');
+  var addEventLocationForm = document.getElementbyId('add-event-location-form');
 
-      if (personalTable) {
-        personalTable.addEventListener('htmx:afterSwap', function (event) {
-          if (uploadForm) {
-            uploadForm.reset();
-          }
-          showModal = false;
-        });
+  if (personalTable) {
+    personalTable.addEventListener('htmx:afterSwap', function (event) {
+      if (uploadForm) {
+        uploadForm.reset();
       }
-      if (editEventForm) {
-        editEventForm.addEventListener('htmx:AfterSwap', function(event) {
-        showEditEventModal = true;
-                });
-
-      window.validateForm = function () {
-        if (uploadForm) {
-          return uploadForm.checkValidity();  // Allow the form to be submitted if it's valid
-        }
-        if (editEventForm) {
-          return editEventForm.checkValidity();  // Allow the form to be submitted if it's valid
-                  }
-        return false;
-      }
+      showModal = false;
     });
+  }
+
+  if (editEventForm) {
+    editEventForm.addEventListener('htmx:AfterSwap', function(event) {
+      showEditEventModal = true;
+    });
+  }
+
+  if (addEventForm) {
+    addEventForm.addEventListener('htmx:AfterSwap', function(event) {
+      showAddEventModal = true;
+    });
+    if (addEventLocationForm) {
+      addEventLocationForm.addEventListener('htmx:AfterSwap', function(event) {
+        showAddEventModal = true;
+      });
+    }
+
+  window.validateForm = function () {
+    if (uploadForm) {
+      return uploadForm.checkValidity();  // Allow the form to be submitted if it's valid
+    }
+    if (editEventForm) {
+      return editEventForm.checkValidity();  // Allow the form to be submitted if it's valid
+    }
+    if (addEventForm) {
+          return addEventForm.checkValidity();  // Allow the form to be submitted if it's valid
+        }
+    if (addEventLocationForm) {
+      return addEventLocationForm.checkValidity();  // Allow the form to be submitted if it's valid
+    }
+    return false;
+  }
+});
         </script>
     </head>
-    <body x-data='{ showEditEventModal: false}'
-          @keydown.escape="showEditEventModal = false; showModal = false"
-          hx-boost="false"
+    <body x-data='{ showEditEventModal: false, showAddEventModal: false, showAddEventLocationModal: false }'
+          @keydown.escape="showEditEventModal = false; showLocationModal = false; showModal = false; showAddEventModal = false; showAddEventLocationModal = false;"
           hx-headers='{X-CSRFToken": "{{ csrf_token }}"}'
           class="flex flex-shrink flex-col bg-stone-300 dark:bg-stone-800">
         {% tailwind_css %}
         {% include 'members/includes/navbar_members.html' %}
         {% block content %}{% endblock %}
+        <script>document.body.addEventListener('htmx:configRequest', (event) => {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+})
+        </script>
     </body>
 </html>
