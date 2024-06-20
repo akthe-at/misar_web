@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform"]
 lock_version = "4.4.1"
-content_hash = "sha256:d343a8bacb7bdf315cc7eaf31edc90db778eb34b7175c7505046b42a1b0a56d6"
+content_hash = "sha256:8523863cb0e8042622ea44a44097a8514f91e135dd8fea3b327a8b121874e644"
 
 [[package]]
 name = "asgiref"
@@ -195,6 +195,20 @@ dependencies = [
 files = [
     {file = "django-guardian-2.4.0.tar.gz", hash = "sha256:c58a68ae76922d33e6bdc0e69af1892097838de56e93e78a8361090bcd9f89a0"},
     {file = "django_guardian-2.4.0-py3-none-any.whl", hash = "sha256:440ca61358427e575323648b25f8384739e54c38b3d655c81d75e0cd0d61b697"},
+]
+
+[[package]]
+name = "django-htmx"
+version = "1.17.3"
+requires_python = ">=3.8"
+summary = "Extensions for using Django with htmx."
+dependencies = [
+    "Django>=3.2",
+    "asgiref>=3.6",
+]
+files = [
+    {file = "django-htmx-1.17.3.tar.gz", hash = "sha256:a2069219920d7ef0883ddbf5e8d931069db145a0d4a8a032a2708f840c7a68a6"},
+    {file = "django_htmx-1.17.3-py3-none-any.whl", hash = "sha256:0de964ca257eda2a4ebeeaa8181320119378fa5f95a2fc2f2bfbdd35034ed424"},
 ]
 
 [[package]]
