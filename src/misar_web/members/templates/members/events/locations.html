@@ -87,6 +87,7 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                     <div id="inner-popup"
+                         x-on:htmx:after-settle.window="showLocationModal = true"
                          class="flex h-full w-full items-center justify-between rounded-lg bg-none"></div>
                 </div>
             </div>
@@ -128,7 +129,6 @@
                                href="{{ location.id }}"
                                hx-get='{% url "show_location" location.id %}'
                                hx-trigger="click"
-                               @click="showLocationModal = true"
                                hx-target="#inner-popup"
                                hx-swap="innerHTML transition:true">{{ location }}</a>
                         </td>
