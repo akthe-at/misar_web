@@ -2,13 +2,13 @@
 {% load static %}
 {% load partials %}
 {% block content %}
-    <div>
+    <div class="h-full w-full">
         <div class="flex h-full w-full items-center justify-center bg-stone-600">
             <div id="donate_gallery"
                  class="relative flex h-auto w-auto min-w-full flex-col"
                  data-carousel="slide">
                 <!-- Carousel wrapper -->
-                <div class="sm:min-h-32 relative h-80 overflow-hidden rounded-lg object-top lg:h-96 lg:min-h-[70vh]">
+                <div class="relative h-72 overflow-hidden rounded-lg object-top lg:h-80">
                     <!-- Item 1 -->
                     <div class="duration-1000 hidden ease-in-out" data-carousel-item>
                         <img src="{{ siteinfo.donate_photo_3.url }}"
@@ -71,17 +71,17 @@
                 </button>
             </div>
         </div>
-        <div class="flex min-h-96 flex-col items-center justify-center bg-stone-400 py-8 lg:py-[72px]">
+        <div class="flex min-h-96 flex-col items-center justify-center bg-misarbrown py-8 lg:py-[72px]">
             <div class="flex w-5/6 flex-col text-center lg:w-3/4">
-                <h2 class="inset-0 pb-2 pt-3 font-serif text-5xl font-bold text-stone-700">Our Mission</h2>
-                <p class="inset-0 pb-3 text-xl text-stone-700 md:text-2xl">{{ siteinfo.mission_statement }}</p>
-                <hr class="md:40 mx-auto my-4 h-1 w-32 rounded border-0 bg-stone-300 dark:bg-stone-300 md:my-10">
-                <h2 class="inset-0 pb-2 pt-3 font-serif text-5xl font-bold text-stone-700">Our Team</h2>
-                <p class="inset-0 pb-3 text-xl text-stone-700 md:text-2xl">{{ siteinfo.description }}</p>
+                <h2 class="inset-0 pb-2 pt-3 font-serif text-5xl font-bold text-misarcream">Our Mission</h2>
+                <p class="inset-0 pb-3 text-xl text-misarcream md:text-2xl">{{ siteinfo.mission_statement }}</p>
+                <hr class="md:40 mx-auto my-4 h-1 w-32 rounded border-0 bg-misargray300 dark:bg-misargray300 md:my-10">
+                <h2 class="inset-0 pb-2 pt-3 font-serif text-5xl font-bold text-misarcream">Our Team</h2>
+                <p class="inset-0 pb-3 text-xl text-misarcream md:text-2xl">{{ siteinfo.description }}</p>
             </div>
         </div>
-        <div class="max-h-1/6 align-items-center flex flex-col flex-wrap justify-center bg-stone-700 px-8 py-6 text-center lg:py-[72px]">
-            <h2 class="my-4 flex flex-col font-serif text-5xl font-bold text-white">Search Specialties</h2>
+        <div class="max-h-1/6 align-items-center flex flex-col flex-wrap justify-center bg-misarblue px-8 py-6 text-center lg:py-[72px]">
+            <h2 class="my-4 flex flex-col font-serif text-5xl font-bold text-misarcream">Search Specialties</h2>
             <div class="align-items-center  px-auto mx-auto grid grid-cols-2 place-items-center justify-center gap-16 text-center sm:grid-cols-2 md:grid-cols-3">
                 {% for spec in search_spec %}
                     <!-- Also the Modal Toggle -->
@@ -89,17 +89,17 @@
                             hx-trigger="click"
                             hx-target="#modal-body"
                             hx-swap="innerHTML transition:true"
-                            class="group relative m-2 cursor-pointer items-center justify-center rounded-lg text-center grayscale-0 filter transition-all duration-500 hover:shadow-2xl hover:shadow-stone-900 sm:shadow-2xl sm:shadow-stone-900 ">
+                            class="group relative m-2 cursor-pointer items-center justify-center rounded-lg text-center grayscale-0 filter transition-all duration-500 sm:shadow-2xl sm:shadow-stone-950 ">
                         <div class="bg-[url('{{ spec.icon.url }}')] hover:bg-[url('{{ siteinfo.blank_icon.url }}')] hover:transform-[5%] max-h-48 max-w-48 rounded-lg bg-cover hover:scale-105 hover:duration-700 group-hover:hidden">
-                            <img class="visible max-h-48 max-w-48 rounded-lg object-cover transition-all hover:shadow-2xl hover:shadow-stone-900 sm:shadow-2xl sm:shadow-stone-900 "
+                            <img class="visible max-h-48 max-w-48 rounded-lg object-cover transition-all  sm:shadow-2xl sm:shadow-stone-950 "
                                  src="{{ spec.icon.url }}"
                                  alt="image description">
                         </div>
-                        <div class="hidden hover:shadow-2xl hover:shadow-stone-900 group-hover:block sm:shadow-2xl sm:shadow-stone-900">
-                            <img class="max-h-48 max-w-48 rounded-lg object-cover transition-all hover:shadow-2xl hover:shadow-stone-900 sm:shadow-2xl sm:shadow-stone-900"
+                        <div class="hidden group-hover:block ">
+                            <img class="max-h-48 max-w-48 rounded-lg object-cover transition-all   sm:shadow-2xl sm:shadow-stone-950"
                                  src="{{ siteinfo.blank_icon.url }}"
                                  alt="image description">
-                            <figcaption class="hover:mix-blend-burn absolute inset-0 mx-auto flex w-full place-items-center items-center justify-center p-2 text-center text-xs text-transparent hover:font-black md:hover:text-misargreen hover:shadow-2xl hover:shadow-stone-900 sm:text-sm md:text-base lg:text-3xl">
+                            <figcaption class="hover:mix-blend-burn absolute inset-0 mx-auto flex w-full place-items-center items-center justify-center p-2 text-center text-xs text-transparent hover:font-black md:hover:text-misargreen hover:shadow-2xl hover:shadow-stone-950 sm:text-sm md:text-base lg:text-3xl">
                                 <div class="z-1 shrink text-center">{{ spec.brief_synopsis }}</div>
                             </figcaption>
                         </figure>
@@ -107,9 +107,9 @@
                 </div>
             </div>
         </div>
-        <div class="flex h-80 w-full flex-col items-center justify-center bg-stone-400 px-4 text-center">
-            <h2 class="pb-3 font-serif text-5xl font-bold text-stone-700">Emergency Dispatch</h2>
-            <h4 class="font-[Sedan SC] mb-3 px-4 text-2xl text-stone-700 sm:mx-auto sm:px-6 md:mx-auto md:px-8 lg:mx-32 lg:px-12 xl:mx-64 xl:px-16">
+        <div class="flex h-80 w-full flex-col items-center justify-center bg-misarbrown px-4 text-center">
+            <h2 class="pb-3 font-serif text-5xl font-bold text-misarcream">Emergency Dispatch</h2>
+            <h4 class="font-[Sedan SC] mb-3 px-4 text-2xl text-misarcream sm:mx-auto sm:px-6 md:mx-auto md:px-8 lg:mx-32 lg:px-12 xl:mx-64 xl:px-16">
                 For Immediate Dispatch of K9 Teams:
             </h4>
             <div class="flex items-center justify-center text-center">
@@ -118,11 +118,11 @@
                         {{ siteinfo.dispatch_number }}
                     </a>
                 </div>
-                <p class="text-red-700 my-4 font-bold">
-                    If you have reached this site to report an emergency, please call 911 immediately.
+                <p class="text-red-900 my-4 font-black">
+                    *If you have reached this site to report an emergency, please call 911 immediately.
                 </p>
             </div>
-            <div class="flex  h-[36rem] w-full flex-col items-center justify-center bg-stone-900 bg-cover bg-fixed bg-top py-32 text-center lg:flex-row lg:py-[72px]">
+            <div class="flex  h-auto w-full flex-col items-center justify-center bg-stone-900  text-center lg:flex-row ">
                 <div class="flex w-1/2 flex-col-reverse items-center justify-center text-center text-white sm:px-3 lg:flex-col">
                     <div class="mt-6 flex w-full flex-col items-center justify-center text-center">
                         <h2 class="mb-3 mt-6 font-serif text-3xl font-semibold text-white lg:text-6xl">Get Involved</h2>
@@ -139,16 +139,16 @@
                             </button>
                         </div>
                         <hr class="mx-auto my-3 h-1 w-24 rounded border-0 bg-white dark:bg-white md:my-10">
-                        <h2 class="mb-3 flex flex-col font-serif text-3xl font-semibold italic text-white hover:text-blue-400 lg:text-5xl">
+                        <h2 class="my-2 flex flex-col font-serif text-3xl font-semibold italic text-white hover:text-blue-400 lg:text-5xl">
                             <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on
                             Facebook!</a>
                         </h2>
                     </div>
                 </div>
-                <div class="align-items-center flex h-full w-1/2 flex-col items-center justify-center">
+                <div class="align-items-center flex h-1/2 w-1/2 flex-col items-center justify-center">
                     <img src="{{ siteinfo.alternate_logo.url }}"
                          alt="MISAR LOGO"
-                         class="flex h-full w-full flex-col object-scale-down py-4 lg:py-8">
+                         class="flex h-1/2 w-1/2 flex-col object-scale-down py-4 lg:py-8">
                 </div>
                 <!-- large icon modal -->
                 <div x-show="showSpecialtyModal"
@@ -156,7 +156,7 @@
                      tabindex="-1"
                      class="fixed left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
                     <div @click.outside="showSpecialtyModal = false"
-                         class="relative rounded-lg max-h-full w-11/12 md:w-1/2 max-w-3/4 shadow-xl shadow-stone-900">
+                         class="relative rounded-lg max-h-full w-11/12 md:w-1/2 max-w-3/4 shadow-xl shadow-stone-950">
                         <!-- modal content -->
                         <div class="relative rounded-lg bg-stone-200 shadow dark:bg-gray-700">
                             <div class="align-items-right mx-4 flex justify-end">
@@ -187,7 +187,7 @@
                      tabindex="-1"
                      class="fixed left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
                     <div @click.outside="showVolunteerModal = false"
-                         class="relative max-h-full w-11/12 md:w-3/3 rounded-lg bg-stone-200 shadow-xl shadow-stone-900 dark:bg-gray-700">
+                         class="relative max-h-full w-11/12 md:w-3/3 rounded-lg bg-stone-200 shadow-xl shadow-stone-950 dark:bg-gray-700">
                         <div class="relative rounded-lg align-items-right mx-4 flex justify-end">
                             <button type="button"
                                     @click="showVolunteerModal = false"
@@ -251,8 +251,8 @@
                      alt="search specialty icons">
             </div>
             <div class="my-1 flex flex-col items-center justify-center gap-2 text-left indent-8">
-                <p class="my-2 flex-col break-normal text-xl text-stone-700">{{ specialty.long_description_part1 }}</p>
-                <p class="my-2 flex-col break-normal text-xl text-stone-700">{{ specialty.long_descript_part2 }}</p>
+                <p class="my-2 flex-col break-normal text-xl text-misarcream">{{ specialty.long_description_part1 }}</p>
+                <p class="my-2 flex-col break-normal text-xl text-misarcream">{{ specialty.long_descript_part2 }}</p>
                 <div class="my-2 flex-col">
                     <h2 .
                         <img class="max-h-96 flex-row rounded-lg"
