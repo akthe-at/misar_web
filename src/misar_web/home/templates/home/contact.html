@@ -1,9 +1,9 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block content %}
-    <div class="flex h-auto flex-col-reverse items-center justify-center bg-stone-400  md:flex-row">
+    <div class="flex h-auto flex-col-reverse items-center justify-center bg-stone-400  lg:flex-row">
         <div class="size-full h-screen flex-1 flex-col">
-            <img class="h-full w-full object-cover"
+            <img class="h-full w-full object-fit"
                  src="{{ siteinfo.contact_photo_1.url }}"
                  alt="destiny">
         </div>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="size-full h-screen flex-1 flex-col">
-            <img class="h-full w-full object-cover"
+            <img class="h-full w-full object-fit"
                  src="{{ siteinfo.contact_photo_2.url }}"
                  alt="whiskey">
         </div>
