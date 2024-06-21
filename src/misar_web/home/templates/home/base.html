@@ -17,7 +17,7 @@
     <body @keydown.escape="showVolunteerModal = false; showSpecialtyModal = false"
           x-data="{ showSpecialtyModal: false, showVolunteerModal: false, showStoryModal: false}"
           hx-headers='{X-CSRFToken": "{{ csrf_token }}"}'
-          class="bg-neutral-300 text-[100%]">
+          class="bg-stone-400 text-[100%]">
         {% tailwind_css %}
         {% include 'home/includes/navbar.html' %}
         {% block content %}{% endblock %}
