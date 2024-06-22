@@ -53,8 +53,15 @@ module.exports = {
         extend: {
       colors: {
         'misargreen': '#1dbf04',
-        'misargray': '#565959'
-      }
+        'misargray300':'#d6d3d1',
+        'misargray400': '#a8a29e',
+        'misarcream': '#e0e2db',
+        'misarbrown':'#6b654b',
+        'misarblue':'#172A3a',
+        'misargrey':'#cecccc',
+      },
+      transitionDuration: {'2000': '2000ms',
+      '5000':'5000ms'},
     },
     },
     plugins: [
