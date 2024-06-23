@@ -3,45 +3,44 @@
 {% load partials %}
 {% block content %}
     <div class="h-full w-full">
-        <div class="flex h-full w-auto items-center justify-center bg-stone-900">
+        <div class="flex h-full w-full items-center justify-center bg-stone-600">
             <div id="donate_gallery"
-                 class="relative flex h-full w-auto min-w-full flex-col"
-                 data-carousel="slide"
-                 data-carousel-interval="7000">
+                 class="relative flex h-auto w-auto min-w-full flex-col"
+                 data-carousel-interval="7000"
+                 data-carousel="slide">
                 <!-- Carousel wrapper -->
-                <div class="sm:min-h-32 lg:h-96 relative h-72 overflow-hidden object-top ">
+                <div class="sm:min-h-32 relative h-64 overflow-hidden rounded-lg object-top lg:h-96 lg:min-h-[70vh]">
                     <!-- Item 1 -->
                     <div class="duration-1000 hidden ease-in-out" data-carousel-item>
                         <img src="{{ siteinfo.donate_photo_3.url }}"
-                             class="absolute left-1/2 top-1/2 block h-full md:h-auto -translate-x-1/2 -translate-y-1/2"
+                             class="absolute left-1/2 top-1/2 block h-auto -translate-x-1/2 -translate-y-1/2"
                              alt="">
                     </div>
                     <!-- Item 2 -->
                     <div class="duration-1000 hidden ease-in-out" data-carousel-item="active">
                         <img src="{{ siteinfo.donate_photo_2.url }}"
-                             class="absolute left-1/2 top-1/2 block h-full md:h-auto -translate-x-1/2 -translate-y-1/2"
+                             class="absolute left-1/2 top-1/2 block h-auto -translate-x-1/2 -translate-y-1/2"
                              alt="">
                     </div>
                     <!-- Item 3 -->
                     <div class="duration-1000 hidden ease-in-out" data-carousel-item>
                         <img src="{{ siteinfo.donate_photo_1.url }}"
-                             class="absolute left-1/2 top-1/2 block h-full md:h-auto -translate-x-1/2 -translate-y-1/2"
+                             class="absolute left-1/2 top-1/2 block h-auto -translate-x-1/2 -translate-y-1/2"
                              alt="">
                     </div>
                     <!-- Item 4 -->
-                    <div class="hidden duration-1000 ease-in-out" data-carousel-item>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
                         <img src="{{ siteinfo.donate_photo_4.url }}"
-                             class="absolute left-1/2 top-1/2 block h-full md:h-auto -translate-x-1/2 -translate-y-1/2"
+                             class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                              alt="">
                     </div>
                     <!-- Item 5 -->
-                    <div class="hidden duration-1000 ease-in-out" data-carousel-item>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
                         <img src="{{ siteinfo.donate_photo_5.url }}"
-                             class="absolute left-1/2 top-1/2 block h-full md:h-auto -translate-x-1/2 -translate-y-1/2"
+                             class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                              alt="">
                     </div>
                 </div>
-                <!-- Slider controls -->
             </div>
         </div>
         <div class="flex min-h-96 flex-col items-center justify-center bg-misarbrown py-8 lg:py-[72px]">
