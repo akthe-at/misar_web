@@ -9,7 +9,7 @@
                  data-carousel-interval="7000"
                  data-carousel="slide">
                 <!-- Carousel wrapper -->
-                <div class="relative h-64 overflow-hidden rounded-lg object-top sm:min-h-32 lg:h-96 lg:min-h-[70vh]">
+                <div class="relative h-64 overflow-hidden rounded-lg object-top sm:min-h-32 lg:h-96 lg:min-h-[50vh]">
                     <!-- Item 1 -->
                     <div class="hidden duration-1000 ease-in-out" data-carousel-item>
                         <img src="{{ siteinfo.donate_photo_3.url }}"
@@ -68,23 +68,23 @@
                     *If you have reached this site to report an emergency, please call 911 immediately.
             </p>
         </div>
-        <div class="max-h-1/6 align-items-center flex flex-col flex-wrap justify-center bg-stone-700 px-8 py-6 text-center lg:py-[72px]">
-          <h2 class="my-4 flex flex-col font-serif text-5xl font-bold text-misarcream">Search Specialties</h2>
-          <div class="align-items-center  px-auto mx-auto grid grid-cols-2 place-items-center justify-center gap-16 text-center sm:grid-cols-2 md:grid-cols-3">
+        <div class="max-h-1/6 align-items-center flex flex-col flex-wrap justify-center bg-stone-700 px-8 py-2 text-center lg:py-[72px]">
+          <h2 class="py-4 pb-8 flex flex-col font-serif text-5xl font-bold text-misarcream">Search Specialties</h2>
+          <div class="align-items-center py-2 px-auto mx-auto grid grid-cols-2 place-items-center justify-center gap-16 text-center sm:grid-cols-2 md:grid-cols-3">
               {% for spec in search_spec %}
                   <!-- Also the Modal Toggle -->
                   <figure hx-get="{% url 'icon_modal' spec.id %}"
                           hx-trigger="click"
                           hx-target="#modal-body"
                           hx-swap="innerHTML transition:true"
-                          class="group relative m-2 cursor-pointer items-center justify-center rounded-lg text-center grayscale-0 filter transition-all duration-500 sm:shadow-2xl sm:shadow-stone-950 ">
+                          class="group relative m-2 cursor-pointer items-center justify-center rounded-lg text-center grayscale-0 filter transition-all duration-500 sm:shadow-sm sm:shadow-stone-950 ">
                     <div class="bg-[url('{{ spec.icon.url }}')] hover:bg-[url('{{ siteinfo.blank_icon.url }}')] hover:transform-[5%] max-h-48 max-w-48 rounded-lg bg-cover hover:scale-105 hover:duration-700 group-hover:hidden">
-                          <img class="visible max-h-48 max-w-48 rounded-lg object-cover transition-all  sm:shadow-2xl sm:shadow-stone-950 "
+                          <img class="visible max-h-48 max-w-48 rounded-lg object-cover transition-all  sm:shadow-lg sm:shadow-stone-950 "
                                 src="{{ spec.icon.url }}"
                                 alt="image description">
                     </div>
                     <div class="hidden group-hover:block ">
-                      <img class="max-h-48 max-w-48 rounded-lg object-cover transition-all   sm:shadow-2xl sm:shadow-stone-950"
+                      <img class="max-h-48 max-w-48 rounded-lg object-cover transition-all   sm:shadow-lg sm:shadow-stone-950"
                                 src="{{ siteinfo.blank_icon.url }}"
                                 alt="image description">
                           <figcaption class="hover:mix-blend-burn absolute inset-0 mx-auto flex w-full place-items-center items-center justify-center p-2 text-center text-xs text-transparent hover:font-black hover:shadow-2xl hover:shadow-stone-950 sm:text-sm md:text-base md:hover:text-misargreen lg:text-3xl">
@@ -97,41 +97,41 @@
         <div class="flex mt-4 py-4 w-full items-center justify-center bg-misargray400 text-center  text-stone-700">
             <h2 class="font-serif text-5xl font-bold">MISAR Services:</h2>
         </div>
-            <div class="flex flex-col w-full items-center justify-center bg-misargray400 text-center text-stone-700">
-              <div class="flex flex-col items-center justify-center rounded  p-6">
+            <div class="p-4 flex flex-col w-full items-center justify-center bg-misargray400 text-center text-stone-700">
+              <div class="flex flex-col items-center justify-center rounded  p-4">
                     <img src="https://scontent-msp1-1.xx.fbcdn.net/v/t1.6435-9/94978219_10156961898695880_7271089794849964032_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_ohc=smazkEwBkPMQ7kNvgGpeSk6&_nc_ht=scontent-msp1-1.xx&oh=00_AYA1d21UVZmfV-Q4jbglPqofy6fjo4WRlzJXraH-OjDVfg&oe=669F6C2D"
                          alt="MISAR Training"
                          class="md:h-1/3 md:w-1/3 rounded-lg border-4 shadow-md shadow-stone-900 border-spacing-8 border-double border-misarcream">
               </div>
-              <h2 class="font-serif font-bold text-3xl">Emergency Deployment</h2>
-              <div class="flex w-3/4 md:w-1/2">
-                <p class="text-xl py-2 mb-4 flex text-wrap">Michigan SAR deploys K9 teams to assist law enforcement agencies in locating missing persons. Our teams are trained in wilderness search and rescue, disaster response, and human remains detection. We are available 24/7 to assist in searches for those in need.</p>
+              <h2 class="p-2 font-serif font-bold text-3xl">Emergency Deployment</h2>
+              <div class="flex p-2 w-3/4 md:w-1/2">
+                <p class="text-xl flex text-wrap">Michigan SAR deploys K9 teams to assist law enforcement agencies in locating missing persons. Our teams are trained in wilderness search and rescue, disaster response, and human remains detection. We are available 24/7 to assist in searches for those in need.</p>
               </div>
             </div>
-            <div class="flex w-full flex-col items-center justify-center bg-stone-700 py-8 text-center text-misarcream">
+            <div class="p-4 flex w-full flex-col items-center justify-center bg-misargray400 text-center text-stone-700">
                 <div class="flex flex-col items-center justify-center rounded p-4">
                     <img src="https://scontent-msp1-1.xx.fbcdn.net/v/t39.30808-6/448882516_880215377477561_5523350461125081280_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_ohc=9CN8hBzn7hYQ7kNvgFiatEo&_nc_ht=scontent-msp1-1.xx&oh=00_AYAyItc8cm5OMnVUvOprkVafI_jkL30lrJeT5n7P_jmozA&oe=667CA31C"
                          alt="MISAR Training"
                          class="md:h-1/3 md:w-1/3 rounded-lg border-4 shadow-md shadow-stone-900 border-spacing-8 border-double border-misarcream">
                 </div>
-                <h2 class="py-2 font-serif font-bold flex-col text-3xl">Community Education</h2>
-                  <div class="flex w-3/4 md:w-1/2">
-                    <p class="flex py-2 text-xl max-w-1/2 text-wrap">Michigan SAR offers presentations to community groups, schools, and other organizations. We provide information on search and rescue, wilderness safety, and how to avoid becoming lost. We also offer information on what to do if you become lost, and how to be prepared for a search and rescue operation.</p>
+                <h2 class="p-2 font-serif font-bold flex-col text-3xl">Community Education</h2>
+                  <div class="p-2 flex w-3/4 md:w-1/2">
+                    <p class="flex text-xl max-w-1/2 text-wrap">Michigan SAR offers presentations to community groups, schools, and other organizations. We provide information on search and rescue, wilderness safety, and how to avoid becoming lost. We also offer information on what to do if you become lost, and how to be prepared for a search and rescue operation.</p>
                   </div>
             </div>
-            <div class="flex w-full flex-col items-center justify-center bg-misarbrown py-2 text-center text-misarcream">
-                <div class="flex flex-col items-center justify-center rounded p-4">
+            <div class="flex w-full flex-col items-center justify-center bg-misargray400 p-4 text-center text-stone-700">
+                <div class="p-4 flex flex-col items-center justify-center rounded">
                     <img src="https://scontent-msp1-1.xx.fbcdn.net/v/t1.6435-9/37809344_10155483378785880_5941495682400518144_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_ohc=g1IyTrom5a0Q7kNvgFfxjsg&_nc_ht=scontent-msp1-1.xx&oh=00_AYCECyxGO3w4skfBMH2abkevh8qCuakzAzD-_AUrBFTsZQ&oe=669F0A40"
                          alt="MISAR Training"
                          class="md:h-1/3 md:w-1/3 rounded-lg border-4 shadow-md shadow-stone-900 border-spacing-8 border-double border-misarcream">
                 </div>
-                <h2 class="font-serif flex-col font-bold text-3xl">Fundraising</h2>
-                <div class="flex w-3/4 md:w-1/2">
-                  <p class="flex my-2 text-xl max-w-1/2 text-wrap">MISAR is a non-profit organization, therefore we rely on donations to keep our organization running. We host several fundraising events throughout the year to help raise money for training, equipment, and other expenses. We also accept donations through our website and PayPal.</p>
+                <h2 class="font-serif p-2 flex-col font-bold text-3xl">Fundraising</h2>
+                <div class="flex mb-6 w-3/4 md:w-1/2 p-2">
+                  <p class="flex text-xl max-w-1/2 text-wrap">MISAR is a non-profit organization, therefore we rely on donations to keep our organization running. We host several fundraising events throughout the year to help raise money for training, equipment, and other expenses. We also accept donations through our website and PayPal.</p>
                 </div>
-            </div>
-            <div class="flex h-auto w-full flex-col items-center justify-center bg-stone-900  text-center lg:flex-row ">
-                <div class="flex w-1/2 flex-col-reverse items-center justify-center text-center text-white sm:px-3 lg:flex-col">
+      </div>
+            <div class="flex h-1/5 w-full flex-col items-center justify-center bg-stone-700  text-center lg:flex-row">
+                <div class="flex flex-col-reverse items-center justify-center text-center text-white px-3 lg:flex-col">
                     <div class="mt-6 flex w-full flex-col items-center justify-center text-center">
                         <h2 class="mb-3 mt-6 font-serif text-3xl font-semibold text-misarcream lg:text-6xl">Get Involved</h2>
                         <div class="flex flex-col justify-center gap-2 text-center lg:flex-row">
@@ -153,11 +153,14 @@
                         </h2>
                     </div>
                 </div>
-                <div class="align-items-center flex h-1/2 w-1/2 flex-col items-center justify-center">
+                <div class="align-items-center flex  flex-col items-center justify-center">
                     <img src="{{ siteinfo.alternate_logo.url }}"
                          alt="MISAR LOGO"
                          class="flex h-1/2 w-1/2 flex-col object-scale-down py-4">
                 </div>
+            </div>
+      </div>
+    </div>
                 <!-- large icon modal -->
                 <div x-show="showSpecialtyModal"
                      id="specialty-modal"
