@@ -69,9 +69,9 @@
             </p>
         </div>
         <div class="max-h-1/6 align-items-center flex flex-col flex-wrap justify-center bg-stone-700 px-8 py-10 text-center">
-        <div class="flex items-center justify-center py-4 pb-8">
-          <h2 class=" flex flex-col font-serif text-5xl font-bold text-white">Search Specialties</h2>
-        </div>
+          <div class="flex items-center justify-center py-4 pb-8">
+            <h2 class=" flex flex-col font-serif text-5xl font-bold text-white">Search Specialties</h2>
+          </div>
           <div class="align-items-center px-auto mx-auto grid grid-cols-2 place-items-center justify-center gap-16 py-2 text-center sm:grid-cols-2 md:grid-cols-3">
               {% for spec in search_spec %}
                   <!-- Also the Modal Toggle -->
@@ -89,6 +89,7 @@
                       <img class="max-h-48 max-w-48 rounded-lg object-cover transition-all   sm:shadow-lg sm:shadow-stone-950"
                                 src="{{ siteinfo.blank_icon.url }}"
                                 alt="image description">
+                    </div>
                           <figcaption class="hover:mix-blend-burn absolute inset-0 mx-auto flex w-full place-items-center items-center justify-center p-2 text-center text-xs text-transparent hover:font-black hover:shadow-2xl hover:shadow-stone-950 sm:text-sm md:text-base md:hover:text-misargreen lg:text-3xl">
                               <div class="z-1 shrink text-center">{{ spec.brief_synopsis }}</div>
                           </figcaption>
@@ -96,142 +97,142 @@
               {% endfor %}
           </div>
         </div>
-          <div class="flex flex-col items-center justify-center lg:px-24">
-        <h2 class="flex flex-col pt-12 text-center font-serif text-5xl font-bold">MISAR Services:</h2>
-        <div class="flex flex-col items-center justify-center rounded px-4 py-6 lg:flex-row lg:py-12">
-          <div class="flex w-11/12 flex-col items-center justify-center lg:mx-2 lg:w-1/2 lg:p-2">
-          <img src="https://scontent-msp1-1.xx.fbcdn.net/v/t1.6435-9/94978219_10156961898695880_7271089794849964032_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_ohc=smazkEwBkPMQ7kNvgGpeSk6&_nc_ht=scontent-msp1-1.xx&oh=00_AYA1d21UVZmfV-Q4jbglPqofy6fjo4WRlzJXraH-OjDVfg&oe=669F6C2D"
-                         alt="MISAR Training"
-                         class="rounded-lg shadow-sm shadow-stone-900  lg:mx-4 lg:w-3/4 ">
-          </div>
-          <div class="flex w-10/12 flex-col items-center justify-center p-2 lg:mx-2 lg:w-1/2">
-            <h2 class="p-4 text-center font-serif text-3xl font-bold lg:p-6">Emergency Deployment</h2>
-            <p class="flex text-wrap pt-4 text-center text-xl lg:w-3/4">Michigan SAR deploys K9 teams to assist law enforcement agencies in locating missing persons. Our teams are trained in wilderness search and rescue, disaster response, and human remains detection. We are available 24/7 to assist in searches for those in need.</p>
+        <div class="flex flex-col items-center justify-center lg:px-24">
+          <h2 class="flex flex-col pt-12 text-center font-serif text-5xl font-bold">MISAR Services:</h2>
+          <div class="flex flex-col items-center justify-center rounded py-6 lg:flex-row lg:py-12">
+            <div class="flex w-11/12 flex-col items-center justify-center  lg:w-1/2 lg:py-2">
+              <img src="https://scontent-msp1-1.xx.fbcdn.net/v/t1.6435-9/94978219_10156961898695880_7271089794849964032_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_ohc=smazkEwBkPMQ7kNvgGpeSk6&_nc_ht=scontent-msp1-1.xx&oh=00_AYA1d21UVZmfV-Q4jbglPqofy6fjo4WRlzJXraH-OjDVfg&oe=669F6C2D"
+                            alt="MISAR Training"
+                            class="rounded-lg shadow-sm shadow-stone-900   lg:w-3/4 ">
+            </div>
+            <div class="flex w-10/12 flex-col items-center justify-center py-2 lg:w-1/2">
+              <h2 class="p-4 text-center font-serif text-3xl font-bold lg:py-6">Emergency Deployment</h2>
+              <p class="flex text-wrap pt-4 text-center text-xl lg:w-3/4">Michigan SAR deploys K9 teams to assist law enforcement agencies in locating missing persons. Our teams are trained in wilderness search and rescue, disaster response, and human remains detection. We are available 24/7 to assist in searches for those in need.</p>
+            </div>
           </div>
         </div>
         <div class="flex flex-col items-center justify-center rounded px-4 py-6 lg:flex-row-reverse lg:py-12">
-          <div class="flex w-11/12 flex-col items-center justify-center lg:mx-2 lg:w-1/2 lg:p-2">
-          <img src="https://scontent-msp1-1.xx.fbcdn.net/v/t39.30808-6/448882516_880215377477561_5523350461125081280_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_ohc=9CN8hBzn7hYQ7kNvgFiatEo&_nc_ht=scontent-msp1-1.xx&oh=00_AYAyItc8cm5OMnVUvOprkVafI_jkL30lrJeT5n7P_jmozA&oe=667CA31C"
-                         alt="MISAR Training"
-                         class="rounded-lg shadow-sm shadow-stone-900  lg:mx-4 lg:w-3/4 ">
-        </div>
-          <div class="flex w-10/12 flex-col items-center justify-center p-2 lg:mx-2 lg:w-1/2">
-            <h2 class="p-4 text-center font-serif text-3xl font-bold lg:p-6">Community Education</h2>
+          <div class="flex w-11/12 flex-col items-center justify-center  lg:w-1/2 lg:py-2">
+            <img src="https://scontent-msp1-1.xx.fbcdn.net/v/t39.30808-6/448882516_880215377477561_5523350461125081280_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_ohc=9CN8hBzn7hYQ7kNvgFiatEo&_nc_ht=scontent-msp1-1.xx&oh=00_AYAyItc8cm5OMnVUvOprkVafI_jkL30lrJeT5n7P_jmozA&oe=667CA31C"
+                          alt="MISAR Training"
+                          class="rounded-lg shadow-sm shadow-stone-900  lg:w-3/4 ">
+          </div>
+          <div class="flex w-10/12 flex-col items-center justify-center py-2 lg:w-1/2">
+            <h2 class="p-4 text-center font-serif text-3xl font-bold lg:py-6">Community Education</h2>
             <p class="flex text-wrap pt-4 text-center text-xl lg:w-3/4">Michigan SAR offers presentations to community groups, schools, and other organizations. We provide information on search and rescue, wilderness safety, and how to avoid becoming lost. We also offer information on what to do if you become lost, and how to be prepared for a search and rescue operation.</p>
           </div>
         </div>
-        <div class="flex flex-col items-center justify-center rounded px-4 py-6 lg:flex-row lg:py-12">
-          <div class="flex w-11/12 flex-col items-center justify-center lg:mx-2 lg:w-1/2 lg:p-2">
-          <img src="https://scontent-msp1-1.xx.fbcdn.net/v/t1.6435-9/37809344_10155483378785880_5941495682400518144_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_ohc=g1IyTrom5a0Q7kNvgFfxjsg&_nc_ht=scontent-msp1-1.xx&oh=00_AYCECyxGO3w4skfBMH2abkevh8qCuakzAzD-_AUrBFTsZQ&oe=669F0A40"
-                         alt="MISAR Training"
-                         class="rounded-lg shadow-sm shadow-stone-900  lg:mx-4 lg:w-3/4 ">
-                        </div>
-          <div class="flex w-10/12 flex-col items-center justify-center p-2 lg:mx-2 lg:w-1/2">
-            <h2 class="p-4 text-center font-serif text-3xl font-bold lg:p-6">Fundraising</h2>
+        <div class="flex flex-col items-center justify-center rounded py-6 lg:flex-row lg:py-12">
+          <div class="flex w-11/12 flex-col items-center justify-center lg:w-1/2 lg:py-2">
+            <img src="https://scontent-msp1-1.xx.fbcdn.net/v/t1.6435-9/37809344_10155483378785880_5941495682400518144_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_ohc=g1IyTrom5a0Q7kNvgFfxjsg&_nc_ht=scontent-msp1-1.xx&oh=00_AYCECyxGO3w4skfBMH2abkevh8qCuakzAzD-_AUrBFTsZQ&oe=669F0A40"
+                          alt="MISAR Training"
+                          class="rounded-lg shadow-sm shadow-stone-900  lg:w-3/4 ">
+          </div>
+          <div class="flex w-10/12 flex-col items-center justify-center py-2 lg:w-1/2">
+            <h2 class="p-4 text-center font-serif text-3xl font-bold lg:py-6">Fundraising</h2>
             <p class="flex text-wrap pt-4 text-center text-xl lg:w-3/4">MISAR is a non-profit organization, therefore we rely on donations to keep our organization running. We host several fundraising events throughout the year to help raise money for training, equipment, and other expenses. We also accept donations through our website and PayPal.</p>
           </div>
         </div>
       </div>
-    </div>
-            <div class="flex h-1/5 w-full flex-col items-center  px-24 justify-center bg-stone-700 py-8  text-center lg:flex-row">
-                <div id="div_1" class="flex w-1/2 flex-col-reverse items-center justify-center text-center text-white lg:flex-col">
-                    <div class=" flex w-full flex-col items-center justify-center text-center">
-                        <h2 class="mb-2 mt-6 font-serif text-3xl font-semibold text-white lg:text-3xl">Get Involved</h2>
-                        <div class="flex flex-col justify-center gap-2 text-center lg:flex-row">
-                            <a href="https://www.paypal.com/donate/?hosted_button_id=QKGJDAUPLV626"
-                               class="">
-                                <button class="flex w-32 items-center justify-center rounded bg-misargreen px-2 py-2 font-bold text-white hover:bg-white hover:text-black">
-                                    Donate
-                                </button>
-                            </a>
-                            <button @click="showVolunteerModal = true"
-                                    class="mb-3 flex w-32 items-center justify-center rounded bg-misargreen px-2 py-2 font-bold text-white hover:bg-white hover:text-black">
-                                Volunteer
-                            </button>
-                        </div>
-                        <hr class="mx-auto my-2 h-1 w-24 rounded border-0 bg-white dark:bg-white md:my-10">
-                        <h2 class="my-2 flex flex-col font-serif text-3xl font-semibold italic text-white hover:text-blue-400 lg:text-2xl">
-                            <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on
-                            Facebook!</a>
-                        </h2>
+      <div class="flex h-1/5 w-full flex-col items-center  justify-center bg-stone-700 py-8  text-center lg:flex-row">
+          <div id="div_1" class="flex h-1/2 lg:h-full lg:w-1/2 flex-col-reverse items-center justify-center text-center text-white lg:flex-col">
+              <div class=" flex w-full flex-col items-center justify-center text-center">
+                  <h2 class="mb-2 mt-6 font-serif text-3xl font-semibold text-white lg:text-3xl">Get Involved</h2>
+                    <div class="flex flex-col justify-center gap-2 text-center lg:flex-row">
+                      <a href="https://www.paypal.com/donate/?hosted_button_id=QKGJDAUPLV626"
+                          class="">
+                        <button class="flex w-32 items-center justify-center rounded bg-misargreen px-2 py-2 font-bold text-white hover:bg-white hover:text-black">
+                            Donate
+                        </button>
+                      </a>
+                        <button @click="showVolunteerModal = true"
+                                class="mb-3 flex w-32 items-center justify-center rounded bg-misargreen px-2 py-2 font-bold text-white hover:bg-white hover:text-black">
+                            Volunteer
+                        </button>
                     </div>
-                </div>
-                <div id="div_2" class="align-items-center flex w-1/2 flex-col items-center justify-center">
-                    <img src="{{ siteinfo.alternate_logo.url }}"
-                         alt="MISAR LOGO"
-                         class="flex h-1/4 w-1/4 flex-col py-2">
-                </div>
+                  <hr class="mx-auto my-2 h-1 w-24 rounded border-0 bg-white dark:bg-white md:my-4">
+                  <h2 class="my-2 flex flex-col font-serif text-3xl font-semibold italic text-white hover:text-blue-400 lg:text-2xl">
+                      <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on
+                      Facebook!</a>
+                  </h2>
+              </div>
+          </div>
+          <div id="div_2" class="align-items-center flex lg:h-full h-1/2 lg:w-1/2 flex-col items-center justify-center">
+              <img src="{{ siteinfo.alternate_logo.url }}"
+                    alt="MISAR LOGO"
+                    class="flex h-1/4 w-1/4 flex-col py-2">
+          </div>
+      </div>
+      <!-- large icon modal -->
+      <div x-show="showSpecialtyModal"
+            id="specialty-modal"
+            tabindex="-1"
+            class="fixed left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
+          <div @click.outside="showSpecialtyModal = false"
+                class="max-w-3/4 relative max-h-full w-11/12 rounded-lg shadow-xl shadow-stone-950 md:w-1/2">
+              <!-- modal content -->
+              <div class="relative rounded-lg  shadow">
+                  <div id="modal-body"
+                        x-on:htmx:after-settle.window="showSpecialtyModal = true"
+                        class="items-center justify-center space-y-2  rounded-2xl bg-misargray300 p-4 md:p-5">
+                      {% partial search_spec_modal %}
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- Large Volunteer Modal-- Does not use a partial -->
+      <div x-show="showVolunteerModal"
+            id="volunteer-modal"
+            tabindex="-1"
+            class="fixed left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
+        <div @click.outside="showVolunteerModal = false"
+              class="md:w-3/3 relative max-h-full w-11/12 rounded-lg bg-stone-200 shadow-xl shadow-stone-950 dark:bg-gray-700">
+            <div class="align-items-right relative mx-4 flex justify-end rounded-lg">
+                <button type="button"
+                        @click="showVolunteerModal = false"
+                        class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden">
+                    <svg class="h-5 w-5"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
             </div>
-                <!-- large icon modal -->
-                <div x-show="showSpecialtyModal"
-                     id="specialty-modal"
-                     tabindex="-1"
-                     class="fixed left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
-                    <div @click.outside="showSpecialtyModal = false"
-                         class="max-w-3/4 relative max-h-full w-11/12 rounded-lg shadow-xl shadow-stone-950 md:w-1/2">
-                        <!-- modal content -->
-                        <div class="relative rounded-lg  shadow">
-                            <div id="modal-body"
-                                 x-on:htmx:after-settle.window="showSpecialtyModal = true"
-                                 class="items-center justify-center space-y-2  rounded-2xl bg-misargray300 p-4 md:p-5">
-                                {% partial search_spec_modal %}
-                            </div>
-                        </div>
-                    </div>
+            <!-- Modal content -->
+            <div class="relative rounded-lg bg-white shadow dark:bg-misargrey">
+              <div class="flex flex-row items-center justify-center rounded-t border-b bg-stone-200 p-4 dark:border-gray-600 md:p-5">
+                  <h2 class="my-2 flex-col font-serif text-3xl font-black">Interested in Joining or Helping Out?</h2>
+              </div>
+              <div id="volunteer-modal-body"
+                    class="space-y-2 rounded-lg bg-stone-200 p-4 md:p-5">
+                <div class="my-3 flex flex-col items-center justify-center gap-2 text-left text-xl">
+                    <p>
+                        Michigan Search and Rescue trains one weeknight each week and one or two weekend days per month. Visiting handlers and those interested in joining a SAR team are welcome to join us at trainings.
+                    </p>
+                    <br>
+                    <p>
+                        For those considering getting involved in canine search and rescue, we encourage attendance at several training sessions prior to making the commitment.
+                    </p>
+                    <br>
+                    <p>
+                        Prospective Members are subject to a background check and all membes are required to complete field support training, which includes compass, scent theory, radio protocols, crime scene preservation and search strategy. Additionally, members are now required to meet standards set forth by the Michigan Professional Search and Rescue Council (MIPSARC).
+                    </p>
+                    <br>
+                    <p>
+                        Search and rescue often requires driving long distances to participate in training and many hours of training in all types of weather conditions. In addition, many hours must be spent training on your own as well. Searches rarely occur at convenient times and members must be willing to drop everything to participate in a search.
+                    </p>
+                    <br>
+                    <p>
+                        If you are interested in joining, please email us at <a class="text-misargreen" href="mailto:michiganSAR@gmail.com">michiganSAR@gmail.com</a>
+                    </p>
                 </div>
-                <!-- Large Volunteer Modal-- Does not use a partial -->
-                <div x-show="showVolunteerModal"
-                     id="volunteer-modal"
-                     tabindex="-1"
-                     class="fixed left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
-                    <div @click.outside="showVolunteerModal = false"
-                         class="md:w-3/3 relative max-h-full w-11/12 rounded-lg bg-stone-200 shadow-xl shadow-stone-950 dark:bg-gray-700">
-                        <div class="align-items-right relative mx-4 flex justify-end rounded-lg">
-                            <button type="button"
-                                    @click="showVolunteerModal = false"
-                                    class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden">
-                                <svg class="h-5 w-5"
-                                     aria-hidden="true"
-                                     xmlns="http://www.w3.org/2000/svg"
-                                     fill="none"
-                                     viewBox="0 0 14 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                </svg>
-                                <span class="sr-only">Close modal</span>
-                            </button>
-                        </div>
-                        <!-- Modal content -->
-                        <div class="relative rounded-lg bg-white shadow dark:bg-misargrey">
-                            <div class="flex flex-row items-center justify-center rounded-t border-b bg-stone-200 p-4 dark:border-gray-600 md:p-5">
-                                <h2 class="my-2 flex-col font-serif text-3xl font-black">Interested in Joining or Helping Out?</h2>
-                            </div>
-                            <div id="volunteer-modal-body"
-                                 class="space-y-2 rounded-lg bg-stone-200 p-4 md:p-5">
-                                <div class="my-3 flex flex-col items-center justify-center gap-2 text-left text-xl">
-                                    <p>
-                                        Michigan Search and Rescue trains one weeknight each week and one or two weekend days per month. Visiting handlers and those interested in joining a SAR team are welcome to join us at trainings.
-                                    </p>
-                                    <br>
-                                    <p>
-                                        For those considering getting involved in canine search and rescue, we encourage attendance at several training sessions prior to making the commitment.
-                                    </p>
-                                    <br>
-                                    <p>
-                                        Prospective Members are subject to a background check and all membes are required to complete field support training, which includes compass, scent theory, radio protocols, crime scene preservation and search strategy. Additionally, members are now required to meet standards set forth by the Michigan Professional Search and Rescue Council (MIPSARC).
-                                    </p>
-                                    <br>
-                                    <p>
-                                        Search and rescue often requires driving long distances to participate in training and many hours of training in all types of weather conditions. In addition, many hours must be spent training on your own as well. Searches rarely occur at convenient times and members must be willing to drop everything to participate in a search.
-                                    </p>
-                                    <br>
-                                    <p>
-                                        If you are interested in joining, please email us at <a class="text-misargreen" href="mailto:michiganSAR@gmail.com">michiganSAR@gmail.com</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
+            </div>
+      </div>
+  </div>
         {% endblock %}
 <!-- Modal body -->
 {% partialdef search_spec_modal %}
