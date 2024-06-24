@@ -106,7 +106,7 @@
           </div>
           <div class="flex w-10/12 flex-col items-center justify-center p-2 lg:mx-2 lg:w-1/2">
             <h2 class="p-4 text-center font-serif text-3xl font-bold lg:p-6">Emergency Deployment</h2>
-            <p class="flex text-center text-wrap pt-4 text-xl lg:w-3/4">Michigan SAR deploys K9 teams to assist law enforcement agencies in locating missing persons. Our teams are trained in wilderness search and rescue, disaster response, and human remains detection. We are available 24/7 to assist in searches for those in need.</p>
+            <p class="flex text-wrap pt-4 text-center text-xl lg:w-3/4">Michigan SAR deploys K9 teams to assist law enforcement agencies in locating missing persons. Our teams are trained in wilderness search and rescue, disaster response, and human remains detection. We are available 24/7 to assist in searches for those in need.</p>
           </div>
         </div>
         <div class="flex flex-col items-center justify-center rounded px-4 py-6 lg:flex-row-reverse lg:py-12">
@@ -117,7 +117,7 @@
         </div>
           <div class="flex w-10/12 flex-col items-center justify-center p-2 lg:mx-2 lg:w-1/2">
             <h2 class="p-4 text-center font-serif text-3xl font-bold lg:p-6">Community Education</h2>
-            <p class="flex text-center text-wrap pt-4 text-xl lg:w-3/4">Michigan SAR offers presentations to community groups, schools, and other organizations. We provide information on search and rescue, wilderness safety, and how to avoid becoming lost. We also offer information on what to do if you become lost, and how to be prepared for a search and rescue operation.</p>
+            <p class="flex text-wrap pt-4 text-center text-xl lg:w-3/4">Michigan SAR offers presentations to community groups, schools, and other organizations. We provide information on search and rescue, wilderness safety, and how to avoid becoming lost. We also offer information on what to do if you become lost, and how to be prepared for a search and rescue operation.</p>
           </div>
         </div>
         <div class="flex flex-col items-center justify-center rounded px-4 py-6 lg:flex-row lg:py-12">
@@ -128,40 +128,40 @@
                         </div>
           <div class="flex w-10/12 flex-col items-center justify-center p-2 lg:mx-2 lg:w-1/2">
             <h2 class="p-4 text-center font-serif text-3xl font-bold lg:p-6">Fundraising</h2>
-            <p class="flex text-center text-wrap pt-4 text-xl lg:w-3/4">MISAR is a non-profit organization, therefore we rely on donations to keep our organization running. We host several fundraising events throughout the year to help raise money for training, equipment, and other expenses. We also accept donations through our website and PayPal.</p>
+            <p class="flex text-wrap pt-4 text-center text-xl lg:w-3/4">MISAR is a non-profit organization, therefore we rely on donations to keep our organization running. We host several fundraising events throughout the year to help raise money for training, equipment, and other expenses. We also accept donations through our website and PayPal.</p>
           </div>
         </div>
       </div>
-            <div class="flex h-1/5 w-full flex-col items-center justify-center bg-stone-700 py-8  text-center lg:flex-row">
-                <div class="flex flex-col-reverse items-center justify-center px-3 text-center text-white lg:flex-col">
+    </div>
+            <div class="flex h-1/5 w-full flex-col items-center  justify-center bg-stone-700 py-8  text-center lg:flex-row">
+                <div id="div_1" class="flex w-1/2 flex-col-reverse items-center justify-center text-center text-white lg:flex-col">
                     <div class=" flex w-full flex-col items-center justify-center text-center">
-                        <h2 class="mb-2 mt-6 font-serif text-3xl font-semibold text-white lg:text-6xl">Get Involved</h2>
+                        <h2 class="mb-2 mt-6 font-serif text-3xl font-semibold text-white lg:text-3xl">Get Involved</h2>
                         <div class="flex flex-col justify-center gap-2 text-center lg:flex-row">
                             <a href="https://www.paypal.com/donate/?hosted_button_id=QKGJDAUPLV626"
                                class="">
-                                <button class="flex w-36 items-center justify-center rounded bg-misargreen px-2 py-2 font-bold text-white hover:bg-white hover:text-black">
+                                <button class="flex w-32 items-center justify-center rounded bg-misargreen px-2 py-2 font-bold text-white hover:bg-white hover:text-black">
                                     Donate
                                 </button>
                             </a>
                             <button @click="showVolunteerModal = true"
-                                    class="mb-3 flex w-36 items-center justify-center rounded bg-misargreen px-4 py-2 font-bold text-white hover:bg-white hover:text-black">
+                                    class="mb-3 flex w-32 items-center justify-center rounded bg-misargreen px-2 py-2 font-bold text-white hover:bg-white hover:text-black">
                                 Volunteer
                             </button>
                         </div>
                         <hr class="mx-auto my-2 h-1 w-24 rounded border-0 bg-white dark:bg-white md:my-10">
-                        <h2 class="my-2 flex flex-col font-serif text-3xl font-semibold italic text-white hover:text-blue-400 lg:text-5xl">
+                        <h2 class="my-2 flex flex-col font-serif text-3xl font-semibold italic text-white hover:text-blue-400 lg:text-2xl">
                             <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on
                             Facebook!</a>
                         </h2>
                     </div>
                 </div>
-                <div class="align-items-center flex flex-col items-center justify-center">
+                <div id="div_2" class="align-items-center flex w-1/2 flex-col items-center justify-center">
                     <img src="{{ siteinfo.alternate_logo.url }}"
                          alt="MISAR LOGO"
-                         class="flex h-2/5 w-2/5 flex-col py-2">
+                         class="flex h-1/4 w-1/4 flex-col py-2">
                 </div>
             </div>
-      </div>
                 <!-- large icon modal -->
                 <div x-show="showSpecialtyModal"
                      id="specialty-modal"
@@ -232,7 +232,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         {% endblock %}
 <!-- Modal body -->
 {% partialdef search_spec_modal %}
