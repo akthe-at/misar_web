@@ -47,8 +47,6 @@
           <h4 class="text-2xl text-stone-900">Donate Your Time:</h4>
           <p class="flex flex-col text-xl font-normal text-stone-700">
             Volunteer as a "lost" person for canine training exercises.
-            <br>
-            Join the team: Train to become a search and rescue volunteer.
           </p>
         </div>
         <div class="flex flex-col py-4">
@@ -60,7 +58,7 @@
         <div class="flex flex-col py-4">
           <h4 class="text-2xl text-stone-900">Make a Financial Donation:</h4>
           <p class="flex flex-col text-xl font-normal text-stone-700">
-            Every dollar helps. Click "Donate" or contact us at Michigansar@gmail.com.
+            Every dollar helps. Michigan Search and Rescue is a 501(c)(3) Nonprofit Corporation and donations may be considered tax deductible.
           </p>
         </div>
       </div>
@@ -134,31 +132,24 @@
       </div>
     </div>
     <div class="flex h-1/5 w-full flex-col items-center  justify-center bg-stone-700 py-8  text-center lg:flex-row">
-      <div id="div_1"
-           class="flex h-1/2 lg:h-full lg:w-1/2 flex-col-reverse items-center justify-center text-center text-white lg:flex-col">
-        <div class=" flex w-full flex-col items-center justify-center text-center">
-          <h2 class="mb-2 mt-6 font-serif text-3xl font-semibold text-white lg:text-3xl">Get Involved</h2>
-          <div class="flex flex-col justify-center gap-2 text-center lg:flex-row">
-            <a href="https://www.paypal.com/donate/?hosted_button_id=QKGJDAUPLV626"
-               class="">
-              <button class="flex w-32 items-center justify-center rounded bg-misargreen px-2 py-2 font-bold text-white hover:bg-white hover:text-black">
-                Donate
+      <div class="flex h-1/2 lg:h-full lg:w-1/2 flex-col-reverse items-center justify-center text-center text-white lg:flex-col">
+        <div class="flex w-full flex-col items-center justify-center text-center">
+          <h2 class="pb-3 font-serif font-bold text-misarcream text-3xl md:text-2xl">Contact Us</h2>
+          <div class="flex flex-col justify-center gap-2 text-center md:flex-row">
+            <a href="tel:18008185645"
+              <button class="flex w-auto items-center justify-center rounded bg-misargreen px-4 py-2 text-center  font-bold text-misarcream hover:bg-red-700 md:w-56">
+                {{ siteinfo.dispatch_number }}
               </button>
             </a>
-            <button @click="showVolunteerModal = true"
-                    class="mb-3 flex w-32 items-center justify-center rounded bg-misargreen px-2 py-2 font-bold text-white hover:bg-white hover:text-black">
-              Volunteer
-            </button>
           </div>
-          <hr class="mx-auto my-2 h-1 w-24 rounded border-0 bg-white dark:bg-white md:my-4">
-          <h2 class="my-2 flex flex-col font-serif text-3xl font-semibold italic text-white hover:text-blue-400 lg:text-2xl">
-            <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on
-            Facebook!</a>
-          </h2>
         </div>
+        <hr class="mx-auto my-2 h-1 w-24 rounded border-0 bg-white dark:bg-white md:my-4">
+        <h2 class="my-2 flex flex-col font-serif text-3xl font-semibold italic text-white hover:text-blue-400 lg:text-2xl">
+          <a href="https://www.facebook.com/Michigan-Search-and-Rescue-128305365879/">Follow Us on
+          Facebook!</a>
+        </h2>
       </div>
-      <div id="div_2"
-           class="align-items-center flex lg:h-full h-1/2 lg:w-1/2 flex-col items-center justify-center">
+      <div class="align-items-center flex lg:h-full h-1/2 lg:w-1/2 flex-col items-center justify-center">
         <img src="{{ siteinfo.alternate_logo.url }}"
              alt="MISAR LOGO"
              class="flex h-1/4 w-1/4 flex-col py-2">
