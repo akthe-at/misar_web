@@ -1,16 +1,18 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block content %}
-  <div class="flex w-full h-full flex-row min-w-0 bg-stone-900">
-    <div class="flex lg:w-1/3 flex-1 flex-col">
-      <img class="object-contain"
-           src="{{ siteinfo.contact_photo_1.url }}"
-           alt="destiny">
+  <div class="flex w-full h-full flex-row min-w-0 bg-misargray400">
+    <div class="w-1/4 flex bg-misargray400  place-self-center items-center h-full flex-1 flex-col">
+      <div class="flex">
+        <img class="rounded-[50%] px-4"
+             src="{{ siteinfo.contact_photo_1.url }}"
+             alt="destiny">
+      </div>
     </div>
-    <div class="flex w-1/3 flex-col items-center justify-center bg-misargray400 py-5 text-center">
+    <div class="flex w-1/2 flex-col items-center justify-center bg-misargray400 py-5 text-center">
       <h1 class="font-serif pb-4 flex text-4xl  text-stone-700 ">Support Our Mission:</h1>
       <h2 class="italic pb-4 flex text-4xl text-stone-700  md:text-4xl lg:text-5xl">Save Lives with MISAR</h2>
-      <div class="align-items-center flex flex-col w-1/3 h-1/3 items-center justify-center">
+      <div class="align-items-center flex flex-col w-1/4 h-1/4 items-center justify-center">
         <img src="{{ siteinfo.alternate_logo.url }}"
              alt="MISAR LOGO"
              class="flex flex-col py-4">
@@ -23,46 +25,48 @@
           </button>
         </a>
       </div>
-      <div class="flex w-10/12 flex-col text-stone-700 py-2 justify-center text-center items-center">
+      <div class="flex w-11/12 flex-col text-stone-700 py-2 justify-center text-center items-center">
         <p class="font-serif text-xl">
           Your donations are crucial to our mission. They enable us to equip our volunteers with essential gear, provide our teams with advanced training opportunities, and ensure the well being of our incredible canine search partners. When you donate, you directly support these efforts to save lives and enhance our emergency response capabilities.
         </p>
       </div>
-      <div class="flex w-10/12 flex-col text-center items-center justify-center">
+      <div class="flex w-11/12 flex-col text-center items-center justify-center">
         <div class="py-4 text-center">
           <h3 class="text-xl font-serif text-stone-700">
             If you're unable to donate financially, there are still valuable ways you can support Michigan Search and Rescue (MISAR):
           </h3>
         </div>
-        <div class="flex w-10/12 flex-col text-center items-center justify-center py-4">
+        <div class="flex w-11/12 flex-col text-center items-center justify-center py-4">
           <h4 class="text-2xl font-serif text-stone-700">Donate Your Time:</h4>
           <p class="flex flex-col text-xl font-normal text-stone-700">
             Volunteer as a "lost" person for canine training exercises.
           </p>
         </div>
-        <div class="flex w-10/12 flex-col text-center items-center justify-center py-4">
+        <div class="flex w-11/12 flex-col text-center items-center justify-center py-4">
           <h4 class="text-2xl font-serif text-stone-700">Donate Training Space:</h4>
           <p class="flex flex-col text-xl font-normal text-stone-700">
             Do you have unused land or buildings? Offer it for MISAR training exercises.
           </p>
         </div>
-        <div class="flex w-10/12 text-center items-center justify-center flex-col py-4">
+        <div class="flex w-11/12 text-center items-center justify-center flex-col py-4">
           <h4 class="text-2xl font-serif text-stone-700">Make a Financial Donation:</h4>
           <p class="flex flex-col text-xl font-normal text-stone-700">
             Every dollar helps. Michigan Search and Rescue is a 501(c)(3) Nonprofit Corporation and donations may be considered tax deductible.
           </p>
         </div>
-        <div class="py-4 w-10/12 flex flex-col text-center items-center justify-center">
+        <div class="py-4 w-11/12 flex flex-col text-center items-center justify-center">
           <h3 class="text-xl font-serif text-stone-700">
             Michigan Search and Rescue is a team of dedicated volunteers. Your support, whether through time, space, or financial contribution, makes significant impact on our ability to save lives and serve our community. Thank you for considering how you can support MISAR!
           </h3>
         </div>
       </div>
     </div>
-    <div class="flex-1 lg:w-1/3 flex-col">
-      <img class="object-contain"
-           src="{{ siteinfo.contact_photo_2.url }}"
-           alt="whiskey">
+    <div class="flex bg-misargray400  place-self-center items-center h-full w-1/4 flex-1 flex-col">
+      <div class="flex">
+        <img class="rounded-[50%] px-4"
+             src="{{ siteinfo.contact_photo_2.url }}"
+             alt="whiskey">
+      </div>
     </div>
   </div>
   <div class="flex h-full w-full items-center justify-center bg-stone-600">
