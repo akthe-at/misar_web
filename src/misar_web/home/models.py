@@ -18,6 +18,7 @@ class SiteInfo(models.Model):
     about_photo_1 = models.ImageField(upload_to="home/files/images")
     about_photo_2 = models.ImageField(upload_to="home/files/images")
     about_photo_3 = models.ImageField(upload_to="home/files/images")
+    just_a_dog_photo = models.ImageField(upload_to="home/files/images")
     misar_services_1 = models.ImageField(upload_to="home/files/images")
     misar_services_2 = models.ImageField(upload_to="home/files/images")
     misar_services_3 = models.ImageField(upload_to="home/files/images")
