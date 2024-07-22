@@ -2,6 +2,7 @@ import csv
 from typing import Literal
 
 from django.contrib import messages
+from django.db.models import QuerySet
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
@@ -98,10 +99,10 @@ class CustomLogoutView(LogoutView):
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def member_home(request: HttpRequest):
     siteinfo: SiteInfo = SiteInfo.objects.get(id=1)
-    external_references: list[ExternalReference] = (
+    external_references: QuerySet[ExternalReference] = (
         ExternalReference.objects.all().order_by("name")
     )
-    team_files: list[TeamFile] = TeamFile.objects.all().order_by("file_name")
+    team_files: QuerySet[TeamFile] = TeamFile.objects.all().order_by("file_name")
     context = {
         "siteinfo": siteinfo,
         "external_references": external_references,
@@ -159,12 +160,14 @@ def update_shared_files(request: HttpRequest) -> HttpResponse:
         request, "members/files.html#shared-files-table", {"sharedfiles": files}
     )
 
+
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def update_files(request: HttpRequest) -> HttpResponse:
     files = MemberFile.objects.filter(owner=request.user).order_by("id")
     return render(request, "members/files.html#personal_table", {"memberfiles": files})
 
-@require_http_methods(['DELETE'])
+
+@require_http_methods(["DELETE"])
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
 def delete_file(request: HttpRequest, file_id: int) -> HttpResponse | None:
     file = MemberFile.objects.get(pk=file_id)
@@ -287,7 +290,7 @@ def create_event(request: HttpRequest):
         "delete_event",
     ]
     siteinfo = SiteInfo.objects.get(id=1)
-    
+
     event_form = EventForm(request.POST or None)
     if request.method == "POST":
         if event_form.is_valid():
@@ -307,7 +310,6 @@ def create_event(request: HttpRequest):
             return render(request, "members/events/all_events.html#event_list", context)
     context = {"siteinfo": siteinfo, "event_form": event_form}
     return render(request, "members/events/all_events.html#add_event_modal", context)
-
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
@@ -338,7 +340,6 @@ def delete_event(request: HttpRequest, event_id: int):
     events = Event.objects.filter(date__gte=timezone.now()).order_by("date")
     context = {"siteinfo": siteinfo, "events": events}
     return render(request, "members/events/all_events.html#event_list", context)
-
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
@@ -378,7 +379,9 @@ def create_location(request: HttpRequest):
     context = {"siteinfo": siteinfo, "form": form, "submitted": submitted}
     if str(request.headers.get("Referer")).endswith("/members/events/locations/"):
         return render(request, "members/events/add_location.html", context)
-    return render(request, "members/events/all_events.html#add_event_location_modal", context)
+    return render(
+        request, "members/events/all_events.html#add_event_location_modal", context
+    )
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
@@ -476,21 +479,19 @@ def location_csv(request: HttpRequest) -> HttpResponse:
         response["Content-Disposition"] = 'attachment; filename="locations.csv"'
         writer = csv.writer(response)
 
-        writer.writerow(
-            [
-                "Location Name",
-                "Address",
-                "City",
-                "State",
-                "Zip Code",
-                "POC Name",
-                "Phone Number",
-                "Email",
-                "Website",
-                "Description",
-                "MISAR Point of Contact",
-            ]
-        )
+        writer.writerow([
+            "Location Name",
+            "Address",
+            "City",
+            "State",
+            "Zip Code",
+            "POC Name",
+            "Phone Number",
+            "Email",
+            "Website",
+            "Description",
+            "MISAR Point of Contact",
+        ])
         location_ids = request.POST.getlist("location_ids")
 
         locations = Location.objects.filter(pk__in=location_ids).values_list(
