@@ -74,4 +74,57 @@
            class="flex h-1/4 w-1/4 flex-col py-2">
     </div>
   </div>
+  <!-- Large Volunteer Modal-- Does not use a partial -->
+  <div x-show="showVolunteerModal"
+       id="volunteer-modal"
+       tabindex="-1"
+       class="fixed left-0 right-0 top-0 z-50 flex h-[calc(100%-1rem)] max-h-full items-center justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0">
+    <div @click.outside="showVolunteerModal = false"
+         class="lg:w-1/3 relative max-h-full w-11/12 rounded-lg bg-stone-200 shadow-xl shadow-stone-950 dark:bg-gray-700">
+      <div class="align-items-right relative mx-4 flex justify-end rounded-lg">
+        <button type="button"
+                @click="showVolunteerModal = false"
+                class="my-4 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white md:hidden">
+          <svg class="h-5 w-5"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="none"
+               viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <!-- Modal content -->
+      <div class="relative rounded-lg bg-white shadow dark:bg-misargrey">
+        <div class="flex flex-row items-center justify-center rounded-t border-b bg-stone-200 p-4 dark:border-gray-600 md:p-5">
+          <h2 class="my-2 flex-col font-serif text-3xl font-black">Interested in Joining or Helping Out?</h2>
+        </div>
+        <div id="volunteer-modal-body"
+             class="space-y-2 rounded-lg bg-stone-200 p-4 md:p-5">
+          <div class="my-3 flex flex-col items-center justify-center gap-2 text-left text-xl">
+            <p>
+              Michigan Search and Rescue trains one weeknight each week and one or two weekend days per month. Visiting handlers and those interested in joining a SAR team are welcome to join us at trainings.
+            </p>
+            <br>
+            <p>
+              For those considering getting involved in canine search and rescue, we encourage attendance at several training sessions prior to making the commitment.
+            </p>
+            <br>
+            <p>
+              Prospective Members are subject to a background check and all membes are required to complete field support training, which includes compass, scent theory, radio protocols, crime scene preservation and search strategy. Additionally, members are now required to meet standards set forth by the Michigan Professional Search and Rescue Council (MIPSARC).
+            </p>
+            <br>
+            <p>
+              Search and rescue often requires driving long distances to participate in training and many hours of training in all types of weather conditions. In addition, many hours must be spent training on your own as well. Searches rarely occur at convenient times and members must be willing to drop everything to participate in a search.
+            </p>
+            <br>
+            <p>
+              If you are interested in joining, please email us at <a class="text-misargreen" href="mailto:michiganSAR@gmail.com">michiganSAR@gmail.com</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
