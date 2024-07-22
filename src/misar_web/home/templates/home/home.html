@@ -5,11 +5,11 @@
     <div class="h-full w-full">
         <div class="flex h-full w-full items-center justify-center bg-stone-600">
             <div id="home_gallery"
-                 class="relative flex h-auto w-auto min-w-full flex-col"
+                 class="relative flex h-52 sm:min-h-32 lg:h-96 lg:min-h-[50vh] w-auto min-w-full flex-col"
                  data-carousel-interval="7000"
                  data-carousel="slide">
                 <!-- Carousel wrapper -->
-                <div class="relative h-64 overflow-hidden rounded-lg object-top sm:min-h-32 lg:h-96 lg:min-h-[50vh]">
+                <div class="relative flex w-full h-full overflow-hidden rounded-lg object-top ">
                     <!-- Item 1 -->
                     <div class="hidden duration-1000 ease-in-out" data-carousel-item>
                         <img src="{{ siteinfo.home_carousel_photo_1.url }}"
@@ -72,7 +72,7 @@
           <div class="flex items-center justify-center py-4 pb-8">
             <h2 class=" flex flex-col font-serif text-5xl font-bold text-white">Search Specialties</h2>
           </div>
-          <div class="align-items-center px-auto mx-auto grid grid-cols-2 place-items-center justify-center gap-16 py-2 text-center sm:grid-cols-2 md:grid-cols-3">
+          <div class="w-10/12 md:w-3/4 md:gap-4 lg:gap-2 align-items-center px-auto mx-auto grid grid-cols-2 place-items-center justify-center py-2 text-center sm:grid-cols-2 md:grid-cols-3">
               {% for spec in search_spec %}
                   <!-- Also the Modal Toggle -->
                   <figure hx-get="{% url 'icon_modal' spec.id %}"
@@ -80,8 +80,8 @@
                           hx-target="#modal-body"
                           hx-swap="innerHTML transition:true"
                           class="group relative m-2 cursor-pointer items-center justify-center rounded-lg text-center grayscale-0 filter transition-all duration-500 sm:shadow-sm sm:shadow-stone-950 ">
-                    <div class="bg-[url('{{ spec.icon.url }}')] hover:bg-[url('{{ siteinfo.blank_icon.url }}')] hover:transform-[5%] max-h-48 max-w-48 rounded-lg bg-cover hover:scale-105 hover:duration-700 group-hover:hidden">
-                          <img class="visible max-h-48 max-w-48 rounded-lg object-cover transition-all  sm:shadow-lg sm:shadow-stone-950 "
+                    <div class="bg-[url('{{ spec.icon.url }}')] hover:bg-[url('{{ siteinfo.blank_icon.url }}')] hover:transform-[5%] lg:max-h-48 lg:max-w-48 max-h-10/12  max-w-10/12  rounded-lg bg-cover hover:scale-105 hover:duration-700 group-hover:hidden">
+                          <img class="visible max-h-10/12 max-w-10/12 lg:max-h-48 lg:max-w-48  rounded-lg object-cover transition-all  sm:shadow-lg sm:shadow-stone-950 "
                                 src="{{ spec.icon.url }}"
                                 alt="image description">
                     </div>
