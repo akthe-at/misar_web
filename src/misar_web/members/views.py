@@ -1,8 +1,9 @@
 import csv
-from typing import Literal
+from typing import Any, Literal, Mapping
 
 from django.contrib import messages
 from django.db.models import QuerySet
+from django.http.response import HttpResponseRedirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
@@ -97,22 +98,24 @@ class CustomLogoutView(LogoutView):
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
-def member_home(request: HttpRequest):
+def member_home(request: HttpRequest) -> HttpResponse:
     siteinfo: SiteInfo = SiteInfo.objects.get(id=1)
     external_references: QuerySet[ExternalReference] = (
         ExternalReference.objects.all().order_by("name")
     )
     team_files: QuerySet[TeamFile] = TeamFile.objects.all().order_by("file_name")
-    context = {
+    context: Mapping[str, Any] = {
         "siteinfo": siteinfo,
         "external_references": external_references,
         "team_files": team_files,
     }
-    return render(request, "members/member_landing.html", context)
+    return render(
+        request=request, template_name="members/member_landing.html", context=context
+    )
 
 
 @login_required(redirect_field_name=LOGIN_URL, login_url=LOGIN_URL)
-def files(request: HttpRequest):
+def files(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     DEFAULT_PERMS = [
         "view_memberfile",
         "change_memberfile",
@@ -213,15 +216,17 @@ class ShareFileView(LoginRequiredMixin, View):
     redirect_field_name = "redirect_to"
 
     def get(self, request, file_id=None):
-        siteinfo = SiteInfo.objects.get(id=1)
+        siteinfo: SiteInfo = SiteInfo.objects.get(id=1)
         file_instance = None
         if file_id is not None:
             try:
                 file_instance = MemberFile.objects.get(id=file_id)
             except MemberFile.DoesNotExist:
                 return HttpResponseForbidden("File does not exist.")
-        form = FileShareForm(initial={"file": file_instance}, user=request.user)
-        context = {"form": form, "siteinfo": siteinfo}
+        form: FileShareForm = FileShareForm(
+            initial={"file": file_instance}, user=request.user
+        )
+        context: Mapping[str, Any] = {"form": form, "siteinfo": siteinfo}
         return render(request, "members/share_file.html", context)
 
     def post(self, request, file_id=None):
@@ -479,19 +484,21 @@ def location_csv(request: HttpRequest) -> HttpResponse:
         response["Content-Disposition"] = 'attachment; filename="locations.csv"'
         writer = csv.writer(response)
 
-        writer.writerow([
-            "Location Name",
-            "Address",
-            "City",
-            "State",
-            "Zip Code",
-            "POC Name",
-            "Phone Number",
-            "Email",
-            "Website",
-            "Description",
-            "MISAR Point of Contact",
-        ])
+        writer.writerow(
+            [
+                "Location Name",
+                "Address",
+                "City",
+                "State",
+                "Zip Code",
+                "POC Name",
+                "Phone Number",
+                "Email",
+                "Website",
+                "Description",
+                "MISAR Point of Contact",
+            ]
+        )
         location_ids = request.POST.getlist("location_ids")
 
         locations = Location.objects.filter(pk__in=location_ids).values_list(
@@ -510,3 +517,5 @@ def location_csv(request: HttpRequest) -> HttpResponse:
         for location in locations:
             writer.writerow(location)
         return response
+    else:
+        pass
