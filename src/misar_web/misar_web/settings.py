@@ -28,24 +28,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv("SECRET_KEY"))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-LOCAL_DEV_CHECK = str(os.getenv("HOME"))
-LOCAL_DEV_ENV = str(os.getenv("LOCAL_DEV_ENV"))
-if LOCAL_DEV_CHECK == LOCAL_DEV_ENV:
-    DEBUG = True
-else:
-    DEBUG = False
+DEBUG = True
 if DEBUG:
     ALLOWED_HOSTS = ["127.0.0.1"]
 else:
     ALLOWED_HOSTS = ["misar-uwwssi.pythonanywhere.com"]
-DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": lambda x: True,
-}
+# DEBUG_TOOLBAR_CONFIG = {
+#     "SHOW_TOOLBAR_CALLBACK": lambda x: True,
+# }
 
 # Application definition
 
 INSTALLED_APPS = [
-    "debug_toolbar",
+    # "debug_toolbar",
     "template_partials",
     "home.apps.HomeConfig",
     "members.apps.MembersConfig",
@@ -70,15 +65,13 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
 TAILWIND_APP_NAME = "theme"
 
-if DEBUG:
-    NPM_BIN_PATH = Path(f"{LOCAL_DEV_CHECK}/node-v20.8.1-win-x64/npm.cmd")
-
+NPM_BIN_PATH = "/home/aktheat/.local/share/mise/installs/node/lts/bin/npm"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
